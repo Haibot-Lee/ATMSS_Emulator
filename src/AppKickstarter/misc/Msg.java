@@ -135,8 +135,28 @@ public class Msg {
          */
         PollAck,
         /**
-         * Hello
+         * Update Display
          */
-        Hello,
+        TD_UpdateDisplay,
+        /**
+         * Mouse Clicked
+         */
+        TD_MouseClicked,
+        /**
+         * Card inserted
+         */
+        CR_CardInserted,
+        /**
+         * Card removed
+         */
+        CR_CardRemoved,
+        /**
+         * Eject card
+         */
+        CR_EjectCard,
+        /**
+         * Key pressed
+         */
+        KP_KeyPressed,
     } // Type
 } // Msg
