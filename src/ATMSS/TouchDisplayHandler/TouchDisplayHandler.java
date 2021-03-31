@@ -11,7 +11,7 @@ public class TouchDisplayHandler extends HWHandler {
     //------------------------------------------------------------
     // TouchDisplayHandler
     public TouchDisplayHandler(String id, AppKickstarter appKickstarter) throws Exception {
-	super(id, appKickstarter);
+        super(id, appKickstarter);
     } // TouchDisplayHandler
 
 
@@ -36,6 +36,6 @@ public class TouchDisplayHandler extends HWHandler {
     //------------------------------------------------------------
     // handleUpdateDisplay
     protected void handleUpdateDisplay(Msg msg) {
-	log.info(id + ": update display -- " + msg.getDetails());
+        log.info(id + ": update display -- " + msg.getDetails());
     } // handleUpdateDisplay
 } // TouchDisplayHandler

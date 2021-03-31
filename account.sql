@@ -1,0 +1,25 @@
+DROP TABLE ATMcards;
+
+CREATE TABLE ATMcards
+(
+    cardNo    CHAR(8),
+    pin       CHAR(6) NOT NULL,
+    accountNo CHAR(10),
+    balance   REAL DEFAULT 0,
+    primary key (cardNo, accountNo)
+);
+
+INSERT INTO ATMcards
+VALUES ('41070001', '000001', '41070001-0', 100);
+
+INSERT INTO ATMcards
+VALUES ('41070001', '000001', '41070001-1', 100);
+
+INSERT INTO ATMcards
+VALUES ('41070002', '000002', '41070002-0', 200);
+
+INSERT INTO ATMcards
+VALUES ('41070003', '000003', '41070003-0', 300);
+
+SELECT *
+FROM ATMcards;

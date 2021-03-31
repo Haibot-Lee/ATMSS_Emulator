@@ -22,7 +22,7 @@ public class HWHandler extends AppThread {
         atmss = appKickstarter.getThread("ATMSS").getMBox();
         log.info(id + ": starting...");
 
-        for (boolean quit = false; !quit;) {
+        for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
 
             log.fine(id + ": message received: [" + msg + "].");
