@@ -4,9 +4,9 @@ CREATE TABLE ATMcards
 (
     cardNo    CHAR(8),
     pin       CHAR(6) NOT NULL,
-    accountNo CHAR(10),
+    accNo CHAR(10),
     balance   REAL DEFAULT 0,
-    primary key (cardNo, accountNo)
+    primary key (cardNo, accNo)
 );
 
 INSERT INTO ATMcards

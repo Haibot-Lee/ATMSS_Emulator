@@ -21,11 +21,11 @@ public class TestBAMSHandler {
 
         try {
             testLogin(bams);
-            testGetAcc(bams);
-            testWithdraw(bams);
-            testDeposit(bams);
-            testEnquiry(bams);
-            testTransfer(bams);
+//            testGetAcc(bams);
+//            testWithdraw(bams);
+//            testDeposit(bams);
+//            testEnquiry(bams);
+//            testTransfer(bams);
         } catch (Exception e) {
             System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
             e.printStackTrace();
@@ -38,7 +38,7 @@ public class TestBAMSHandler {
     // testLogin
     static void testLogin(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
         System.out.println("Login:");
-        String cred = bams.login("12345678-0", "456123789");
+        String cred = bams.login("41070001", "000002");
         System.out.println("cred: " + cred);
         System.out.println();
     } // testLogin
