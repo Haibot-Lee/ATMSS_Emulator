@@ -20,12 +20,12 @@ public class TestBAMSHandler {
         BAMSHandler bams = new BAMSHandler(urlPrefix, initLogger());    // with logger
 
         try {
-            testLogin(bams);
-//            testGetAcc(bams);
-//            testWithdraw(bams);
-//            testDeposit(bams);
-//            testEnquiry(bams);
-//            testTransfer(bams);
+            String cred = testLogin(bams);
+            testGetAcc(bams, cred);
+            testWithdraw(bams);
+            testDeposit(bams);
+            testEnquiry(bams);
+            testTransfer(bams);
         } catch (Exception e) {
             System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
             e.printStackTrace();
@@ -36,19 +36,20 @@ public class TestBAMSHandler {
 
     //------------------------------------------------------------
     // testLogin
-    static void testLogin(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
+    static String testLogin(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
         System.out.println("Login:");
-        String cred = bams.login("41070001", "000002");
+        String cred = bams.login("41070001", "000001");
         System.out.println("cred: " + cred);
         System.out.println();
+        return cred;
     } // testLogin
 
 
     //------------------------------------------------------------
     // testGetAcc
-    static void testGetAcc(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
+    static void testGetAcc(BAMSHandler bams, String cred) throws BAMSInvalidReplyException, IOException {
         System.out.println("GetAcc:");
-        String accounts = bams.getAccounts("12345678-1", "cred-1");
+        String accounts = bams.getAccounts("41070001", cred);
         System.out.println("accounts: " + accounts);
         System.out.println();
     } // testGetAcc
@@ -58,7 +59,7 @@ public class TestBAMSHandler {
     // testWithdraw
     static void testWithdraw(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
         System.out.println("Withdraw:");
-        int outAmount = bams.withdraw("12345678-2", "111-222-332", "cred-2", "109702");
+        int outAmount = bams.withdraw("41070002", "41070002-0", "cred-1", "1000");
         System.out.println("outAmount: " + outAmount);
         System.out.println();
     } // testWithdraw
@@ -68,7 +69,7 @@ public class TestBAMSHandler {
     // testDeposit
     static void testDeposit(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
         System.out.println("Deposit:");
-        double depAmount = bams.deposit("12345678-3", "111-222-333", "cred-3", "109703");
+        double depAmount = bams.deposit("41070003", "41070003-0", "cred-3", "1000");
         System.out.println("depAmount: " + depAmount);
         System.out.println();
     } // testDeposit
@@ -78,7 +79,7 @@ public class TestBAMSHandler {
     // testEnquiry
     static void testEnquiry(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
         System.out.println("Enquiry:");
-        double amount = bams.enquiry("12345678-4", "111-222-334", "cred-4");
+        double amount = bams.enquiry("41070003", "41070003-0", "cred-4");
         System.out.println("amount: " + amount);
         System.out.println();
     } // testEnquiry
@@ -88,7 +89,7 @@ public class TestBAMSHandler {
     // testTransfer
     static void testTransfer(BAMSHandler bams) throws BAMSInvalidReplyException, IOException {
         System.out.println("Transfer:");
-        double transAmount = bams.transfer("12345678-5", "cred-5", "111-222-335", "11-222-336", "109705");
+        double transAmount = bams.transfer("41070001", "cred-5", "41070001-1", "41070001-0", "100");
         System.out.println("transAmount: " + transAmount);
         System.out.println();
     } // testTransfer
@@ -107,7 +108,6 @@ public class TestBAMSHandler {
         logConHdr.setLevel(Level.ALL);
         return log;
     } // initLogger
-
 
     static class LogFormatter extends Formatter {
         //------------------------------------------------------------
