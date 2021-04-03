@@ -1,7 +1,7 @@
 package ATMSS;
 
 import ATMSS.BAMSHandler.BAMSHandler;
-import ATMSS.BAMSHandler.BAMSInvalidReplyException;
+import ATMSS.DepositCollector.DepositCollectorHandler;
 import ATMSS.KeypadHandler.Emulator.KeypadEmulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.Msg;
@@ -26,6 +26,7 @@ public class ATMSSStarter extends AppKickstarter {
     protected CardReaderHandler cardReaderHandler;
     protected KeypadHandler keypadHandler;
     protected TouchDisplayHandler touchDisplayHandler;
+    protected DepositCollectorHandler depositCollectorHandler;
 
 
     //------------------------------------------------------------
