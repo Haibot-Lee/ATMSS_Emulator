@@ -23,7 +23,7 @@ public class DepositCollectorEmulatorController {
         this.appKickstarter = appKickstarter;
         this.log = log;
         this.depositCollectorEmulator = depositCollectorEmulator;
-        this.depositCollectorMBox = appKickstarter.getThread("depositCollectorMBox").getMBox();
+        this.depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
     } // initialize
 
     //------------------------------------------------------------
