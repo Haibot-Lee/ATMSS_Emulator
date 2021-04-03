@@ -68,6 +68,7 @@ public class ATMSSStarter extends AppKickstarter {
             cardReaderHandler = new CardReaderHandler("CardReaderHandler", this);
             keypadHandler = new KeypadHandler("KeypadHandler", this);
             touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
+            depositCollectorHandler = new DepositCollectorHandler("DepositCollectorHandler", this);
         } catch (Exception e) {
             System.out.println("AppKickstarter: startApp failed");
             e.printStackTrace();
@@ -80,6 +81,7 @@ public class ATMSSStarter extends AppKickstarter {
         new Thread(cardReaderHandler).start();
         new Thread(keypadHandler).start();
         new Thread(touchDisplayHandler).start();
+        new Thread(depositCollectorHandler).start();
     } // startHandlers
 
 
@@ -94,6 +96,7 @@ public class ATMSSStarter extends AppKickstarter {
         cardReaderHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
         keypadHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
         touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+        depositCollectorHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
         timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
     } // stopApp
 } // ATM.ATMSSStarter

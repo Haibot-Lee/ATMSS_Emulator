@@ -1,7 +1,5 @@
 package ATMSS.DepositCollector.Emulator;
 
-import ATMSS.CardReaderHandler.Emulator.CardReaderEmulator;
-import ATMSS.KeypadHandler.Emulator.KeypadEmulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;

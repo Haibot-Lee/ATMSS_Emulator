@@ -61,7 +61,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
                 cardReaderEmulator = new CardReaderEmulator("CardReaderHandler", atmssEmulatorStarter);
                 keypadEmulator = new KeypadEmulator("KeypadHandler", atmssEmulatorStarter);
                 touchDisplayEmulator = new TouchDisplayEmulator("TouchDisplayHandler", atmssEmulatorStarter);
-                depositCollectorEmulator = new DepositCollectorEmulator("DepositCollectorHandler",atmssEmulatorStarter);
+                depositCollectorEmulator = new DepositCollectorEmulator("DepositCollectorHandler", atmssEmulatorStarter);
 
                 // start emulator GUIs
                 keypadEmulator.start();
@@ -112,7 +112,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
         this.touchDisplayHandler = touchDisplayHandler;
     }
 
-    private void setDepositCollector(DepositCollectorHandler depositCollectorHandler){
+    private void setDepositCollector(DepositCollectorHandler depositCollectorHandler) {
         this.depositCollectorHandler = depositCollectorHandler;
     }
 } // ATMSSEmulatorStarter

@@ -1,16 +1,8 @@
 package ATMSS.DepositCollector.Emulator;
 
-import ATMSS.ATMSSEmulatorStarter;
 import ATMSS.ATMSSStarter;
-import ATMSS.CardReaderHandler.Emulator.CardReaderEmulator;
-import ATMSS.CardReaderHandler.Emulator.CardReaderEmulatorController;
 import ATMSS.DepositCollector.DepositCollectorHandler;
-import ATMSS.KeypadHandler.Emulator.KeypadEmulatorController;
-import ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulator;
-import ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController;
-import ATMSS.TouchDisplayHandler.TouchDisplayHandler;
-import AppKickstarter.AppKickstarter;
-import AppKickstarter.misc.MBox;
+
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-import java.util.logging.Logger;
 
 public class DepositCollectorEmulator extends DepositCollectorHandler {
     private ATMSSStarter atmssStarter;
@@ -28,7 +19,7 @@ public class DepositCollectorEmulator extends DepositCollectorHandler {
     private DepositCollectorEmulatorController depositCollectorEmulatorController;
 
 
-    public DepositCollectorEmulator(String id, ATMSSStarter atmssStarter) throws Exception{
+    public DepositCollectorEmulator(String id, ATMSSStarter atmssStarter) throws Exception {
         super(id, atmssStarter);
         this.atmssStarter = atmssStarter;
         this.id = id;
