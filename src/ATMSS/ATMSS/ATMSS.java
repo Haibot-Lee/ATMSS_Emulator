@@ -1,9 +1,13 @@
 package ATMSS.ATMSS;
 
 import ATMSS.BAMSHandler.BAMSHandler;
+import ATMSS.BAMSHandler.BAMSInvalidReplyException;
+
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
+
+import java.io.IOException;
 
 
 //======================================================================
@@ -15,9 +19,12 @@ public class ATMSS extends AppThread {
     private MBox touchDisplayMBox;
     private MBox depositCollectorMBox;
 
+    protected BAMSHandler bams;
     private String keyUsedFor = "";
 
-    protected BAMSHandler bams;
+    //For one card
+    private String cardNo = "";
+    private String password = "";
 
     //------------------------------------------------------------
     // ATMSS
@@ -52,7 +59,7 @@ public class ATMSS extends AppThread {
                     break;
 
                 case KP_KeyPressed:
-//                    log.info("KeyPressed: " + msg.getDetails());
+                    //log.info("KeyPressed: " + msg.getDetails());
                     processKeyPressed(msg);
                     break;
 
@@ -60,6 +67,7 @@ public class ATMSS extends AppThread {
                     log.info("CardInserted: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
                     keyUsedFor = "password";
+                    cardNo = msg.getDetails();
                     break;
 
                 case TimesUp:
@@ -92,20 +100,37 @@ public class ATMSS extends AppThread {
     //------------------------------------------------------------
     // processKeyPressed
     private void processKeyPressed(Msg msg) {
-        switch (keyUsedFor) {
-            case "password":
-                if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
+        if (keyUsedFor.equals("")) {
+            log.info("Invalid key pressed" + msg.getDetails());
+        } else if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
+            cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
 
-                } else if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
-                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
-
-                } else if (!msg.getDetails().equals(".") && !msg.getDetails().equals("00")) {
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Passwords, msg.getDetails()));
-                }
-                break;
-            default:
-
-
+            //reset
+            keyUsedFor = "";
+            cardNo = "";
+            password = "";
+        } else {
+            switch (keyUsedFor) {
+                case "password":
+                    if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
+                        if (cardValidation()) {
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        } else {
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "wrongPassword"));
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Passwords, "Clear"));
+                            password = "";
+                        }
+                    } else if (!msg.getDetails().equals(".") && !msg.getDetails().equals("00")) {
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Passwords, msg.getDetails()));
+                        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
+                            password = "";
+                        } else {
+                            password += msg.getDetails();
+                        }
+                    }
+                    break;
+            }
         }
 
     } // processKeyPressed
@@ -116,4 +141,20 @@ public class ATMSS extends AppThread {
     private void processMouseClicked(Msg msg) {
         // *** process mouse click here!!! ***
     } // processMouseClicked
-} // CardReaderHandler
+
+    //-------------------------------------------------------------
+    //BAMS Connection
+    private boolean cardValidation() {
+        String cred = "";
+        try {
+            cred = bams.login(cardNo, password);
+        } catch (Exception e) {
+            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
+        if (!cred.equals("") && !cred.equals("Error")) {
+            return true;
+        }
+        return false;
+    }
+}

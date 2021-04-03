@@ -69,6 +69,14 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 reloadStage("TouchDisplayPinInput.fxml");
                 break;
 
+            case "wrongPassword":
+                touchDisplayEmulatorController.setPasswordMsg("Wrong password! Please input again:");
+                break;
+
+            case "Eject":
+                reloadStage("TouchDisplayEmulatorEject.fxml");
+                break;
+
             case "MainMenu":
                 reloadStage("TouchDisplayMainMenu.fxml");
                 break;

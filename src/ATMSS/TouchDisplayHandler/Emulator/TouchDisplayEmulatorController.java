@@ -4,6 +4,7 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ public class TouchDisplayEmulatorController {
     private TouchDisplayEmulator touchDisplayEmulator;
     private MBox touchDisplayMBox;
     public PasswordField passwordField;
+    public TextField passwordMsg;
 
 
     //------------------------------------------------------------
@@ -50,5 +52,10 @@ public class TouchDisplayEmulatorController {
         cur += password;
         passwordField.setText(cur);
     }
+
+    public void setPasswordMsg(String msg) {
+        passwordMsg.setText(msg);
+    }
+
 
 } // TouchDisplayEmulatorController
