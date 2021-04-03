@@ -3,6 +3,7 @@ package ATMSS.TouchDisplayHandler.Emulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
+import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ public class TouchDisplayEmulatorController {
     private Logger log;
     private TouchDisplayEmulator touchDisplayEmulator;
     private MBox touchDisplayMBox;
+    public PasswordField passwordField;
 
 
     //------------------------------------------------------------
@@ -38,4 +40,15 @@ public class TouchDisplayEmulatorController {
         log.fine(id + ": mouse clicked: -- (" + x + ", " + y + ")");
         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_MouseClicked, x + " " + y));
     } // td_mouseClick
+
+    public void resetPassword() {
+        passwordField.setText("");
+    }
+
+    public void appendPassword(String password) {
+        String cur = passwordField.getText();
+        cur += password;
+        passwordField.setText(cur);
+    }
+
 } // TouchDisplayEmulatorController

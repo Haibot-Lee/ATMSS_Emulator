@@ -1,5 +1,6 @@
 package ATMSS.ATMSS;
 
+import ATMSS.BAMSHandler.BAMSHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
@@ -14,11 +15,16 @@ public class ATMSS extends AppThread {
     private MBox touchDisplayMBox;
     private MBox depositCollectorMBox;
 
+    private String keyUsedFor = "";
+
+    protected BAMSHandler bams;
+
     //------------------------------------------------------------
     // ATMSS
     public ATMSS(String id, AppKickstarter appKickstarter) throws Exception {
         super(id, appKickstarter);
         pollingTime = Integer.parseInt(appKickstarter.getProperty("ATMSS.PollingTime"));
+        bams = new BAMSHandler("http://cslinux0.comp.hkbu.edu.hk/comp4107_20-21_grp01/");
     } // ATMSS
 
 
@@ -46,12 +52,14 @@ public class ATMSS extends AppThread {
                     break;
 
                 case KP_KeyPressed:
-                    log.info("KeyPressed: " + msg.getDetails());
+//                    log.info("KeyPressed: " + msg.getDetails());
                     processKeyPressed(msg);
                     break;
 
                 case CR_CardInserted:
                     log.info("CardInserted: " + msg.getDetails());
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
+                    keyUsedFor = "password";
                     break;
 
                 case TimesUp:
@@ -84,16 +92,22 @@ public class ATMSS extends AppThread {
     //------------------------------------------------------------
     // processKeyPressed
     private void processKeyPressed(Msg msg) {
-        // *** The following is an example only!! ***
-        if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
-            cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
-        } else if (msg.getDetails().compareToIgnoreCase("1") == 0) {
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
-        } else if (msg.getDetails().compareToIgnoreCase("2") == 0) {
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-        } else if (msg.getDetails().compareToIgnoreCase("3") == 0) {
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
+        switch (keyUsedFor) {
+            case "password":
+                if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
+
+                } else if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
+                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+
+                } else if (!msg.getDetails().equals(".") && !msg.getDetails().equals("00")) {
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Passwords, msg.getDetails()));
+                }
+                break;
+            default:
+
+
         }
+
     } // processKeyPressed
 
 

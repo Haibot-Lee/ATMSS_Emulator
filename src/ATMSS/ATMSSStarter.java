@@ -1,6 +1,5 @@
 package ATMSS;
 
-import ATMSS.BAMSHandler.BAMSHandler;
 import ATMSS.DepositCollector.DepositCollectorHandler;
 import ATMSS.KeypadHandler.Emulator.KeypadEmulator;
 import AppKickstarter.AppKickstarter;
@@ -22,7 +21,6 @@ import java.io.IOException;
 public class ATMSSStarter extends AppKickstarter {
     protected Timer timer;
     protected ATMSS atmss;
-    protected BAMSHandler bams;
     protected CardReaderHandler cardReaderHandler;
     protected KeypadHandler keypadHandler;
     protected TouchDisplayHandler touchDisplayHandler;
@@ -64,7 +62,6 @@ public class ATMSSStarter extends AppKickstarter {
         try {
             timer = new Timer("timer", this);
             atmss = new ATMSS("ATMSS", this);
-            bams = new BAMSHandler("http://cslinux0.comp.hkbu.edu.hk/comp4107_20-21_grp01/");
             cardReaderHandler = new CardReaderHandler("CardReaderHandler", this);
             keypadHandler = new KeypadHandler("KeypadHandler", this);
             touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);

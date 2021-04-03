@@ -143,6 +143,10 @@ public class Msg {
          */
         TD_MouseClicked,
         /**
+         * show Passwords
+         */
+        TD_Passwords,
+        /**
          * Card inserted
          */
         CR_CardInserted,

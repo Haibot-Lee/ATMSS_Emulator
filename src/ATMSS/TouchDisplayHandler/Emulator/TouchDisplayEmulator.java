@@ -38,7 +38,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         Parent root;
         myStage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        String fxmlName = "TouchDisplayEmulator.fxml";
+        String fxmlName = "TouchDisplayEmulatorStart.fxml";
         loader.setLocation(TouchDisplayEmulator.class.getResource(fxmlName));
         root = loader.load();
         touchDisplayEmulatorController = (TouchDisplayEmulatorController) loader.getController();
@@ -61,16 +61,16 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         log.info(id + ": update display -- " + msg.getDetails());
 
         switch (msg.getDetails()) {
-            case "BlankScreen":
-                reloadStage("TouchDisplayEmulator.fxml");
+            case "Start":
+                reloadStage("TouchDisplayEmulatorStart.fxml");
+                break;
+
+            case "Password":
+                reloadStage("TouchDisplayPinInput.fxml");
                 break;
 
             case "MainMenu":
                 reloadStage("TouchDisplayMainMenu.fxml");
-                break;
-
-            case "Confirmation":
-                reloadStage("TouchDisplayConfirmation.fxml");
                 break;
 
             default:
@@ -78,6 +78,17 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 break;
         }
     } // handleUpdateDisplay
+
+    protected void ShowPasswords(Msg msg) {
+        log.info(id + ": show passwords");
+
+        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
+            touchDisplayEmulatorController.resetPassword();
+        } else {
+            touchDisplayEmulatorController.appendPassword(msg.getDetails());
+        }
+
+    }
 
 
     //------------------------------------------------------------

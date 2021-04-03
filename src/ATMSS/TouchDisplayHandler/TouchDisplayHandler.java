@@ -26,16 +26,18 @@ public class TouchDisplayHandler extends HWHandler {
             case TD_UpdateDisplay:
                 handleUpdateDisplay(msg);
                 break;
+            case TD_Passwords:
+                ShowPasswords(msg);
+                break;
 
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
     } // processMsg
 
-
-    //------------------------------------------------------------
-    // handleUpdateDisplay
     protected void handleUpdateDisplay(Msg msg) {
-        log.info(id + ": update display -- " + msg.getDetails());
-    } // handleUpdateDisplay
+    }
+
+    protected void ShowPasswords(Msg msg) {
+    }
 } // TouchDisplayHandler

@@ -56,7 +56,7 @@ public class KeypadEmulatorController {
         } else if (keyCodeStr.compareTo("ESCAPE") == 0) {
             keypadMBox.send(new Msg(id, keypadMBox, Msg.Type.KP_KeyPressed, "CANCEL"));
         } else if (keyCodeStr.compareTo("BACK_SPACE") == 0) {
-            keypadMBox.send(new Msg(id, keypadMBox, Msg.Type.KP_KeyPressed, "ERASE"));
+            keypadMBox.send(new Msg(id, keypadMBox, Msg.Type.KP_KeyPressed, "CLEAR"));
         } else {
             log.finer(id + ": Key Pressed " + keyCodeStr);
         }
