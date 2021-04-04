@@ -26,6 +26,7 @@ public class TouchDisplayHandler extends HWHandler {
             case TD_UpdateDisplay:
                 handleUpdateDisplay(msg);
                 break;
+
             case TD_Passwords:
                 ShowPasswords(msg);
                 break;
