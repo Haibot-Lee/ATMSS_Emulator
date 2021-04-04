@@ -35,7 +35,7 @@ public class DepositCollectorEmulator extends DepositCollectorHandler {
         depositCollectorEmulatorController = (DepositCollectorEmulatorController) loader.getController();
         depositCollectorEmulatorController.initialize(id, atmssStarter, log, this);
         myStage.initStyle(StageStyle.DECORATED);
-        myStage.setScene(new Scene(root, 350, 470));
+        myStage.setScene(new Scene(root, 600, 420));
         myStage.setTitle("Deposit Collector");
         myStage.setResizable(false);
         myStage.setOnCloseRequest((WindowEvent event) -> {

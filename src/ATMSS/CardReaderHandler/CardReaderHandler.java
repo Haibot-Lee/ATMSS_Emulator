@@ -30,6 +30,7 @@ public class CardReaderHandler extends HWHandler {
 
             case CR_CardRemoved:
                 handleCardRemove();
+                atmss.send(new Msg(id, mbox, Msg.Type.CR_CardRemoved, msg.getDetails()));
                 break;
 
             default:

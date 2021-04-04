@@ -72,6 +72,11 @@ public class ATMSS extends AppThread {
                     cardNo = msg.getDetails();
                     break;
 
+                case CR_CardRemoved:
+                    log.info("CardRemoved: " + msg.getDetails());
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
+                    break;
+
                 case TimesUp:
                     Timer.setTimer(id, mbox, pollingTime);
                     log.info("Poll: " + msg.getDetails());
