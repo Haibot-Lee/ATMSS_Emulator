@@ -1,5 +1,7 @@
 package ATMSS;
 
+import ATMSS.CashDispenserHandler.CashDispenserHandler;
+import ATMSS.CashDispenserHandler.Emulator.CashDispenserEmulator;
 import ATMSS.DepositCollector.DepositCollectorHandler;
 import ATMSS.KeypadHandler.Emulator.KeypadEmulator;
 import AppKickstarter.AppKickstarter;
@@ -25,6 +27,7 @@ public class ATMSSStarter extends AppKickstarter {
     protected KeypadHandler keypadHandler;
     protected TouchDisplayHandler touchDisplayHandler;
     protected DepositCollectorHandler depositCollectorHandler;
+    protected CashDispenserHandler cashDispenserHandler;
 
 
     //------------------------------------------------------------
@@ -66,6 +69,7 @@ public class ATMSSStarter extends AppKickstarter {
             keypadHandler = new KeypadHandler("KeypadHandler", this);
             touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
             depositCollectorHandler = new DepositCollectorHandler("DepositCollectorHandler", this);
+            cashDispenserHandler=new CashDispenserHandler("CashDispenserHandler",this);
         } catch (Exception e) {
             System.out.println("AppKickstarter: startApp failed");
             e.printStackTrace();
@@ -79,6 +83,7 @@ public class ATMSSStarter extends AppKickstarter {
         new Thread(keypadHandler).start();
         new Thread(touchDisplayHandler).start();
         new Thread(depositCollectorHandler).start();
+        new Thread(cashDispenserHandler).start();
     } // startHandlers
 
 
@@ -94,6 +99,7 @@ public class ATMSSStarter extends AppKickstarter {
         keypadHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
         touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
         depositCollectorHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+        cashDispenserHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
         timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
     } // stopApp
 } // ATM.ATMSSStarter

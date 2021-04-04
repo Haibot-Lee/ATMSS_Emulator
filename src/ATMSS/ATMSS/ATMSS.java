@@ -18,6 +18,7 @@ public class ATMSS extends AppThread {
     private MBox keypadMBox;
     private MBox touchDisplayMBox;
     private MBox depositCollectorMBox;
+    private MBox cardDispenserMBox;
 
     protected BAMSHandler bams;
     private String keyUsedFor = "";
@@ -45,6 +46,7 @@ public class ATMSS extends AppThread {
         keypadMBox = appKickstarter.getThread("KeypadHandler").getMBox();
         touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
+        //cardDispenserMBox =  appKickstarter.getThread("CashDispenserHandler").getMBox();
 
 
         for (boolean quit = false; !quit; ) {

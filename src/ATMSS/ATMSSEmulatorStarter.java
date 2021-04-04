@@ -1,7 +1,10 @@
 package ATMSS;
 
+import ATMSS.CashDispenserHandler.Emulator.CashDispenserEmulator;
 import ATMSS.DepositCollector.DepositCollectorHandler;
 import ATMSS.DepositCollector.Emulator.DepositCollectorEmulator;
+import ATMSS.CashDispenserHandler.CashDispenserHandler;
+
 import AppKickstarter.timer.Timer;
 
 import ATMSS.ATMSS.ATMSS;
@@ -53,6 +56,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             KeypadEmulator keypadEmulator = null;
             TouchDisplayEmulator touchDisplayEmulator = null;
             DepositCollectorEmulator depositCollectorEmulator = null;
+            CashDispenserEmulator cashDispenserEmulator= null ;
 
             // create emulators
             try {
@@ -62,12 +66,14 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
                 keypadEmulator = new KeypadEmulator("KeypadHandler", atmssEmulatorStarter);
                 touchDisplayEmulator = new TouchDisplayEmulator("TouchDisplayHandler", atmssEmulatorStarter);
                 depositCollectorEmulator = new DepositCollectorEmulator("DepositCollectorHandler", atmssEmulatorStarter);
+                cashDispenserEmulator=new CashDispenserEmulator("CashDispenserHandler",atmssEmulatorStarter);
 
                 // start emulator GUIs
                 keypadEmulator.start();
                 cardReaderEmulator.start();
                 touchDisplayEmulator.start();
                 depositCollectorEmulator.start();
+                cashDispenserEmulator.start();
             } catch (Exception e) {
                 System.out.println("Emulators: start failed");
                 e.printStackTrace();
@@ -79,6 +85,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             atmssEmulatorStarter.setKeypadHandler(keypadEmulator);
             atmssEmulatorStarter.setTouchDisplayHandler(touchDisplayEmulator);
             atmssEmulatorStarter.setDepositCollector(depositCollectorEmulator);
+            atmssEmulatorStarter.setCashDispenser(cashDispenserEmulator);
 
             // start threads
             new Thread(timer).start();
@@ -87,6 +94,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             new Thread(keypadEmulator).start();
             new Thread(touchDisplayEmulator).start();
             new Thread(depositCollectorEmulator).start();
+            new Thread(cashDispenserEmulator).start();
         } // start
     } // Emulators
 
@@ -114,5 +122,8 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
 
     private void setDepositCollector(DepositCollectorHandler depositCollectorHandler) {
         this.depositCollectorHandler = depositCollectorHandler;
+    }
+    private void setCashDispenser(CashDispenserHandler cashDispenserHandler){
+        this.cashDispenserHandler=cashDispenserHandler;
     }
 } // ATMSSEmulatorStarter
