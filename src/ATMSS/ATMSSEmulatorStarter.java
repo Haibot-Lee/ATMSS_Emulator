@@ -2,6 +2,7 @@ package ATMSS;
 
 import ATMSS.DepositCollector.DepositCollectorHandler;
 import ATMSS.DepositCollector.Emulator.DepositCollectorEmulator;
+import ATMSS.PrinterHandler.Emulator.PrinterEmulator;
 import AppKickstarter.timer.Timer;
 
 import ATMSS.ATMSS.ATMSS;
@@ -53,6 +54,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             KeypadEmulator keypadEmulator = null;
             TouchDisplayEmulator touchDisplayEmulator = null;
             DepositCollectorEmulator depositCollectorEmulator = null;
+            PrinterEmulator printerEmulator = null;
 
             // create emulators
             try {
@@ -62,12 +64,14 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
                 keypadEmulator = new KeypadEmulator("KeypadHandler", atmssEmulatorStarter);
                 touchDisplayEmulator = new TouchDisplayEmulator("TouchDisplayHandler", atmssEmulatorStarter);
                 depositCollectorEmulator = new DepositCollectorEmulator("DepositCollectorHandler", atmssEmulatorStarter);
+                printerEmulator = new PrinterEmulator("PrinterHandler", atmssEmulatorStarter);
 
                 // start emulator GUIs
                 keypadEmulator.start();
                 cardReaderEmulator.start();
                 touchDisplayEmulator.start();
                 depositCollectorEmulator.start();
+                printerEmulator.start();
             } catch (Exception e) {
                 System.out.println("Emulators: start failed");
                 e.printStackTrace();
