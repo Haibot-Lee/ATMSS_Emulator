@@ -17,6 +17,7 @@ public class ATMSS extends AppThread {
     private MBox cardReaderMBox;
     private MBox keypadMBox;
     private MBox touchDisplayMBox;
+    private MBox printerMBox;
     private MBox depositCollectorMBox;
     private MBox cardDispenserMBox;
 
@@ -47,7 +48,7 @@ public class ATMSS extends AppThread {
         touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
         //cardDispenserMBox =  appKickstarter.getThread("CashDispenserHandler").getMBox();
-
+        printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -77,12 +78,20 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
                     break;
 
+                case P_AdviceAccept:
+                    //TODO
+                    // send advice message to printer
+//                    log.info("CardRemoved: " + msg.getDetails());
+//                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
+                    break;
+
                 case TimesUp:
                     Timer.setTimer(id, mbox, pollingTime);
                     log.info("Poll: " + msg.getDetails());
                     cardReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     keypadMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    printerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     break;
 
                 case PollAck:
