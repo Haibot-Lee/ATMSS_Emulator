@@ -49,7 +49,7 @@ public class PrinterEmulatorController {
                 //cardReaderMBox.send(new Msg(id, cardReaderMBox, Msg.Type.CR_CardInserted, cardNumField.getText()));
                 //cardReaderTextArea.appendText("Sending " + cardNumField.getText() + "\n");
                 //cardStatusField.setText("Card Inserted");
-                printerTextArea.setText("Advice Accepted.");
+                appendTextArea("Advice Accepted.");
                 break;
 
             default:
@@ -61,7 +61,7 @@ public class PrinterEmulatorController {
     //------------------------------------------------------------
     // appendTextArea
     public void appendTextArea(String status) {
-        printerTextArea.appendText(status + "\n");
+        javafx.application.Platform.runLater( () -> printerTextArea.appendText(status + "\n"));
     } // appendTextArea
 } // CardReaderEmulatorController
 

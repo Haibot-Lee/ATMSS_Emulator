@@ -65,14 +65,14 @@ public class CardReaderEmulatorController {
             case "Insert Card":
                 if (cardNumField.getText().length() != 0) {
                     cardReaderMBox.send(new Msg(id, cardReaderMBox, Msg.Type.CR_CardInserted, cardNumField.getText()));
-                    cardReaderTextArea.appendText("Sending " + cardNumField.getText() + "\n");
+                    appendTextArea("Sending " + cardNumField.getText());
                 }
                 break;
 
             case "Remove Card":
                 if (cardStatusField.getText().compareTo("Card Ejected") == 0) {
-                    cardReaderTextArea.appendText("Removing card\n");
                     cardReaderMBox.send(new Msg(id, cardReaderMBox, Msg.Type.CR_CardRemoved, cardNumField.getText()));
+                    appendTextArea("Removing card");
                 }
                 break;
 
@@ -104,6 +104,6 @@ public class CardReaderEmulatorController {
     //------------------------------------------------------------
     // appendTextArea
     public void appendTextArea(String status) {
-        cardReaderTextArea.appendText(status + "\n");
+        javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText(status + "\n"));
     } // appendTextArea
 } // CardReaderEmulatorController
