@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ATMSS.PrinterHandler.Emulator.PrinterEmulatorController">
     <children>
-        <TextArea fx:id="printerTextArea" editable="false" layoutX="20.0" layoutY="169.0" AnchorPane.bottomAnchor="120" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="110" />
+        <TextArea fx:id="printerTextArea" editable="false" layoutX="20.0" layoutY="169.0" AnchorPane.bottomAnchor="120" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="30" />
         <AnchorPane prefHeight="30.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
             <children>
                 <Button mnemonicParsing="false" onAction="#buttonPressed" prefHeight="30.0" prefWidth="300.0" text="Accept Advice" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><font><Font size="12.0" /></font></Button>
