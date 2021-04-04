@@ -3,6 +3,7 @@ package ATMSS;
 import ATMSS.DepositCollector.DepositCollectorHandler;
 import ATMSS.DepositCollector.Emulator.DepositCollectorEmulator;
 import ATMSS.PrinterHandler.Emulator.PrinterEmulator;
+import ATMSS.PrinterHandler.PrinterHandler;
 import AppKickstarter.timer.Timer;
 
 import ATMSS.ATMSS.ATMSS;
@@ -82,7 +83,8 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             atmssEmulatorStarter.setCardReaderHandler(cardReaderEmulator);
             atmssEmulatorStarter.setKeypadHandler(keypadEmulator);
             atmssEmulatorStarter.setTouchDisplayHandler(touchDisplayEmulator);
-            atmssEmulatorStarter.setDepositCollector(depositCollectorEmulator);
+            atmssEmulatorStarter.setDepositCollectorHandler(depositCollectorEmulator);
+            atmssEmulatorStarter.setPrinterHandler(printerEmulator);
 
             // start threads
             new Thread(timer).start();
@@ -91,6 +93,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             new Thread(keypadEmulator).start();
             new Thread(touchDisplayEmulator).start();
             new Thread(depositCollectorEmulator).start();
+            new Thread(printerEmulator).start();
         } // start
     } // Emulators
 
@@ -116,7 +119,11 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
         this.touchDisplayHandler = touchDisplayHandler;
     }
 
-    private void setDepositCollector(DepositCollectorHandler depositCollectorHandler) {
+    private void setDepositCollectorHandler(DepositCollectorHandler depositCollectorHandler) {
         this.depositCollectorHandler = depositCollectorHandler;
+    }
+
+    private void setPrinterHandler(PrinterHandler printerHandler) {
+        this.printerHandler = printerHandler;
     }
 } // ATMSSEmulatorStarter
