@@ -162,5 +162,10 @@ public class Msg {
          * Key pressed
          */
         KP_KeyPressed,
+        /**
+         * Printer advice accept
+         */
+        P_AdviceAccept,
+
     } // Type
 } // Msg

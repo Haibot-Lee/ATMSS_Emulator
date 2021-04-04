@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671d914b-696b-4b3e-871f-a99a884da07d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ATMSS/CashDispenserHandler/CashDispenserHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ATMSS/CashDispenserHandler/Emulator/CashDispenserEmulator.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ATMSS/CashDispenserHandler/Emulator/CashDispenserEmulator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ATMSS/CashDispenserHandler/Emulator/CashDispenserEmulatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ATMSS/ATMSS/ATMSS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ATMSS/ATMSS/ATMSS.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/COMP4107_groupProj.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ATMSS/PrinterHandler/Emulator/PrinterEmulator.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ATMSS/PrinterHandler/Emulator/PrinterEmulator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ATMSS/PrinterHandler/Emulator/PrinterEmulatorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ATMSS/PrinterHandler/PrinterHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ATMSS/ATMSSEmulatorStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ATMSS/ATMSSEmulatorStarter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ATMSS/ATMSSStarter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ATMSS/ATMSSStarter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppKickstarter/misc/Msg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppKickstarter/misc/Msg.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,13 +23,16 @@
     <option name="hideWarnings" value="true" />
     <option name="HIDE_WARNINGS" value="true" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="COMP4107_groupProj" />
+  </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ATMSSEmulatorStarter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ATMSSEmulatorStarter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ATMSS/ATMSSEmulatorStarter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="96" column="54" selection-start-line="96" selection-start-column="54" selection-end-line="96" selection-end-column="54" />
+            <state relative-caret-position="-884">
+              <caret line="88" column="13" lean-forward="true" selection-start-line="88" selection-start-column="13" selection-end-line="88" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,16 +45,19 @@
           <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="432">
-              <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ATMSSStarter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ATMSSStarter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ATMSS/ATMSSStarter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="102" column="86" lean-forward="true" selection-start-line="102" selection-start-column="86" selection-end-line="102" selection-end-column="86" />
+            <state relative-caret-position="-1524">
+              <caret line="31" column="44" lean-forward="true" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="44" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -62,7 +67,7 @@
           <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="125">
-              <caret line="5" column="208" lean-forward="true" selection-start-line="5" selection-end-line="5" selection-end-column="208" />
+              <caret line="5" column="208" selection-start-line="5" selection-end-line="5" selection-end-column="208" />
             </state>
           </provider>
         </entry>
@@ -91,12 +96,12 @@
         <option value="$PROJECT_DIR$/src/ATMSS/CashDispenserHandler/CashDispenserHandler.java" />
         <option value="$PROJECT_DIR$/src/ATMSS/ATMSS/ATMSS.java" />
         <option value="$PROJECT_DIR$/src/ATMSS/CashDispenserHandler/Emulator/CashDispenserEmulator.fxml" />
-        <option value="$PROJECT_DIR$/src/ATMSS/ATMSSEmulatorStarter.java" />
         <option value="$PROJECT_DIR$/src/ATMSS/ATMSSStarter.java" />
+        <option value="$PROJECT_DIR$/src/ATMSS/ATMSSEmulatorStarter.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1615" />
@@ -205,6 +210,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="ToolWindowFavorites.ShowToolbar" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -324,22 +330,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" weight="0.32952926" />
+      <window_info anchor="bottom" id="Messages" weight="0.0" />
       <window_info anchor="right" id="Palette&#9;" />
       <window_info id="Image Layers" />
       <window_info anchor="right" id="Capture Analysis" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.0" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.014265335" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16621985" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32952926" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -500,7 +506,7 @@
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
-          <caret line="5" column="208" lean-forward="true" selection-start-line="5" selection-end-line="5" selection-end-column="208" />
+          <caret line="5" column="208" selection-start-line="5" selection-end-line="5" selection-end-column="208" />
         </state>
       </provider>
     </entry>
@@ -508,24 +514,27 @@
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
-          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ATMSS/ATMSSEmulatorStarter.java">
+    <entry file="file://$PROJECT_DIR$/src/ATMSS/ATMSSStarter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="96" column="54" selection-start-line="96" selection-start-column="54" selection-end-line="96" selection-end-column="54" />
+        <state relative-caret-position="-1524">
+          <caret line="31" column="44" lean-forward="true" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ATMSS/ATMSSStarter.java">
+    <entry file="file://$PROJECT_DIR$/src/ATMSS/ATMSSEmulatorStarter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="102" column="86" lean-forward="true" selection-start-line="102" selection-start-column="86" selection-end-line="102" selection-end-column="86" />
+        <state relative-caret-position="-884">
+          <caret line="88" column="13" lean-forward="true" selection-start-line="88" selection-start-column="13" selection-end-line="88" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
