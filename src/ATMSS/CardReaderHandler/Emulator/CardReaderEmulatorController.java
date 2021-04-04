@@ -24,6 +24,9 @@ public class CardReaderEmulatorController {
     public TextField cardStatusField;
     public TextArea cardReaderTextArea;
 
+    public Button cardReaderInsertButton;
+    public Button cardReaderRemoveButton;
+
 
     //------------------------------------------------------------
     // initialize
@@ -33,6 +36,7 @@ public class CardReaderEmulatorController {
         this.log = log;
         this.cardReaderEmulator = cardReaderEmulator;
         this.cardReaderMBox = appKickstarter.getThread("CardReaderHandler").getMBox();
+        cardReaderRemoveButton.setDisable(true);
     } // initialize
 
 
@@ -62,7 +66,6 @@ public class CardReaderEmulatorController {
                 if (cardNumField.getText().length() != 0) {
                     cardReaderMBox.send(new Msg(id, cardReaderMBox, Msg.Type.CR_CardInserted, cardNumField.getText()));
                     cardReaderTextArea.appendText("Sending " + cardNumField.getText() + "\n");
-                    cardStatusField.setText("Card Inserted");
                 }
                 break;
 
@@ -84,6 +87,17 @@ public class CardReaderEmulatorController {
     // updateCardStatus
     public void updateCardStatus(String status) {
         cardStatusField.setText(status);
+
+        if (status.equals("Card Inserted")) {
+            cardReaderInsertButton.setDisable(true);
+            cardReaderRemoveButton.setDisable(true);
+        } else if (status.equals("Card Ejected")) {
+            cardReaderInsertButton.setDisable(true);
+            cardReaderRemoveButton.setDisable(false);
+        } else if (status.equals("Card Reader Empty")) {
+            cardReaderInsertButton.setDisable(false);
+            cardReaderRemoveButton.setDisable(true);
+        }
     } // updateCardStatus
 
 

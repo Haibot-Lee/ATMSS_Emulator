@@ -91,7 +91,6 @@ public class ATMSSStarter extends AppKickstarter {
         new Thread(cashDispenserHandler).start();
         new Thread(printerHandler).start();
 
-
     } // startHandlers
 
 

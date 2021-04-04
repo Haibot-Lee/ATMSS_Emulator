@@ -58,7 +58,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             KeypadEmulator keypadEmulator = null;
             TouchDisplayEmulator touchDisplayEmulator = null;
             DepositCollectorEmulator depositCollectorEmulator = null;
-            CashDispenserEmulator cashDispenserEmulator= null ;
+            CashDispenserEmulator cashDispenserEmulator = null;
             PrinterEmulator printerEmulator = null;
 
 
@@ -70,7 +70,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
                 keypadEmulator = new KeypadEmulator("KeypadHandler", atmssEmulatorStarter);
                 touchDisplayEmulator = new TouchDisplayEmulator("TouchDisplayHandler", atmssEmulatorStarter);
                 depositCollectorEmulator = new DepositCollectorEmulator("DepositCollectorHandler", atmssEmulatorStarter);
-                cashDispenserEmulator=new CashDispenserEmulator("CashDispenserHandler",atmssEmulatorStarter);
+                cashDispenserEmulator = new CashDispenserEmulator("CashDispenserHandler", atmssEmulatorStarter);
                 printerEmulator = new PrinterEmulator("PrinterHandler", atmssEmulatorStarter);
 
 
@@ -137,13 +137,11 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
         this.depositCollectorHandler = depositCollectorHandler;
     }
 
-    private void setCashDispenserHandler(CashDispenserHandler cashDispenserHandler){
-        this.cashDispenserHandler=cashDispenserHandler;
+    private void setCashDispenserHandler(CashDispenserHandler cashDispenserHandler) {
+        this.cashDispenserHandler = cashDispenserHandler;
     }
-
 
     private void setPrinterHandler(PrinterHandler printerHandler) {
         this.printerHandler = printerHandler;
-
     }
 } // ATMSSEmulatorStarter

@@ -16,11 +16,13 @@ public class CashDispenserEmulator extends CashDispenserHandler{
     private String id;
     private Stage myStage;
     private  CashDispenserEmulatorController cashDispenserEmulatorController;
+
     public CashDispenserEmulator (String id, ATMSSStarter atmssStarter) throws Exception {
         super(id, atmssStarter);
         this.atmssStarter = atmssStarter;
         this.id = id;
     }//cashDispenserEmulator
+
     public void start() throws Exception {
         Parent root;
         myStage = new Stage();

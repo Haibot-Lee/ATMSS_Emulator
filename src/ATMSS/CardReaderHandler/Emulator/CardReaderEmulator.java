@@ -55,7 +55,6 @@ public class CardReaderEmulator extends CardReaderHandler {
     //------------------------------------------------------------
     // handleCardInsert
     protected void handleCardInsert() {
-        // fixme
         super.handleCardInsert();
         cardReaderEmulatorController.appendTextArea("Card Inserted");
         cardReaderEmulatorController.updateCardStatus("Card Inserted");
@@ -65,7 +64,6 @@ public class CardReaderEmulator extends CardReaderHandler {
     //------------------------------------------------------------
     // handleCardEject
     protected void handleCardEject() {
-        // fixme
         super.handleCardEject();
         cardReaderEmulatorController.appendTextArea("Card Ejected");
         cardReaderEmulatorController.updateCardStatus("Card Ejected");
@@ -75,7 +73,6 @@ public class CardReaderEmulator extends CardReaderHandler {
     //------------------------------------------------------------
     // handleCardRemove
     protected void handleCardRemove() {
-        // fixme
         super.handleCardRemove();
         cardReaderEmulatorController.appendTextArea("Card Removed");
         cardReaderEmulatorController.updateCardStatus("Card Reader Empty");

@@ -103,8 +103,11 @@ public class ATMSS extends AppThread {
     // processKeyPressed
     private void processKeyPressed(Msg msg) {
         if (keyUsedFor.equals("")) {
-            log.info("Invalid key pressed" + msg.getDetails());
-        } else if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
+            log.info("Invalid key pressed: " + msg.getDetails());
+            return;
+        }
+
+        if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
             cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
 

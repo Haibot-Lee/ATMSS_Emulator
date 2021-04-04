@@ -20,6 +20,7 @@ public class CardReaderHandler extends HWHandler {
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case CR_CardInserted:
+                handleCardInsert();
                 atmss.send(new Msg(id, mbox, Msg.Type.CR_CardInserted, msg.getDetails()));
                 break;
 
