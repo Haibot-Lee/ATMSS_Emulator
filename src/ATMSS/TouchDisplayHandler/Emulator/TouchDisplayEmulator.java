@@ -101,8 +101,10 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         }
     }
 
-    protected void changeTransDisplay(Msg msg) {
+    protected void changeTransferFrom(Msg msg) {
+
         javafx.application.Platform.runLater(() -> touchDisplayEmulatorController.setAcc(msg.getDetails()));
+
     }
 
     protected void showBalance(Msg msg) {

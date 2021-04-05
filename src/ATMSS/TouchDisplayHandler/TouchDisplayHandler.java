@@ -35,8 +35,8 @@ public class TouchDisplayHandler extends HWHandler {
                 showBalance(msg);
                 break;
 
-            case TD_Message_transfer:
-                changeTransDisplay(msg);
+            case TD_Message_transferFrom:
+                changeTransferFrom(msg);
                 break;
 
             default:
@@ -53,5 +53,5 @@ public class TouchDisplayHandler extends HWHandler {
     protected void showBalance(Msg msg) {
     }
 
-    protected void changeTransDisplay(Msg msg){}
+    protected void changeTransferFrom(Msg msg){}
 } // TouchDisplayHandler

@@ -153,7 +153,7 @@ public class Msg {
         /**
          * show message of transfer
          */
-        TD_Message_transfer,
+        TD_Message_transferFrom,
         /**
          * Card inserted
          */

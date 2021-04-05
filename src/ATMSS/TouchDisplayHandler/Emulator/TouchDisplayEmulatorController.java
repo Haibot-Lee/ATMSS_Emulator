@@ -69,7 +69,6 @@ public class TouchDisplayEmulatorController {
     }
 
     public void setAcc(String msg) {
-        td_transferTitle.setText("Select Payment Account:");
         String[] accs = msg.split("/");
         TextField[] td_transferAccount = {td_transferAccount1, td_transferAccount2, td_transferAccount3, td_transferAccount4};
         for (int i = 0; i < td_transferAccount.length; i++) {
@@ -80,6 +79,11 @@ public class TouchDisplayEmulatorController {
             }
         }
     }
+
+    public void setTitle(String msg) {
+        td_transferTitle.setText(msg);
+    }
+
     public void showBalance(String msg) {
         messageArea.setText(msg);
         button1.setText("Print Advice");

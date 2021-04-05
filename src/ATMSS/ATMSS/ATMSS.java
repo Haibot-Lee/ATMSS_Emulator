@@ -2,12 +2,9 @@ package ATMSS.ATMSS;
 
 import ATMSS.BAMSHandler.BAMSHandler;
 
-import ATMSS.BAMSHandler.BAMSInvalidReplyException;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
-
-import java.io.IOException;
 
 
 //======================================================================
@@ -27,6 +24,7 @@ public class ATMSS extends AppThread {
     //For one card
     private String cardNo = "";
     private String password = "";
+    private String trans = "";
 
     //------------------------------------------------------------
     // ATMSS
@@ -162,33 +160,26 @@ public class ATMSS extends AppThread {
         String[] msgs = msg.getDetails().split(" ");
         int x = Integer.parseInt(msgs[0]), y = Integer.parseInt(msgs[1]);
 
+        int buttonPressed = buttonPressed(x, y);
+
         switch (currentPage) {
             case "mainMenu":
-                if (x >= 0 && x <= 300) {
-                    if (y >= 410) {
-                        //None temp
-
-                    } else if (y >= 340) {
+                switch (buttonPressed) {
+                    case 1:
+                        //cash withdrawal
+                        break;
+                    case 2:
+                        //Cash Deposit
+                        break;
+                    case 3:
                         //money transfer
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyTrans"));
                         String accs = getAcc();
                         if (!accs.equals("")) {
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transfer, accs));
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferFrom, accs));
                         }
-                        currentPage = "transfer";
-                    } else if (y >= 270) {
-                        //cash withdrawal
-
-                    }
-                } else if (x >= 340 && x <= 640) {
-                    if (y >= 410) {
-                        //Exit
-                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        currentPage = "";
-                        cardNo = "";
-                        password = "";
-                    } else if (y >= 340) {
+                        currentPage = "transferFrom";
+                        break;
+                    case 4:
                         //Balance Enquiry
                         String balance = "";
                         balance += "Account 1: " + checkBalance("-0");
@@ -199,81 +190,74 @@ public class ATMSS extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowBalance, balance));
 
                         currentPage = "showBalance";
-
-                    } else if (y >= 270) {
-                        //Cash Deposit
-                    }
-                }
-
-            case "showBalance":
-                if (x >= 0 && x <= 300) {
-                    if (y >= 410) {
-                        //None temp
-                        //System.out.println("Button 5");
-
-                    } else if (y >= 340) {
-                        //money transfer
-                        //System.out.println("Button 3");
-
-                    } else if (y >= 270) {
-                        //Print Advice
-                        //System.out.println("Button 1");
-
-                        //Balance Enquiry
-                        String balance = "";
-                        balance += "Account 1: " + checkBalance("-0");
-                        balance += "\nAccount 2: " + checkBalance("-1");
-                        balance += "\nAccount 3: " + checkBalance("-2");
-                        balance += "\nAccount 4: " + checkBalance("-3");
-
-                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
-                    }
-                } else if (x >= 340 && x <= 640) {
-                    if (y >= 410) {
+                        break;
+                    case 6:
                         //Exit
-                        //System.out.println("Button 6");
-
-
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                         currentPage = "";
                         cardNo = "";
                         password = "";
+                        break;
 
-                    } else if (y >= 340) {
-                        //Balance Enquiry
-                        //System.out.println("Button 4");
+                }
 
-                        /*
+            case "showBalance":
+                switch (buttonPressed) {
+                    case 1:
+                        //print advice
                         String balance = "";
                         balance += "Account 1: " + checkBalance("-0");
                         balance += "\nAccount 2: " + checkBalance("-1");
                         balance += "\nAccount 3: " + checkBalance("-2");
                         balance += "\nAccount 4: " + checkBalance("-3");
 
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowBalance, balance));
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
-*/
-                    } else if (y >= 270) {
-                        //Cash Deposit
-                        //System.out.println("Button 2");
-                    }
+                        break;
+                    case 6:
+                        //Exit
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        currentPage = "";
+                        cardNo = "";
+                        password = "";
+                        break;
+
                 }
                 break;
 
-            case "transfer":
-                if (x >= 0 && x <= 280 && y >= 380 && y <= 480) {
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                    currentPage = "mainMenu";
-                }else{
-//                    if(){
-//
-//                    }
+            case "transferFrom":
+                switch (buttonPressed) {
+                    case 5:
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        currentPage = "mainMenu";
+                        break;
                 }
                 break;
         }
 
     } // processMouseClicked
+
+    private int buttonPressed(int x, int y) {
+        if (x >= 0 && x <= 300) {
+            if (y >= 410) {
+                return 5;
+            } else if (y >= 340) {
+                return 3;
+            } else if (y >= 270) {
+                return 1;
+            }
+        } else if (x >= 340 && x <= 640) {
+            if (y >= 410) {
+                return 6;
+            } else if (y >= 340) {
+                return 4;
+            } else if (y >= 270) {
+                return 2;
+            }
+        }
+        return 0;
+    }
 
     private String checkBalance(String number) {
         double balance = 0;
