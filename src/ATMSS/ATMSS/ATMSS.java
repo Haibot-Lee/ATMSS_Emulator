@@ -2,9 +2,12 @@ package ATMSS.ATMSS;
 
 import ATMSS.BAMSHandler.BAMSHandler;
 
+import ATMSS.BAMSHandler.BAMSInvalidReplyException;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
+
+import java.io.IOException;
 
 
 //======================================================================
@@ -181,7 +184,13 @@ public class ATMSS extends AppThread {
                         password = "";
                     } else if (y >= 340) {
                         //Balance Enquiry
-                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, "NM$L NM$L"));
+                        String balance = "";
+                        balance += "Account 1: " + checkBalance("-0");
+                        balance += "\nAccount 2: " + checkBalance("-1");
+                        balance += "\nAccount 3: " + checkBalance("-2");
+                        balance += "\nAccount 4: " + checkBalance("-3");
+
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
 
                     } else if (y >= 270) {
                         //Cash Deposit
@@ -192,6 +201,20 @@ public class ATMSS extends AppThread {
         }
 
     } // processMouseClicked
+
+    private String checkBalance(String number) {
+        double balance = 0;
+        try {
+            // cred?
+            balance = bams.enquiry(cardNo, cardNo + number, cardNo);
+            if (balance == -1) return "Invalid account";
+            else return "" + balance;
+        } catch (Exception e) {
+            System.out.println("ATMSS: Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return "" + balance;
+    }
 
     //-------------------------------------------------------------
     //BAMS Connection
