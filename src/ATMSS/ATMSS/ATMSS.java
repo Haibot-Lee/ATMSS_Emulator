@@ -1,13 +1,10 @@
 package ATMSS.ATMSS;
 
 import ATMSS.BAMSHandler.BAMSHandler;
-import ATMSS.BAMSHandler.BAMSInvalidReplyException;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
-
-import java.io.IOException;
 
 
 //======================================================================
@@ -22,7 +19,7 @@ public class ATMSS extends AppThread {
     private MBox cashDispenserMBox;
 
     protected BAMSHandler bams;
-    private String keyUsedFor = "";
+    private String currentPage = "";
 
     //For one card
     private String cardNo = "";
@@ -48,7 +45,7 @@ public class ATMSS extends AppThread {
         touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
         printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
-        cashDispenserMBox= appKickstarter.getThread("PrinterHandler").getMBox();
+        cashDispenserMBox = appKickstarter.getThread("PrinterHandler").getMBox();
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -69,7 +66,7 @@ public class ATMSS extends AppThread {
                 case CR_CardInserted:
                     log.info("CardInserted: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
-                    keyUsedFor = "password";
+                    currentPage = "password";
                     cardNo = msg.getDetails();
                     break;
 
@@ -118,7 +115,7 @@ public class ATMSS extends AppThread {
     //------------------------------------------------------------
     // processKeyPressed
     private void processKeyPressed(Msg msg) {
-        if (keyUsedFor.equals("")) {
+        if (currentPage.equals("")) {
             log.info("Invalid key pressed: " + msg.getDetails());
             return;
         }
@@ -128,15 +125,16 @@ public class ATMSS extends AppThread {
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
 
             //reset
-            keyUsedFor = "";
+            currentPage = "";
             cardNo = "";
             password = "";
         } else {
-            switch (keyUsedFor) {
+            switch (currentPage) {
                 case "password":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         if (cardValidation()) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                            currentPage = "mainMenu";
                         } else {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "wrongPassword"));
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Passwords, "Clear"));
@@ -160,7 +158,36 @@ public class ATMSS extends AppThread {
     //------------------------------------------------------------
     // processMouseClicked
     private void processMouseClicked(Msg msg) {
-        // *** process mouse click here!!! ***
+        String[] msgs = msg.getDetails().split(" ");
+        int x = Integer.parseInt(msgs[0]), y = Integer.parseInt(msgs[1]);
+        switch (currentPage) {
+            case "mainMenu":
+                if (x >= 0 && x <= 300) {
+                    if (y >= 410) {
+                        //None temp
+                    } else if (y >= 340) {
+                        //money transfer
+                    } else if (y >= 270) {
+                        //cash withdrawal
+                    }
+                } else if (x >= 340 && x <= 640) {
+                    if (y >= 410) {
+                        //Exit
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        currentPage = "";
+                        cardNo = "";
+                        password = "";
+                    } else if (y >= 340) {
+                        //Balance Enquiry
+                    } else if (y >= 270) {
+                        //Cash Deposit
+                    }
+                }
+
+            default:
+        }
+
     } // processMouseClicked
 
     //-------------------------------------------------------------
