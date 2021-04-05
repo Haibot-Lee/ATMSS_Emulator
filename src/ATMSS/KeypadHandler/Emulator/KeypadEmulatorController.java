@@ -20,6 +20,8 @@ public class KeypadEmulatorController {
     private KeypadEmulator keypadEmulator;
     private MBox keypadMBox;
 
+    public Button emptyButton;
+
 
     //------------------------------------------------------------
     // initialize
