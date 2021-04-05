@@ -163,9 +163,14 @@ public class Msg {
          */
         KP_KeyPressed,
         /**
-         * Printer advice accept
+         * Print advice
          */
-        P_AdviceAccept,
+        P_PrintAdvice,
+        /**
+         * Printer jammed
+         */
+        P_PrinterJammed,
+
 
     } // Type
 } // Msg

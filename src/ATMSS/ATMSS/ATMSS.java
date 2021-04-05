@@ -75,11 +75,9 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
                     break;
 
-                case P_AdviceAccept:
-                    //TODO
-                    // send advice message to printer
-//                    log.info("CardRemoved: " + msg.getDetails());
-//                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
+                case P_PrinterJammed:
+                    log.info("PrinterJammed: " + msg.getDetails());
+                    //touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
                     break;
 
                 case TimesUp:
@@ -183,6 +181,7 @@ public class ATMSS extends AppThread {
                         password = "";
                     } else if (y >= 340) {
                         //Balance Enquiry
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, "NM$L NM$L"));
 
                     } else if (y >= 270) {
                         //Cash Deposit
