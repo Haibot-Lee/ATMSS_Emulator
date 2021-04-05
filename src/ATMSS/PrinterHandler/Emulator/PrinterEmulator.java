@@ -57,8 +57,7 @@ public class PrinterEmulator extends PrinterHandler {
     protected void handlePrintAdvice(Msg msg) {
         // fixme
         super.handlePrintAdvice();
-        if (printerEmulatorController.printerTextField.getText().equals("") ||
-                printerEmulatorController.printerTextField.getText().equals("Advice Taken.")) {
+        if (printerEmulatorController.printerTextField.getText().equals("")) {
             printerEmulatorController.setTextArea(msg.getDetails());
             printerEmulatorController.setTextField("");
 

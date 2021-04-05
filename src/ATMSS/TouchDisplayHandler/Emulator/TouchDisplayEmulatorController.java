@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
@@ -70,12 +71,14 @@ public class TouchDisplayEmulatorController {
 
     public void setAcc(String msg) {
         String[] accs = msg.split("/");
-        TextField[] td_transferAccount = {td_transferAccount1, td_transferAccount2, td_transferAccount3, td_transferAccount4};
-        for (int i = 0; i < td_transferAccount.length; i++) {
+
+        Text[] buttons = {button1, button2, button3, button4};
+
+        for (int i = 0; i < buttons.length; i++) {
             if (i < accs.length) {
-                td_transferAccount[i].setText(accs[i]);
+                buttons[i].setText(accs[i]);
             } else {
-                td_transferAccount[i].setVisible(false);
+                buttons[i].setText("");
             }
         }
     }

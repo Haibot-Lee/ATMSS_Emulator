@@ -46,7 +46,7 @@ public class ATMSS extends AppThread {
         touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
         printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
-        cashDispenserMBox = appKickstarter.getThread("PrinterHandler").getMBox();
+        cashDispenserMBox = appKickstarter.getThread("CashDispenserHandler").getMBox();
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -67,6 +67,9 @@ public class ATMSS extends AppThread {
                 case CR_CardInserted:
                     log.info("CardInserted: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
+                    // push keypad for inputting password
+                    keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
+
                     currentPage = "password";
                     cardNo = msg.getDetails();
                     break;

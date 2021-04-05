@@ -58,6 +58,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     //------------------------------------------------------------
     // handleUpdateDisplay
     protected void handleUpdateDisplay(Msg msg) {
+
         log.info(id + ": update display -- " + msg.getDetails());
 
         switch (msg.getDetails()) {

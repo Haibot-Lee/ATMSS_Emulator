@@ -23,8 +23,18 @@ public class KeypadHandler extends HWHandler {
                 atmss.send(new Msg(id, mbox, Msg.Type.KP_KeyPressed, msg.getDetails()));
                 break;
 
+            case KP_PushUp:
+                handlePushUp();
+                break;
+
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
     } // processMsg
+
+    //------------------------------------------------------------
+    // handlePushUp
+    protected void handlePushUp() {
+        log.info(id + ": keypad pushed up");
+    } // handlePushUp
 } // KeypadHandler

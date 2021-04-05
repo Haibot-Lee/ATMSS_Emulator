@@ -171,6 +171,10 @@ public class Msg {
          */
         KP_KeyPressed,
         /**
+         * Push up Keypad
+         */
+        KP_PushUp,
+        /**
          * Print advice
          */
         P_PrintAdvice,
@@ -178,6 +182,8 @@ public class Msg {
          * Printer jammed
          */
         P_PrinterJammed,
+
+
 
 
     } // Type
