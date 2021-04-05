@@ -13,19 +13,17 @@ import javafx.scene.control.TextField;
 
 
 //======================================================================
-// CardReaderEmulatorController
+// PrinterEmulatorController
 public class PrinterEmulatorController {
     private String id;
     private AppKickstarter appKickstarter;
     private Logger log;
     private PrinterEmulator printerEmulator;
     private MBox printerMBox;
+
     public TextArea printerTextArea;
-
-    //public TextField cardNumField;
-    //public TextField cardStatusField;
-
-
+    public TextField printerTextField;
+    public Button printerButton;
 
 
     //------------------------------------------------------------
@@ -36,6 +34,7 @@ public class PrinterEmulatorController {
         this.log = log;
         this.printerEmulator = printerEmulator;
         this.printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
+        printerButton.setDisable(true);
     } // initialize
 
 
@@ -45,11 +44,10 @@ public class PrinterEmulatorController {
         Button btn = (Button) actionEvent.getSource();
 
         switch (btn.getText()) {
-            case "Accept Advice":
-                //cardReaderMBox.send(new Msg(id, cardReaderMBox, Msg.Type.CR_CardInserted, cardNumField.getText()));
-                //cardReaderTextArea.appendText("Sending " + cardNumField.getText() + "\n");
-                //cardStatusField.setText("Card Inserted");
-                appendTextArea("Advice Accepted.");
+            case "Take Advice":
+                setTextArea("");
+                setTextField("Advice Taken.");
+                printerButton.setDisable(true);
                 break;
 
             default:
@@ -59,9 +57,14 @@ public class PrinterEmulatorController {
     } // buttonPressed
 
     //------------------------------------------------------------
-    // appendTextArea
-    public void appendTextArea(String status) {
-        javafx.application.Platform.runLater( () -> printerTextArea.appendText(status + "\n"));
-    } // appendTextArea
+    // setTextArea
+    public void setTextArea(String status) {
+        javafx.application.Platform.runLater( () -> printerTextArea.setText(status + "\n"));
+    } // setTextArea
+
+    // setTextField
+    public void setTextField(String status) {
+        javafx.application.Platform.runLater( () -> printerTextField.setText(status + "\n"));
+    } // setTextField
 } // CardReaderEmulatorController
 

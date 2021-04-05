@@ -3,6 +3,7 @@ package ATMSS.PrinterHandler.Emulator;
 import ATMSS.ATMSSStarter;
 import ATMSS.PrinterHandler.PrinterHandler;
 
+import AppKickstarter.misc.Msg;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +29,6 @@ public class PrinterEmulator extends PrinterHandler {
         this.id = id;
     } // PrinterEmulator
 
-
     //------------------------------------------------------------
     // start
     public void start() throws Exception {
@@ -53,13 +53,19 @@ public class PrinterEmulator extends PrinterHandler {
 
 
     //------------------------------------------------------------
-    // handleCardInsert
-    protected void handleAdviceAccept() {
+    // handlePrintAdvice
+    protected void handlePrintAdvice(Msg msg) {
         // fixme
-        super.handleAdviceAccept();
-        printerEmulatorController.appendTextArea("Card Inserted");
-        //printerEmulatorController.updateCardStatus("Card Inserted");
-    } // handleAdviceAccept
+        super.handlePrintAdvice();
+        if (printerEmulatorController.printerTextField.getText().equals("") ||
+                printerEmulatorController.printerTextField.getText().equals("Advice Taken.")) {
+            printerEmulatorController.setTextArea(msg.getDetails());
+            printerEmulatorController.setTextField("");
+            printerEmulatorController.printerButton.setDisable(false);
+        }else {
+            atmss.send(new Msg(id, mbox, Msg.Type.P_PrinterJammed, ""));
+        }
+    } // handlePrintAdvice
 
 
 } // PrinterEmulator

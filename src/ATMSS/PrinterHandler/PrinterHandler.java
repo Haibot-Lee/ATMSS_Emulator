@@ -19,14 +19,9 @@ public class PrinterHandler extends HWHandler {
     // processMsg
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
-            /*
-            case CR_CardInserted:
-                atmss.send(new Msg(id, mbox, Msg.Type.CR_CardInserted, msg.getDetails()));
-                break;
-             */
-
-            case P_AdviceAccept:
-                handleAdviceAccept();
+            case P_PrintAdvice:
+                handlePrintAdvice();
+                handlePrintAdvice(msg);
                 break;
 
             default:
@@ -36,8 +31,12 @@ public class PrinterHandler extends HWHandler {
 
 
     //------------------------------------------------------------
-    // handleAdviceAccept
-    protected void handleAdviceAccept() {
-        log.info(id + ": advice accepted");
-    } // handleAdviceAccept
+    // handlePrintAdvice
+    protected void handlePrintAdvice() {
+        log.info(id + ": print advice");
+    } // handlePrintAdvice
+
+    // handlePrintAdvice with msg
+    protected void handlePrintAdvice(Msg msg) {
+    } // handlePrintAdvice with msg
 } // PrinterHandler

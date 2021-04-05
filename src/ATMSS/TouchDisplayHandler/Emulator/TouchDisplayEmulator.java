@@ -100,7 +100,6 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         } else {
             touchDisplayEmulatorController.appendPassword(msg.getDetails());
         }
-
     }
 
 
