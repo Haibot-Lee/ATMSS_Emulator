@@ -22,7 +22,8 @@
                 </Text>
                 <PasswordField fx:id="passwordField" layoutX="202.0" layoutY="187.0" prefHeight="54.0"
                                prefWidth="238.0"/>
-                <TextField fx:id="passwordMsg" layoutX="12.0" layoutY="298.0" prefHeight="41.0" prefWidth="618.0">
+                <TextField fx:id="passwordMsg" editable="false" layoutX="12.0" layoutY="298.0" prefHeight="41.0"
+                           prefWidth="618.0">
                     <font>
                         <Font size="20.0"/>
                     </font>

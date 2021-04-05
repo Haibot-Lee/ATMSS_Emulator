@@ -5,6 +5,7 @@ import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
 
 import java.util.logging.Logger;
@@ -18,9 +19,12 @@ public class TouchDisplayEmulatorController {
     private Logger log;
     private TouchDisplayEmulator touchDisplayEmulator;
     private MBox touchDisplayMBox;
+
     public PasswordField passwordField;
     public TextField passwordMsg;
 
+    public Text td_transferTitle;
+    public TextField td_transferAccount1, td_transferAccount2, td_transferAccount3, td_transferAccount4;
 
     //------------------------------------------------------------
     // initialize
@@ -57,5 +61,8 @@ public class TouchDisplayEmulatorController {
         passwordMsg.setText(msg);
     }
 
+    public void setAcc(String msg) {
+//        td_transferAccount1.setText(msg);
+    }
 
 } // TouchDisplayEmulatorController

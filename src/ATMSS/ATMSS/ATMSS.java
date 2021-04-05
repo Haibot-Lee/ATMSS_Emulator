@@ -18,7 +18,7 @@ public class ATMSS extends AppThread {
     private MBox depositCollectorMBox;
     private MBox cashDispenserMBox;
 
-    protected BAMSHandler bams;
+    private BAMSHandler bams;
     private String currentPage = "";
 
     //For one card
@@ -168,7 +168,8 @@ public class ATMSS extends AppThread {
 
                     } else if (y >= 340) {
                         //money transfer
-
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyTrans"));
+                        currentPage = "transfer";
                     } else if (y >= 270) {
                         //cash withdrawal
 
@@ -186,10 +187,14 @@ public class ATMSS extends AppThread {
 
                     } else if (y >= 270) {
                         //Cash Deposit
+
                     }
                 }
+                break;
 
-            default:
+            case "transfer":
+
+                break;
         }
 
     } // processMouseClicked
@@ -208,5 +213,9 @@ public class ATMSS extends AppThread {
             return true;
         }
         return false;
+    }
+
+    private String getAcc() {
+        return "";
     }
 }

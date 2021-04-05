@@ -81,6 +81,11 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 reloadStage("TouchDisplayMainMenu.fxml");
                 break;
 
+            case "moneyTrans":
+                reloadStage("TouchDisplayMoneyTrans.fxml");
+                touchDisplayEmulatorController.setAcc("1111111");
+                break;
+
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
                 break;

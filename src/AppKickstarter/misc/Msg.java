@@ -147,6 +147,10 @@ public class Msg {
          */
         TD_Passwords,
         /**
+         * show message of transfer
+         */
+        TD_Message_transfer,
+        /**
          * Card inserted
          */
         CR_CardInserted,
