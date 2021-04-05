@@ -147,6 +147,10 @@ public class Msg {
          */
         TD_Passwords,
         /**
+         * show Balance
+         */
+        TD_ShowBalance,
+        /**
          * Card inserted
          */
         CR_CardInserted,

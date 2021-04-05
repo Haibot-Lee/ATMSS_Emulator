@@ -61,6 +61,7 @@ public class PrinterEmulator extends PrinterHandler {
                 printerEmulatorController.printerTextField.getText().equals("Advice Taken.")) {
             printerEmulatorController.setTextArea(msg.getDetails());
             printerEmulatorController.setTextField("");
+
             printerEmulatorController.printerButton.setDisable(false);
         }else {
             atmss.send(new Msg(id, mbox, Msg.Type.P_PrinterJammed, ""));

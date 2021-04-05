@@ -87,7 +87,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         }
     } // handleUpdateDisplay
 
-    protected void ShowPasswords(Msg msg) {
+    protected void showPasswords(Msg msg) {
         log.info(id + ": show passwords");
 
         if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
@@ -95,6 +95,12 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         } else {
             touchDisplayEmulatorController.appendPassword(msg.getDetails());
         }
+    }
+
+    protected void showBalance(Msg msg) {
+        log.info(id + ": show balance");
+
+        touchDisplayEmulatorController.showBalance(msg.getDetails());
     }
 
 

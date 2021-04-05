@@ -6,6 +6,7 @@ import AppKickstarter.misc.Msg;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import java.util.logging.Logger;
 
@@ -20,6 +21,14 @@ public class TouchDisplayEmulatorController {
     private MBox touchDisplayMBox;
     public PasswordField passwordField;
     public TextField passwordMsg;
+    public Text messageArea;
+
+    public Text button1;
+    public Text button2;
+    public Text button3;
+    public Text button4;
+    public Text button5;
+    public Text button6;
 
 
     //------------------------------------------------------------
@@ -57,5 +66,23 @@ public class TouchDisplayEmulatorController {
         passwordMsg.setText(msg);
     }
 
+    public void showBalance(String msg) {
+        messageArea.setText(msg);
+        button1.setText("Print Advice");
+        button2.setText("");
+        button3.setText("");
+        button4.setText("");
+        //button5.setText("");
+        button6.setText("Exit");
+    }
+
+    public void textReset() {
+        button1.setText("Cash Withdrawal");
+        button2.setText("Cash Deposit");
+        button3.setText("Balance Enquiry");
+        button4.setText("Money Transfer");
+        //button5.setText("");
+        button6.setText("Exit");
+    }
 
 } // TouchDisplayEmulatorController

@@ -28,7 +28,11 @@ public class TouchDisplayHandler extends HWHandler {
                 break;
 
             case TD_Passwords:
-                ShowPasswords(msg);
+                showPasswords(msg);
+                break;
+
+            case TD_ShowBalance:
+                showBalance(msg);
                 break;
 
             default:
@@ -39,6 +43,9 @@ public class TouchDisplayHandler extends HWHandler {
     protected void handleUpdateDisplay(Msg msg) {
     }
 
-    protected void ShowPasswords(Msg msg) {
+    protected void showPasswords(Msg msg) {
+    }
+
+    protected void showBalance(Msg msg) {
     }
 } // TouchDisplayHandler

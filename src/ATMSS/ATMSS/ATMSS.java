@@ -190,12 +190,71 @@ public class ATMSS extends AppThread {
                         balance += "\nAccount 3: " + checkBalance("-2");
                         balance += "\nAccount 4: " + checkBalance("-3");
 
-                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowBalance, balance));
+
+                        currentPage = "showBalance";
 
                     } else if (y >= 270) {
                         //Cash Deposit
                     }
                 }
+
+            case "showBalance":
+                if (x >= 0 && x <= 300) {
+                    if (y >= 410) {
+                        //None temp
+                        //System.out.println("Button 5");
+
+                    } else if (y >= 340) {
+                        //money transfer
+                        //System.out.println("Button 3");
+
+                    } else if (y >= 270) {
+                        //Print Advice
+                        //System.out.println("Button 1");
+
+                        //Balance Enquiry
+                        String balance = "";
+                        balance += "Account 1: " + checkBalance("-0");
+                        balance += "\nAccount 2: " + checkBalance("-1");
+                        balance += "\nAccount 3: " + checkBalance("-2");
+                        balance += "\nAccount 4: " + checkBalance("-3");
+
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
+                    }
+                } else if (x >= 340 && x <= 640) {
+                    if (y >= 410) {
+                        //Exit
+                        //System.out.println("Button 6");
+
+
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        currentPage = "";
+                        cardNo = "";
+                        password = "";
+
+                    } else if (y >= 340) {
+                        //Balance Enquiry
+                        //System.out.println("Button 4");
+
+                        /*
+                        String balance = "";
+                        balance += "Account 1: " + checkBalance("-0");
+                        balance += "\nAccount 2: " + checkBalance("-1");
+                        balance += "\nAccount 3: " + checkBalance("-2");
+                        balance += "\nAccount 4: " + checkBalance("-3");
+
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowBalance, balance));
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
+*/
+                    } else if (y >= 270) {
+                        //Cash Deposit
+                        //System.out.println("Button 2");
+                    }
+                }
+
+                break;
 
             default:
         }
