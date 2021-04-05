@@ -58,6 +58,8 @@ public class PrinterEmulator extends PrinterHandler {
         // fixme
         super.handlePrintAdvice();
 
+        //myStage.alwaysOnTopProperty();
+
         // print advice
         if (printerEmulatorController.printerTextArea.getText().equals("")
                 && printerEmulatorController.printerTextField.getText().equals("")) {
@@ -66,7 +68,6 @@ public class PrinterEmulator extends PrinterHandler {
 
             printerEmulatorController.printerButton.setDisable(false);
         }else if (!printerEmulatorController.printerTextArea.getText().equals("")) {
-            System.out.println("NM$L");
             log.info(id + ": printer jammed.");
             printerEmulatorController.setTextField("printer jammed");
             atmss.send(new Msg(id, mbox, Msg.Type.P_PrinterJammed, ""));
