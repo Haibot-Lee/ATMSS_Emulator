@@ -128,7 +128,10 @@ public class ATMSS extends AppThread {
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
             if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length()-1))]) {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, ""));
+
+                //TODO
+                // lock:
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
 
                 //reset
                 currentPage = "";
@@ -138,7 +141,7 @@ public class ATMSS extends AppThread {
 
             }else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, ""));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
 
                 //reset
                 currentPage = "";

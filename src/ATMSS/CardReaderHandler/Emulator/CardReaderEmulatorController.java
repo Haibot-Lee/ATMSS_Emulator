@@ -104,6 +104,7 @@ public class CardReaderEmulatorController {
         } else if (status.equals("Card Locked")) {
             cardReaderInsertButton.setDisable(false);
             cardReaderRemoveButton.setDisable(true);
+            cardStatusField.setText("");
         }
     } // updateCardStatus
 

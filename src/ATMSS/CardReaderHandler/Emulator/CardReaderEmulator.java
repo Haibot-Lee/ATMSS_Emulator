@@ -76,8 +76,9 @@ public class CardReaderEmulator extends CardReaderHandler {
     protected void handleCardEject(Msg msg) {
         super.handleCardEject(msg);
         if (msg.getDetails().equals("Locked")) {
-            cardReaderEmulatorController.cardStatusField.setText("");
+            System.out.println("NM$L");
             cardReaderEmulatorController.updateCardStatus("Card Locked");
+            System.out.println("NM$L");
         } else {
             cardReaderEmulatorController.appendTextArea("Card Ejected");
             cardReaderEmulatorController.updateCardStatus("Card Ejected");
