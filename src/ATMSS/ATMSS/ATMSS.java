@@ -206,6 +206,8 @@ public class ATMSS extends AppThread {
                 }
 
             case "showBalance":
+
+
                 if (x >= 0 && x <= 300) {
                     if (y >= 410) {
                         //None temp
