@@ -151,6 +151,10 @@ public class Msg {
          */
         TD_ShowBalance,
         /**
+         * show message of transfer
+         */
+        TD_Message_transfer,
+        /**
          * Card inserted
          */
         CR_CardInserted,

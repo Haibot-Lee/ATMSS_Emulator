@@ -30,6 +30,8 @@ public class TouchDisplayEmulatorController {
     public Text button5;
     public Text button6;
 
+    public Text td_transferTitle;
+    public TextField td_transferAccount1, td_transferAccount2, td_transferAccount3, td_transferAccount4;
 
     //------------------------------------------------------------
     // initialize
@@ -66,6 +68,9 @@ public class TouchDisplayEmulatorController {
         passwordMsg.setText(msg);
     }
 
+    public void setAcc(String msg) {
+//        td_transferAccount1.setText(msg);
+    }
     public void showBalance(String msg) {
         messageArea.setText(msg);
         button1.setText("Print Advice");
