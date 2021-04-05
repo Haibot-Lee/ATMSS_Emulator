@@ -219,14 +219,20 @@ public class ATMSS extends AppThread {
 
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
                         break;
-                    case 6:
-                        //Exit
-                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        currentPage = "";
-                        cardNo = "";
-                        password = "";
+                    case 5:
+                        // cancel and go back to the main menu
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        currentPage = "mainMenu";
                         break;
+
+                    case 6:
+                    //Exit
+                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                    currentPage = "";
+                    cardNo = "";
+                    password = "";
+                    break;
 
                 }
                 break;
