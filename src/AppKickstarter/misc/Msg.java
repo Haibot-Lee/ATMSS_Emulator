@@ -154,6 +154,7 @@ public class Msg {
          * show message of transfer
          */
         TD_Message_transferFrom,
+        TD_Message_transferTo,
         /**
          * Card inserted
          */

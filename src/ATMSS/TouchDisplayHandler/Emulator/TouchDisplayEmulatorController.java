@@ -70,6 +70,8 @@ public class TouchDisplayEmulatorController {
     }
 
     public void setAcc(String msg) {
+        messageArea.setText("[Transfer] Choose payment account:");
+
         String[] accs = msg.split("/");
 
         Text[] buttons = {button1, button2, button3, button4};
@@ -81,10 +83,8 @@ public class TouchDisplayEmulatorController {
                 buttons[i].setText("");
             }
         }
-    }
 
-    public void setTitle(String msg) {
-        td_transferTitle.setText(msg);
+        button5.setText("Cancel");
     }
 
     public void showBalance(String msg) {

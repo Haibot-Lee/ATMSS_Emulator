@@ -180,6 +180,8 @@ public class ATMSS extends AppThread {
                         if (!accs.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferFrom, accs));
                         }
+
+                        trans = "" + accs.split("/").length;
                         currentPage = "transferFrom";
                         break;
                     case 4:
@@ -202,8 +204,8 @@ public class ATMSS extends AppThread {
                         cardNo = "";
                         password = "";
                         break;
-
                 }
+                break;
 
             case "showBalance":
                 switch (buttonPressed) {
@@ -230,13 +232,40 @@ public class ATMSS extends AppThread {
                 break;
 
             case "transferFrom":
-                switch (buttonPressed) {
-                    case 5:
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                        currentPage = "mainMenu";
+                if (buttonPressed == 5) {
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                    currentPage = "mainMenu";
+                } else {
+                    for (int i = 1; i <= Integer.parseInt(trans); i++) {
+                        if (buttonPressed == i) {
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferTo, ""));
+                            trans += "/" + i;
+                            currentPage = "transferTo";
+                        }
                         break;
+                    }
                 }
                 break;
+
+//            case "transferTo":
+//                System.out.println(trans);
+//                System.out.println(buttonPressed);
+//
+//                if (buttonPressed == 5) {
+//                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+//                    currentPage = "mainMenu";
+//                } else {
+//                    for (int i = 1; i <= Integer.parseInt(trans); i++) {
+//                        if (buttonPressed == i) {
+//                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferTo, ""));
+//                            trans += "/" + i;
+//                            currentPage = "transferAccount";
+//                        }
+//                        break;
+//                    }
+//                }
+//                break;
+
         }
 
     } // processMouseClicked

@@ -39,6 +39,10 @@ public class TouchDisplayHandler extends HWHandler {
                 changeTransferFrom(msg);
                 break;
 
+            case TD_Message_transferTo:
+                changeTransferTo(msg);
+                break;
+
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -54,4 +58,6 @@ public class TouchDisplayHandler extends HWHandler {
     }
 
     protected void changeTransferFrom(Msg msg){}
+
+    protected void changeTransferTo(Msg msg){}
 } // TouchDisplayHandler
