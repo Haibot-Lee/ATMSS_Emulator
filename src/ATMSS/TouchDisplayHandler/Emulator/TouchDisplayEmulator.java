@@ -83,7 +83,6 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
 
             case "moneyTrans":
                 reloadStage("TouchDisplayMoneyTrans.fxml");
-                touchDisplayEmulatorController.setAcc("1111111");
                 break;
 
             default:
@@ -100,6 +99,10 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         } else {
             touchDisplayEmulatorController.appendPassword(msg.getDetails());
         }
+    }
+
+    protected void changeTransDisplay(Msg msg) {
+        javafx.application.Platform.runLater(() -> touchDisplayEmulatorController.setAcc(msg.getDetails()));
     }
 
     protected void showBalance(Msg msg) {

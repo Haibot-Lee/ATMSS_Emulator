@@ -161,6 +161,7 @@ public class ATMSS extends AppThread {
     private void processMouseClicked(Msg msg) {
         String[] msgs = msg.getDetails().split(" ");
         int x = Integer.parseInt(msgs[0]), y = Integer.parseInt(msgs[1]);
+
         switch (currentPage) {
             case "mainMenu":
                 if (x >= 0 && x <= 300) {
@@ -170,6 +171,10 @@ public class ATMSS extends AppThread {
                     } else if (y >= 340) {
                         //money transfer
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyTrans"));
+                        String accs = getAcc();
+                        if (!accs.equals("")) {
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transfer, accs));
+                        }
                         currentPage = "transfer";
                     } else if (y >= 270) {
                         //cash withdrawal
@@ -257,7 +262,14 @@ public class ATMSS extends AppThread {
                 break;
 
             case "transfer":
-
+                if (x >= 0 && x <= 280 && y >= 380 && y <= 480) {
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                    currentPage = "mainMenu";
+                }else{
+//                    if(){
+//
+//                    }
+                }
                 break;
         }
 
@@ -294,6 +306,12 @@ public class ATMSS extends AppThread {
     }
 
     private String getAcc() {
+        try {
+            return bams.getAccounts(cardNo, cardNo);
+        } catch (Exception e) {
+            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
         return "";
     }
 }

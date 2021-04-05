@@ -35,6 +35,10 @@ public class TouchDisplayHandler extends HWHandler {
                 showBalance(msg);
                 break;
 
+            case TD_Message_transfer:
+                changeTransDisplay(msg);
+                break;
+
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -48,4 +52,6 @@ public class TouchDisplayHandler extends HWHandler {
 
     protected void showBalance(Msg msg) {
     }
+
+    protected void changeTransDisplay(Msg msg){}
 } // TouchDisplayHandler
