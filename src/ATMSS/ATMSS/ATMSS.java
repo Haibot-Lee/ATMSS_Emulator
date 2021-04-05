@@ -223,6 +223,7 @@ public class ATMSS extends AppThread {
 
                         trans = "" + accs.split("/").length;
                         currentPage = "transferFrom";
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         break;
                     case 4:
                         //Balance Enquiry
