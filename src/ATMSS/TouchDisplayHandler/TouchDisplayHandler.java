@@ -54,4 +54,6 @@ public class TouchDisplayHandler extends HWHandler {
     }
 
     protected void changeTransDisplay(Msg msg){}
+
+
 } // TouchDisplayHandler

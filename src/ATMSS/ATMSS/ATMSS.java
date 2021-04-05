@@ -69,6 +69,9 @@ public class ATMSS extends AppThread {
                 case CR_CardInserted:
                     log.info("CardInserted: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
+                    // push keypad for inputting password
+                    keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
+
                     currentPage = "password";
                     cardNo = msg.getDetails();
                     break;
@@ -170,11 +173,16 @@ public class ATMSS extends AppThread {
 
                     } else if (y >= 340) {
                         //money transfer
+
+                        // change display
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyTrans"));
+
                         String accs = getAcc();
                         if (!accs.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transfer, accs));
                         }
+
+                        //TODO: not transfer
                         currentPage = "transfer";
                     } else if (y >= 270) {
                         //cash withdrawal
