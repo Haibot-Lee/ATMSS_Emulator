@@ -57,13 +57,23 @@ public class PrinterEmulator extends PrinterHandler {
     protected void handlePrintAdvice(Msg msg) {
         // fixme
         super.handlePrintAdvice();
-        if (printerEmulatorController.printerTextField.getText().equals("")) {
+
+        //myStage.alwaysOnTopProperty();
+
+        // print advice
+        if (printerEmulatorController.printerTextArea.getText().equals("")
+                && printerEmulatorController.printerTextField.getText().equals("")) {
             printerEmulatorController.setTextArea(msg.getDetails());
             printerEmulatorController.setTextField("");
 
             printerEmulatorController.printerButton.setDisable(false);
-        }else {
+        }else if (!printerEmulatorController.printerTextArea.getText().equals("")) {
+            log.info(id + ": printer jammed.");
+            printerEmulatorController.setTextField("printer jammed");
             atmss.send(new Msg(id, mbox, Msg.Type.P_PrinterJammed, ""));
+        }else {
+            log.info(id + ": already printed");
+            printerEmulatorController.setTextField("already printed");
         }
     } // handlePrintAdvice
 

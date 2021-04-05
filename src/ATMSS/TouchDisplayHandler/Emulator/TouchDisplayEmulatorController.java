@@ -113,7 +113,7 @@ public class TouchDisplayEmulatorController {
         button2.setText("Cash Deposit");
         button3.setText("Balance Enquiry");
         button4.setText("Money Transfer");
-        //button5.setText("");
+        button5.setText("");
         button6.setText("Exit");
     }
 

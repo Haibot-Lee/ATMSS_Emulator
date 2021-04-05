@@ -46,7 +46,7 @@ public class PrinterEmulatorController {
         switch (btn.getText()) {
             case "Take Advice":
                 setTextArea("");
-                setTextField("Advice Taken.");
+                setTextField("Advice Taken");
                 printerButton.setDisable(true);
                 break;
 
@@ -59,12 +59,12 @@ public class PrinterEmulatorController {
     //------------------------------------------------------------
     // setTextArea
     public void setTextArea(String status) {
-        javafx.application.Platform.runLater( () -> printerTextArea.setText(status + "\n"));
+        javafx.application.Platform.runLater( () -> printerTextArea.setText(status));
     } // setTextArea
 
     // setTextField
     public void setTextField(String status) {
-        javafx.application.Platform.runLater( () -> printerTextField.setText(status + "\n"));
+        javafx.application.Platform.runLater( () -> printerTextField.setText(status));
     } // setTextField
 } // CardReaderEmulatorController
 
