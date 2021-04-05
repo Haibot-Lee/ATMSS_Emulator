@@ -129,9 +129,7 @@ public class ATMSS extends AppThread {
             if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length()-1))]) {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
 
-                //TODO
-                // lock:
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
 
                 //reset
                 currentPage = "";

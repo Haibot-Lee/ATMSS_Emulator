@@ -78,6 +78,10 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 reloadStage("TouchDisplayEmulatorEject.fxml");
                 break;
 
+            case "Locked":
+                reloadStage("TouchDisplayEmulatorLocked.fxml");
+                break;
+
             case "MainMenu":
                 reloadStage("TouchDisplayMainMenu.fxml");
                 break;
