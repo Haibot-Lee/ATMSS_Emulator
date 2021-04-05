@@ -3,6 +3,7 @@ package ATMSS.CardReaderHandler.Emulator;
 import ATMSS.ATMSSStarter;
 import ATMSS.CardReaderHandler.CardReaderHandler;
 
+import AppKickstarter.misc.Msg;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -60,13 +61,27 @@ public class CardReaderEmulator extends CardReaderHandler {
         cardReaderEmulatorController.updateCardStatus("Card Inserted");
     } // handleCardInsert
 
-
+/*
     //------------------------------------------------------------
     // handleCardEject
     protected void handleCardEject() {
         super.handleCardEject();
         cardReaderEmulatorController.appendTextArea("Card Ejected");
         cardReaderEmulatorController.updateCardStatus("Card Ejected");
+    } // handleCardEject
+*/
+
+    //------------------------------------------------------------
+    // handleCardEject
+    protected void handleCardEject(Msg msg) {
+        super.handleCardEject(msg);
+        if (msg.getDetails().equals("Locked")) {
+            cardReaderEmulatorController.cardStatusField.setText("");
+            cardReaderEmulatorController.updateCardStatus("Card Locked");
+        } else {
+            cardReaderEmulatorController.appendTextArea("Card Ejected");
+            cardReaderEmulatorController.updateCardStatus("Card Ejected");
+        }
     } // handleCardEject
 
 
@@ -77,4 +92,15 @@ public class CardReaderEmulator extends CardReaderHandler {
         cardReaderEmulatorController.appendTextArea("Card Removed");
         cardReaderEmulatorController.updateCardStatus("Card Reader Empty");
     } // handleCardRemove
+
+
+    //------------------------------------------------------------
+    // handleCardRemove
+    protected void handleLockCard(Msg msg) {
+        super.handleLockCard();
+
+        cardReaderEmulatorController.lockCard(Integer.parseInt("" + msg.getDetails().charAt(msg.getDetails().length() - 1)));
+    } // handleCardRemove
+
+
 } // CardReaderEmulator

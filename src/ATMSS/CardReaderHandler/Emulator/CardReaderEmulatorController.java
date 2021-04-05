@@ -27,6 +27,10 @@ public class CardReaderEmulatorController {
     public Button cardReaderInsertButton;
     public Button cardReaderRemoveButton;
 
+    public Button card1;
+    public Button card2;
+    public Button card3;
+
 
     //------------------------------------------------------------
     // initialize
@@ -97,6 +101,9 @@ public class CardReaderEmulatorController {
         } else if (status.equals("Card Reader Empty")) {
             cardReaderInsertButton.setDisable(false);
             cardReaderRemoveButton.setDisable(true);
+        } else if (status.equals("Card Locked")) {
+            cardReaderInsertButton.setDisable(false);
+            cardReaderRemoveButton.setDisable(true);
         }
     } // updateCardStatus
 
@@ -105,5 +112,17 @@ public class CardReaderEmulatorController {
     // appendTextArea
     public void appendTextArea(String status) {
         javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText(status + "\n"));
+    } // appendTextArea
+
+    //------------------------------------------------------------
+    // appendTextArea
+    public void lockCard(int cardNo) {
+        Button[] cards = new Button[] {card1, card2, card3};
+
+        javafx.application.Platform.runLater( () -> cards[cardNo - 1].setDisable(true));
+        javafx.application.Platform.runLater( () -> cardReaderRemoveButton.setDisable(true));
+        javafx.application.Platform.runLater( () -> cardNumField.setText(""));
+        javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText("Card locked"));
+        javafx.application.Platform.runLater( () -> cardStatusField.setText("Card locked"));
     } // appendTextArea
 } // CardReaderEmulatorController

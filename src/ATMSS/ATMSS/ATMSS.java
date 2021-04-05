@@ -27,6 +27,7 @@ public class ATMSS extends AppThread {
     private String trans = "";
 
     private int attempt = 0;
+    boolean[] lockeds = {false, false, false};
 
     //------------------------------------------------------------
     // ATMSS
@@ -125,14 +126,26 @@ public class ATMSS extends AppThread {
         }
 
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
-            cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+            if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length()-1))]) {
+                cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, ""));
 
-            //reset
-            currentPage = "";
-            cardNo = "";
-            password = "";
-            attempt = 0;
+                //reset
+                currentPage = "";
+                cardNo = "";
+                password = "";
+                attempt = 0;
+
+            }else {
+                cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, ""));
+
+                //reset
+                currentPage = "";
+                cardNo = "";
+                password = "";
+                attempt = 0;
+            }
         } else {
             switch (currentPage) {
                 case "password":
@@ -157,7 +170,8 @@ public class ATMSS extends AppThread {
                     }
 
                     if (attempt >= 3) {
-                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, msg.getDetails()));
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, cardNo));
+                        lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))] = true;
                     }
                     break;
                 case "transferAccount":
