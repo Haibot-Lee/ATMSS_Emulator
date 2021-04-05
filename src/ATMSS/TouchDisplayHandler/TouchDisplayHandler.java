@@ -31,8 +31,12 @@ public class TouchDisplayHandler extends HWHandler {
                 showPasswords(msg);
                 break;
 
-            case TD_ShowBalance:
-                showBalance(msg);
+            case TD_TransAmount:
+                showAmounts(msg);
+                break;
+
+            case TD_ShowResult:
+                showResult(msg);
                 break;
 
             case TD_Message_transferFrom:
@@ -41,6 +45,10 @@ public class TouchDisplayHandler extends HWHandler {
 
             case TD_Message_transferTo:
                 changeTransferTo(msg);
+                break;
+
+            case TD_Message_transferAmount:
+                changeTransferAmount(msg);
                 break;
 
             default:
@@ -54,10 +62,15 @@ public class TouchDisplayHandler extends HWHandler {
     protected void showPasswords(Msg msg) {
     }
 
-    protected void showBalance(Msg msg) {
+    protected void showAmounts(Msg msg) {
+    }
+
+    protected void showResult(Msg msg) {
     }
 
     protected void changeTransferFrom(Msg msg){}
 
     protected void changeTransferTo(Msg msg){}
+
+    protected void changeTransferAmount(Msg msg){}
 } // TouchDisplayHandler

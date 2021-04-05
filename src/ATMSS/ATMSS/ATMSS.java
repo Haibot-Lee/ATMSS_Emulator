@@ -151,6 +151,20 @@ public class ATMSS extends AppThread {
                         }
                     }
                     break;
+                case "transferAccount":
+                    if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, moneyTransfer()));
+                        currentPage = "showTransferResult";
+                    } else {
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_TransAmount, msg.getDetails()));
+                        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
+                            String[] temp = trans.split("/");
+                            trans = temp[0] + "/" + temp[1] + "/";
+                        } else {
+                            trans += msg.getDetails();
+                        }
+                    }
+                    break;
             }
         }
 
@@ -192,7 +206,7 @@ public class ATMSS extends AppThread {
                         balance += "\nAccount 3: " + checkBalance("-2");
                         balance += "\nAccount 4: " + checkBalance("-3");
 
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowBalance, balance));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, balance));
 
                         currentPage = "showBalance";
                         break;
@@ -241,30 +255,62 @@ public class ATMSS extends AppThread {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferTo, ""));
                             trans += "/" + i;
                             currentPage = "transferTo";
+                            break;
                         }
-                        break;
                     }
                 }
                 break;
 
-//            case "transferTo":
-//                System.out.println(trans);
-//                System.out.println(buttonPressed);
-//
-//                if (buttonPressed == 5) {
-//                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-//                    currentPage = "mainMenu";
-//                } else {
-//                    for (int i = 1; i <= Integer.parseInt(trans); i++) {
-//                        if (buttonPressed == i) {
-//                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferTo, ""));
-//                            trans += "/" + i;
-//                            currentPage = "transferAccount";
-//                        }
-//                        break;
-//                    }
-//                }
-//                break;
+            case "transferTo":
+                if (buttonPressed == 5) {
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                    currentPage = "mainMenu";
+                } else {
+                    String[] temp = trans.split("/");
+                    trans = temp[1];
+                    for (int i = 1; i <= Integer.parseInt(temp[0]); i++) {
+                        if (buttonPressed == i) {
+                            trans += "/" + i;
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferAmount, trans));
+                            trans += "/";
+                            currentPage = "transferAccount";
+                            break;
+                        }
+
+                    }
+                }
+                break;
+
+            case "transferAccount":
+                switch (buttonPressed) {
+                    case 5:
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        currentPage = "mainMenu";
+                        break;
+                    case 6:
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, moneyTransfer()));
+                        currentPage = "showTransferResult";
+                        break;
+                }
+                break;
+
+            case "showTransferResult":
+                switch (buttonPressed) {
+                    case 1:
+                        //print advice
+//                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, "result"));
+                        break;
+                    case 6:
+                        //Exit
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        currentPage = "";
+                        cardNo = "";
+                        password = "";
+                        break;
+
+                }
+                break;
 
         }
 
@@ -329,5 +375,20 @@ public class ATMSS extends AppThread {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private String moneyTransfer() {
+        try {
+            String[] accs = bams.getAccounts(cardNo, cardNo).split("/");
+            String[] idx = trans.split("/");
+            double transAmount = bams.transfer(cardNo, cardNo, accs[Integer.parseInt(idx[0]) - 1], accs[Integer.parseInt(idx[1]) - 1], idx[2]);
+            if (transAmount != -1.0) {
+                return "Transfer successfully!";
+            }
+        } catch (Exception e) {
+            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return "Transfer failed. Balance is not enough!";
     }
 }

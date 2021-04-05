@@ -31,8 +31,7 @@ public class TouchDisplayEmulatorController {
     public Text button5;
     public Text button6;
 
-    public Text td_transferTitle;
-    public TextField td_transferAccount1, td_transferAccount2, td_transferAccount3, td_transferAccount4;
+    public TextField transAmount;
 
     //------------------------------------------------------------
     // initialize
@@ -55,27 +54,26 @@ public class TouchDisplayEmulatorController {
         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_MouseClicked, x + " " + y));
     } // td_mouseClick
 
-    public void resetPassword() {
-        passwordField.setText("");
-    }
-
     public void appendPassword(String password) {
         String cur = passwordField.getText();
         cur += password;
         passwordField.setText(cur);
     }
 
+    public void appendAmounts(String amount) {
+        String cur = transAmount.getText();
+        cur += amount;
+        transAmount.setText(cur);
+    }
+
     public void setPasswordMsg(String msg) {
         passwordMsg.setText(msg);
     }
 
-    public void setAcc(String msg) {
+    public void setAccPage(String msg) {
         messageArea.setText("[Transfer] Choose payment account:");
-
-        String[] accs = msg.split("/");
-
         Text[] buttons = {button1, button2, button3, button4};
-
+        String[] accs = msg.split("/");
         for (int i = 0; i < buttons.length; i++) {
             if (i < accs.length) {
                 buttons[i].setText(accs[i]);
@@ -83,17 +81,30 @@ public class TouchDisplayEmulatorController {
                 buttons[i].setText("");
             }
         }
-
         button5.setText("Cancel");
+        button6.setText("");
     }
 
-    public void showBalance(String msg) {
+    public void setAmountPage(String msg) {
+        transAmount.setVisible(true);
+        Text[] buttons = {button1, button2, button3, button4};
+        String[] accs = msg.split("/");
+        int from = Integer.parseInt(accs[0]), to = Integer.parseInt(accs[1]);
+        messageArea.setText("[Transfer from (" + buttons[from - 1].getText() + ") to (" + buttons[to - 1].getText() + ")] Input transfer amount:");
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i].setText("");
+        }
+        button5.setText("Cancel");
+        button6.setText("Confirm");
+    }
+
+    public void showResult(String msg) {
         messageArea.setText(msg);
         button1.setText("Print Advice");
         button2.setText("");
         button3.setText("");
         button4.setText("");
-        //button5.setText("");
+        button5.setText("Back to Main Page");
         button6.setText("Exit");
     }
 

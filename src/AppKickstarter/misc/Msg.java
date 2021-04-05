@@ -143,18 +143,20 @@ public class Msg {
          */
         TD_MouseClicked,
         /**
-         * show Passwords
+         * Text field of Passwords/Transfer Amount
          */
         TD_Passwords,
+        TD_TransAmount,
         /**
-         * show Balance
+         * show the result of operations
          */
-        TD_ShowBalance,
+        TD_ShowResult,
         /**
          * show message of transfer
          */
         TD_Message_transferFrom,
         TD_Message_transferTo,
+        TD_Message_transferAmount,
         /**
          * Card inserted
          */

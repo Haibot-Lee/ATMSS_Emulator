@@ -96,24 +96,38 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         log.info(id + ": show passwords");
 
         if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
-            touchDisplayEmulatorController.resetPassword();
+            touchDisplayEmulatorController.passwordField.setText("");
         } else {
             touchDisplayEmulatorController.appendPassword(msg.getDetails());
         }
     }
 
+    protected void showAmounts(Msg msg) {
+        log.info(id + ": show amounts");
+
+        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
+            touchDisplayEmulatorController.transAmount.setText("");
+        } else {
+            touchDisplayEmulatorController.appendAmounts(msg.getDetails());
+        }
+    }
+
     protected void changeTransferFrom(Msg msg) {
-        touchDisplayEmulatorController.setAcc(msg.getDetails());
+        touchDisplayEmulatorController.setAccPage(msg.getDetails());
     }
 
     protected void changeTransferTo(Msg msg) {
         touchDisplayEmulatorController.messageArea.setText("[Transfer] Choose target account:");
     }
 
-    protected void showBalance(Msg msg) {
-        log.info(id + ": show balance");
+    protected void changeTransferAmount(Msg msg) {
+        touchDisplayEmulatorController.setAmountPage(msg.getDetails());
+    }
 
-        touchDisplayEmulatorController.showBalance(msg.getDetails());
+    protected void showResult(Msg msg) {
+        log.info(id + ": show Result");
+
+        touchDisplayEmulatorController.showResult(msg.getDetails());
     }
 
 
