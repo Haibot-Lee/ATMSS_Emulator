@@ -99,12 +99,13 @@ public class TouchDisplayEmulatorController {
     }
 
     public void showResult(String msg) {
+        transAmount.setVisible(false);
         messageArea.setText(msg);
         button1.setText("Print Advice");
         button2.setText("");
         button3.setText("");
         button4.setText("");
-        button5.setText("Back to Main Page");
+        button5.setText("Back to Main Menu");
         button6.setText("Exit");
     }
 

@@ -153,7 +153,9 @@ public class ATMSS extends AppThread {
                     break;
                 case "transferAccount":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, moneyTransfer()));
+                        String result = moneyTransfer();
+                        trans += "/" + result;
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, result));
                         currentPage = "showTransferResult";
                     } else {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_TransAmount, msg.getDetails()));
@@ -240,13 +242,13 @@ public class ATMSS extends AppThread {
                         break;
 
                     case 6:
-                    //Exit
-                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                    currentPage = "";
-                    cardNo = "";
-                    password = "";
-                    break;
+                        //Exit
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        currentPage = "";
+                        cardNo = "";
+                        password = "";
+                        break;
 
                 }
                 break;
@@ -294,7 +296,9 @@ public class ATMSS extends AppThread {
                         currentPage = "mainMenu";
                         break;
                     case 6:
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, moneyTransfer()));
+                        String result = moneyTransfer();
+                        trans += "/" + result;
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, result));
                         currentPage = "showTransferResult";
                         break;
                 }
@@ -304,7 +308,17 @@ public class ATMSS extends AppThread {
                 switch (buttonPressed) {
                     case 1:
                         //print advice
-//                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, "result"));
+                        String[] accs = getAcc().split("/");
+                        String[] idx = trans.split("/");
+                        String result = "Money Transfer on card: " + cardNo;
+                        result += "\nTransfer " + idx[2] + " from account " + accs[Integer.parseInt(idx[0]) - 1] + " to account " + accs[Integer.parseInt(idx[1]) - 1];
+                        result += "\n" + idx[3];
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, result));
+                        break;
+                    case 5:
+                        //Back to main menu
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        currentPage = "mainMenu";
                         break;
                     case 6:
                         //Exit
@@ -384,9 +398,9 @@ public class ATMSS extends AppThread {
     }
 
     private String moneyTransfer() {
+        String[] accs = getAcc().split("/");
+        String[] idx = trans.split("/");
         try {
-            String[] accs = bams.getAccounts(cardNo, cardNo).split("/");
-            String[] idx = trans.split("/");
             double transAmount = bams.transfer(cardNo, cardNo, accs[Integer.parseInt(idx[0]) - 1], accs[Integer.parseInt(idx[1]) - 1], idx[2]);
             if (transAmount != -1.0) {
                 return "Transfer successfully!";
