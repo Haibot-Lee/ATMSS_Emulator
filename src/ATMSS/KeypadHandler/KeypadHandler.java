@@ -24,7 +24,7 @@ public class KeypadHandler extends HWHandler {
                 break;
 
             case KP_PushUp:
-                handlePushUp();
+                handlePushUp(msg);
                 break;
 
             default:
@@ -34,7 +34,6 @@ public class KeypadHandler extends HWHandler {
 
     //------------------------------------------------------------
     // handlePushUp
-    protected void handlePushUp() {
-        log.info(id + ": keypad pushed up");
+    protected void handlePushUp(Msg msg) {
     } // handlePushUp
 } // KeypadHandler

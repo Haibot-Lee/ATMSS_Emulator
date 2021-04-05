@@ -3,6 +3,9 @@ package ATMSS.KeypadHandler.Emulator;
 import ATMSS.ATMSSStarter;
 import ATMSS.KeypadHandler.KeypadHandler;
 
+import ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulator;
+import ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController;
+import AppKickstarter.misc.Msg;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +18,9 @@ import javafx.stage.WindowEvent;
 //======================================================================
 // KeypadEmulator
 public class KeypadEmulator extends KeypadHandler {
+    private final int WIDTH = 340;
+    private final int HEIGHT = 270;
+
     private ATMSSStarter atmssStarter;
     private String id;
     private Stage myStage;
@@ -41,7 +47,7 @@ public class KeypadEmulator extends KeypadHandler {
         keypadEmulatorController = (KeypadEmulatorController) loader.getController();
         keypadEmulatorController.initialize(id, atmssStarter, log, this);
         myStage.initStyle(StageStyle.DECORATED);
-        myStage.setScene(new Scene(root, 340, 270));
+        myStage.setScene(new Scene(root, WIDTH, HEIGHT));
         myStage.setTitle("KeypadHandler");
         myStage.setResizable(false);
         myStage.setOnCloseRequest((WindowEvent event) -> {
@@ -50,4 +56,38 @@ public class KeypadEmulator extends KeypadHandler {
         });
         myStage.show();
     } // KeypadEmulator
+
+    //------------------------------------------------------------
+    // handlePushUp
+    protected void handlePushUp(Msg msg) {
+        log.info(id + ": keypad pushed up");
+        reloadStage("KeypadEmulator.fxml");
+    } // handlePushUp
+
+    //------------------------------------------------------------
+    // reloadStage
+    private void reloadStage(String fxmlFName) {
+        KeypadEmulator keypadEmulator = this;
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    log.info(id + ": loading fxml: " + fxmlFName);
+
+                    Parent root;
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(KeypadEmulator.class.getResource(fxmlFName));
+                    root = loader.load();
+                    keypadEmulatorController = (KeypadEmulatorController) loader.getController();
+                    keypadEmulatorController.initialize(id, atmssStarter, log, keypadEmulator);
+                    myStage.setScene(new Scene(root, WIDTH, HEIGHT));
+                } catch (Exception e) {
+                    log.severe(id + ": failed to load " + fxmlFName);
+                    e.printStackTrace();
+                }
+            }
+        });
+    } // reloadStage
+
 } // KeypadEmulator
