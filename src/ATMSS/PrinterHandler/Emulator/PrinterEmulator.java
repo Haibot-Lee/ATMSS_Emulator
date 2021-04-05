@@ -77,6 +77,15 @@ public class PrinterEmulator extends PrinterHandler {
         }
     } // handlePrintAdvice
 
+    //------------------------------------------------------------
+    // handlePrintAdvice
+    protected void handleReset(Msg msg) {
+        // fixme
+        super.handleReset();
+        log.info(id + ": reset printer.");
+        printerEmulatorController.reset();
+    } // handlePrintAdvice
+
 
 } // PrinterEmulator
 

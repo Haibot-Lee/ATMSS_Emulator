@@ -23,6 +23,10 @@ public class PrinterHandler extends HWHandler {
                 handlePrintAdvice();
                 handlePrintAdvice(msg);
                 break;
+            case P_Reset:
+                handleReset();
+                handleReset(msg);
+                break;
 
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
@@ -39,4 +43,14 @@ public class PrinterHandler extends HWHandler {
     // handlePrintAdvice with msg
     protected void handlePrintAdvice(Msg msg) {
     } // handlePrintAdvice with msg
+
+    //------------------------------------------------------------
+    // handleReset
+    protected void handleReset() {
+        log.info(id + ": reset printer");
+    } // handleReset
+
+    // handleReset with msg
+    protected void handleReset(Msg msg) {
+    } // handleReset with msg
 } // PrinterHandler

@@ -26,6 +26,8 @@ public class ATMSS extends AppThread {
     private String password = "";
     private String trans = "";
 
+    private int attempt = 0;
+
     //------------------------------------------------------------
     // ATMSS
     public ATMSS(String id, AppKickstarter appKickstarter) throws Exception {
@@ -130,6 +132,7 @@ public class ATMSS extends AppThread {
             currentPage = "";
             cardNo = "";
             password = "";
+            attempt = 0;
         } else {
             switch (currentPage) {
                 case "password":
@@ -137,10 +140,12 @@ public class ATMSS extends AppThread {
                         if (cardValidation()) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                             currentPage = "mainMenu";
+                            attempt = 0;
                         } else {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "wrongPassword"));
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Passwords, "Clear"));
                             password = "";
+                            attempt++;
                         }
                     } else if (!msg.getDetails().equals(".") && !msg.getDetails().equals("00")) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Passwords, msg.getDetails()));
@@ -149,6 +154,10 @@ public class ATMSS extends AppThread {
                         } else {
                             password += msg.getDetails();
                         }
+                    }
+
+                    if (attempt >= 3) {
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, msg.getDetails()));
                     }
                     break;
                 case "transferAccount":
@@ -211,6 +220,7 @@ public class ATMSS extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, balance));
 
                         currentPage = "showBalance";
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         break;
                     case 6:
                         //Exit

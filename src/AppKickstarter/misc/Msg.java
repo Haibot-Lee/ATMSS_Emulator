@@ -172,6 +172,10 @@ public class Msg {
         /**
          * Key pressed
          */
+        CR_LockCard,
+        /**
+         * Key pressed
+         */
         KP_KeyPressed,
         /**
          * Push up Keypad
@@ -185,6 +189,10 @@ public class Msg {
          * Printer jammed
          */
         P_PrinterJammed,
+        /**
+         * Printer jammed
+         */
+        P_Reset,
 
 
 

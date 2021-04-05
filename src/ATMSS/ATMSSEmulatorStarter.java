@@ -75,13 +75,12 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
 
 
                 // start emulator GUIs
-
-                keypadEmulator.start();
-
+                touchDisplayEmulator.start();
                 depositCollectorEmulator.start();
                 cashDispenserEmulator.start();
                 printerEmulator.start();
-                touchDisplayEmulator.start();
+                keypadEmulator.start();
+
                 cardReaderEmulator.start();
 
             } catch (Exception e) {

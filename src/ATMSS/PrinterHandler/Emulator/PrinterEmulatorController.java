@@ -66,5 +66,11 @@ public class PrinterEmulatorController {
     public void setTextField(String status) {
         javafx.application.Platform.runLater( () -> printerTextField.setText(status));
     } // setTextField
+
+    public void reset() {
+        printerTextArea.setText("");
+        printerTextField.setText("");
+        printerButton.setDisable(true);
+    }
 } // CardReaderEmulatorController
 
