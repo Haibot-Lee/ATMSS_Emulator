@@ -165,10 +165,13 @@ public class ATMSS extends AppThread {
                 if (x >= 0 && x <= 300) {
                     if (y >= 410) {
                         //None temp
+
                     } else if (y >= 340) {
                         //money transfer
+
                     } else if (y >= 270) {
                         //cash withdrawal
+
                     }
                 } else if (x >= 340 && x <= 640) {
                     if (y >= 410) {
@@ -180,6 +183,7 @@ public class ATMSS extends AppThread {
                         password = "";
                     } else if (y >= 340) {
                         //Balance Enquiry
+
                     } else if (y >= 270) {
                         //Cash Deposit
                     }
