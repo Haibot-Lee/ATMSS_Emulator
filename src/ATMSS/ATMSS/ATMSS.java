@@ -48,7 +48,7 @@ public class ATMSS extends AppThread {
         touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
         printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
-        cashDispenserMBox = appKickstarter.getThread("PrinterHandler").getMBox();
+        cashDispenserMBox = appKickstarter.getThread("CashDispenserHandler").getMBox();
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
