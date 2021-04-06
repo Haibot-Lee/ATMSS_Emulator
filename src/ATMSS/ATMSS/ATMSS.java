@@ -132,7 +132,7 @@ public class ATMSS extends AppThread {
         }
 
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
-            if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length()-1))]) {
+            if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))]) {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
 
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
@@ -143,7 +143,7 @@ public class ATMSS extends AppThread {
                 password = "";
                 attempt = 0;
 
-            }else {
+            } else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
 
@@ -360,7 +360,6 @@ public class ATMSS extends AppThread {
                         cardNo = "";
                         password = "";
                         break;
-
                 }
                 break;
 
@@ -389,20 +388,6 @@ public class ATMSS extends AppThread {
         return 0;
     }
 
-    private String checkBalance(String number) {
-        double balance = 0;
-        try {
-            // cred?
-            balance = bams.enquiry(cardNo, cardNo + number, cardNo);
-            if (balance == -1) return "Invalid account";
-            else return "" + balance;
-        } catch (Exception e) {
-            System.out.println("ATMSS: Exception caught: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return "" + balance;
-    }
-
     //-------------------------------------------------------------
     //BAMS Connection
     private boolean cardValidation() {
@@ -427,6 +412,19 @@ public class ATMSS extends AppThread {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private String checkBalance(String number) {
+        double balance = 0;
+        try {
+            balance = bams.enquiry(cardNo, cardNo + number, cardNo);
+            if (balance == -1) return "Invalid account";
+            else return "" + balance;
+        } catch (Exception e) {
+            System.out.println("ATMSS: Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return "" + balance;
     }
 
     private String moneyTransfer() {
