@@ -123,7 +123,7 @@ public class CardReaderEmulatorController {
         javafx.application.Platform.runLater( () -> cards[cardNo - 1].setDisable(true));
         javafx.application.Platform.runLater( () -> cardReaderRemoveButton.setDisable(true));
         javafx.application.Platform.runLater( () -> cardNumField.setText(""));
-        javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText("Card locked"));
+        //javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText("Card locked\n"));
         javafx.application.Platform.runLater( () -> cardStatusField.setText("Card locked"));
     } // appendTextArea
 } // CardReaderEmulatorController
