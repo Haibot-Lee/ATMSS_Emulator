@@ -195,6 +195,22 @@ public class Msg {
         P_Reset,
 
 
+        /**
+         * Eject money
+         */
+        CD_EjectMoney,
+        /**
+         * Cash Dispenser jammed
+         */
+        CD_MoneyJammed,
+        /**
+         * Enquiry Money
+         */
+        CD_EnquiryMoney,
+        /**
+         * MoneyNum
+         */
+        CD_MoneyAmount,
 
 
     } // Type
