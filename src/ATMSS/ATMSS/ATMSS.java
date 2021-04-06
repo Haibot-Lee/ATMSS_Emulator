@@ -128,7 +128,6 @@ public class ATMSS extends AppThread {
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
             if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length()-1))]) {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
-
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
 
                 //reset
@@ -172,9 +171,11 @@ public class ATMSS extends AppThread {
 
                     if (attempt >= 3) {
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, cardNo));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
                         lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))] = true;
                     }
                     break;
+
                 case "transferAccount":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         String result = moneyTransfer();
@@ -191,6 +192,7 @@ public class ATMSS extends AppThread {
                         }
                     }
                     break;
+
             }
         }
 
@@ -211,9 +213,11 @@ public class ATMSS extends AppThread {
                     case 1:
                         //cash withdrawal
                         break;
+
                     case 2:
                         //Cash Deposit
                         break;
+
                     case 3:
                         //money transfer
                         String accs = getAcc();
@@ -225,6 +229,7 @@ public class ATMSS extends AppThread {
                         currentPage = "transferFrom";
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         break;
+
                     case 4:
                         //Balance Enquiry
                         String balance = "";
@@ -238,6 +243,7 @@ public class ATMSS extends AppThread {
                         currentPage = "showBalance";
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         break;
+
                     case 6:
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
@@ -261,6 +267,7 @@ public class ATMSS extends AppThread {
 
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
                         break;
+
                     case 5:
                         // cancel and go back to the main menu
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
@@ -346,6 +353,7 @@ public class ATMSS extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         break;
+
                     case 6:
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
