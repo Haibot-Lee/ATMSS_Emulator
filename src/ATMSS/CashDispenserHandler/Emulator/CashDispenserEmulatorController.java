@@ -16,6 +16,10 @@ public class CashDispenserEmulatorController {
     private Logger log;
     private CashDispenserEmulator cashDispenserEmulator;
     private MBox CashDispenserMBox;
+    public TextField oneHundredTextField;
+    public TextField fiveHundredTextField;
+    public TextField oneThousandTextField;
+    public TextField totalAmountTextField;
 
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, CashDispenserEmulator cashDispenserEmulator) {
         this.id = id;

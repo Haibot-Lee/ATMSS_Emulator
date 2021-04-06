@@ -96,6 +96,9 @@ public class ATMSS extends AppThread {
                     printerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,""));
+                    //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EjectMoney,"2 3 4"));
+                    //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,""));
                     break;
 
                 case PollAck:
@@ -105,7 +108,10 @@ public class ATMSS extends AppThread {
                 case Terminate:
                     quit = true;
                     break;
+                case CD_EnquiryMoney:
 
+                    log.info("Money Amount: "+msg.getDetails());
+                    break;
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
             }
