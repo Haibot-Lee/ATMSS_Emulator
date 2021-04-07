@@ -30,6 +30,10 @@ public class TouchDisplayHandler extends HWHandler {
             case TD_Passwords:
                 showPasswords(msg);
                 break;
+            case TD_Withdrawal:
+                showWithdrawal(msg);
+                break;
+
 
             case TD_TransAmount:
                 showAmounts(msg);
@@ -73,4 +77,5 @@ public class TouchDisplayHandler extends HWHandler {
     protected void changeTransferTo(Msg msg){}
 
     protected void changeTransferAmount(Msg msg){}
+    protected void showWithdrawal(Msg msg){}
 } // TouchDisplayHandler

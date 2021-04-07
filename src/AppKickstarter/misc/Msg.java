@@ -146,6 +146,10 @@ public class Msg {
          * Text field of Passwords/Transfer Amount
          */
         TD_Passwords,
+        /**
+         * Text filed of Money Withdrawal
+         */
+        TD_Withdrawal,
         TD_TransAmount,
         /**
          * show the result of operations

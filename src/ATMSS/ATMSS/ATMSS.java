@@ -25,6 +25,7 @@ public class ATMSS extends AppThread {
     private String cardNo = "";
     private String password = "";
     private String trans = "";
+    private String moneyWithdrawal="";
 
     private int attempt = 0;
     boolean[] lockeds = {false, false, false};
@@ -72,7 +73,6 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
                     // push keypad for inputting password
                     keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
-
                     currentPage = "password";
                     cardNo = msg.getDetails();
                     break;
@@ -140,6 +140,7 @@ public class ATMSS extends AppThread {
                 currentPage = "";
                 cardNo = "";
                 password = "";
+                moneyWithdrawal="";
                 attempt = 0;
 
             } else {
@@ -150,6 +151,7 @@ public class ATMSS extends AppThread {
                 currentPage = "";
                 cardNo = "";
                 password = "";
+                moneyWithdrawal="";
                 attempt = 0;
             }
         } else {
@@ -198,6 +200,33 @@ public class ATMSS extends AppThread {
                         }
                     }
                     break;
+                case "moneyWithdrawal":
+                    if(msg.getDetails().compareToIgnoreCase("Enter")==0){
+                        int moneyAmount=Integer.parseInt(moneyWithdrawal);
+                        String oneThousandAmount=Integer.toString(moneyAmount/1000);
+                        String oneHundredAmount=Integer.toString(moneyAmount%1000/100);
+                        cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EjectMoney,oneHundredAmount+" 0 "+oneThousandAmount));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        currentPage = "mainMenu";
+                        try {
+                            bams.withdraw(cardNo,"41070001-0","cred-1",moneyWithdrawal);
+                        } catch (Exception e) {
+                            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                        moneyWithdrawal="";
+
+
+                    }else{
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Withdrawal, msg.getDetails()));
+                        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
+                            moneyWithdrawal = "";
+                        } else {
+                            moneyWithdrawal += msg.getDetails();
+                        }
+
+
+                    }
 
             }
         }
@@ -210,14 +239,17 @@ public class ATMSS extends AppThread {
     private void processMouseClicked(Msg msg) {
         String[] msgs = msg.getDetails().split(" ");
         int x = Integer.parseInt(msgs[0]), y = Integer.parseInt(msgs[1]);
-
         int buttonPressed = buttonPressed(x, y);
+        System.out.println(currentPage);
 
         switch (currentPage) {
             case "mainMenu":
                 switch (buttonPressed) {
                     case 1:
                         //cash withdrawal
+                        currentPage="moneyWithdrawal";
+                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"Withdrawal"));
+                        keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
                         break;
 
                     case 2:
@@ -367,6 +399,16 @@ public class ATMSS extends AppThread {
                         currentPage = "";
                         cardNo = "";
                         password = "";
+                        break;
+                }
+                break;
+            case "moneyWithdrawal":
+                System.out.println(1);
+                switch(buttonPressed){
+                    case 6:
+                        System.out.println(2);
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        currentPage = "mainMenu";
                         break;
                 }
                 break;

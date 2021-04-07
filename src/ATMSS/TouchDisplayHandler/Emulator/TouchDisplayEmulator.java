@@ -89,6 +89,9 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "moneyTrans":
                 reloadStage("TouchDisplayMoneyTrans.fxml");
                 break;
+            case "Withdrawal":
+                reloadStage("TouchDisplayEmulatorWithdrawal.fxml");
+                break;
 
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
@@ -97,6 +100,15 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     } // handleUpdateDisplay
 
     protected void showPasswords(Msg msg) {
+        log.info(id + ": show passwords");
+
+        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
+            touchDisplayEmulatorController.passwordField.setText("");
+        } else {
+            touchDisplayEmulatorController.appendPassword(msg.getDetails());
+        }
+    }
+    protected void showWithdrawal(Msg msg) {
         log.info(id + ": show passwords");
 
         if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
