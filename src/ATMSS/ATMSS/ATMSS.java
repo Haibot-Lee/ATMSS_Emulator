@@ -6,6 +6,8 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
+import java.util.Date;
+
 
 //======================================================================
 // ATMSS
@@ -216,8 +218,8 @@ public class ATMSS extends AppThread {
                             break;
                         }
                         cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EjectMoney,oneHundredAmount+" 0 "+oneThousandAmount));
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                        currentPage = "mainMenu";
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
+                        currentPage = "withdrawalReceipt";
                         try {
                             bams.withdraw(cardNo,accountWithdrawal,"cred-1",moneyWithdrawal);
                         } catch (Exception e) {
@@ -225,8 +227,7 @@ public class ATMSS extends AppThread {
                             e.printStackTrace();
                         }
 
-                        moneyWithdrawal="";
-                        accountWithdrawal="";}catch (Exception e){
+                        }catch (Exception e){
                             moneyWithdrawal="";
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
                         }
@@ -424,10 +425,8 @@ public class ATMSS extends AppThread {
                 }
                 break;
             case "moneyWithdrawal":
-                System.out.println(1);
                 switch(buttonPressed){
                     case 6:
-                        System.out.println(2);
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         break;
@@ -450,6 +449,47 @@ public class ATMSS extends AppThread {
                     }
                 }
                 break;
+            case "withdrawalReceipt":
+                switch (buttonPressed){
+                    case 3:
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
+                        currentPage = "withdrawalEnd";
+                        long currentTime = (new Date()).getTime();
+                        String receipt=currentTime+" "+cardNo+" "+accountWithdrawal+" withdraw "+moneyWithdrawal;
+                        printerMBox.send(new Msg(id,mbox, Msg.Type.P_PrintAdvice,receipt));
+                        moneyWithdrawal="";
+                        accountWithdrawal="";
+                        break;
+                    case 4:
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
+                        currentPage = "withdrawalEnd";
+                        moneyWithdrawal="";
+                        accountWithdrawal="";
+                        break;
+
+
+                }
+                break;
+            case "withdrawalEnd":
+                switch (buttonPressed){
+                    case 3:
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        currentPage = "mainMenu";
+                        break;
+                    case 4:
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        currentPage = "";
+                        cardNo = "";
+                        password = "";
+                        break;
+
+
+                }
+                break;
+
+
+
 
 
         }

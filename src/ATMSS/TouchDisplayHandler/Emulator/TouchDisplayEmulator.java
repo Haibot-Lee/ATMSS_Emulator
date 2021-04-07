@@ -94,6 +94,13 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 break;
             case "SelectAccount":
                 reloadStage("TouchDisplayEmulatorSelectAccount.fxml");
+                break;
+            case "WithdrawalReceipt":
+                reloadStage("TouchDisplayEmulatorWithdrawalReceipt.fxml");
+                break;
+            case "WithdrawalEnd":
+                reloadStage("TouchDisplayEmulatorWithdrawalEnd.fxml");
+                break;
 
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
