@@ -26,6 +26,7 @@ public class ATMSS extends AppThread {
     private String password = "";
     private String trans = "";
     private String moneyWithdrawal="";
+    private String accountWithdrawal="";
 
     private int attempt = 0;
     boolean[] lockeds = {false, false, false};
@@ -142,6 +143,7 @@ public class ATMSS extends AppThread {
                 password = "";
                 moneyWithdrawal="";
                 attempt = 0;
+                accountWithdrawal="";
 
             } else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
@@ -153,6 +155,7 @@ public class ATMSS extends AppThread {
                 password = "";
                 moneyWithdrawal="";
                 attempt = 0;
+                accountWithdrawal="";
             }
         } else {
             switch (currentPage) {
@@ -202,19 +205,31 @@ public class ATMSS extends AppThread {
                     break;
                 case "moneyWithdrawal":
                     if(msg.getDetails().compareToIgnoreCase("Enter")==0){
+                        try{
                         int moneyAmount=Integer.parseInt(moneyWithdrawal);
                         String oneThousandAmount=Integer.toString(moneyAmount/1000);
                         String oneHundredAmount=Integer.toString(moneyAmount%1000/100);
+                        int mod=moneyAmount%100;
+                        if(mod!=0){
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
+                            moneyWithdrawal="";
+                            break;
+                        }
                         cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EjectMoney,oneHundredAmount+" 0 "+oneThousandAmount));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         try {
-                            bams.withdraw(cardNo,"41070001-0","cred-1",moneyWithdrawal);
+                            bams.withdraw(cardNo,accountWithdrawal,"cred-1",moneyWithdrawal);
                         } catch (Exception e) {
                             System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
                             e.printStackTrace();
                         }
+
                         moneyWithdrawal="";
+                        accountWithdrawal="";}catch (Exception e){
+                            moneyWithdrawal="";
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
+                        }
 
 
                     }else{
@@ -227,6 +242,7 @@ public class ATMSS extends AppThread {
 
 
                     }
+                    break;
 
             }
         }
@@ -240,16 +256,21 @@ public class ATMSS extends AppThread {
         String[] msgs = msg.getDetails().split(" ");
         int x = Integer.parseInt(msgs[0]), y = Integer.parseInt(msgs[1]);
         int buttonPressed = buttonPressed(x, y);
-        System.out.println(currentPage);
+
 
         switch (currentPage) {
             case "mainMenu":
                 switch (buttonPressed) {
                     case 1:
                         //cash withdrawal
-                        currentPage="moneyWithdrawal";
-                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"Withdrawal"));
-                        keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
+                        currentPage="selectAccountWithdrawal";
+                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"SelectAccount"));
+                        String allAccounts = getAcc();
+                        if (!allAccounts.equals("")) {
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_showAccount, allAccounts));
+                        }
+                        //touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"Withdrawal"));
+                        //keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
                         break;
 
                     case 2:
@@ -412,6 +433,24 @@ public class ATMSS extends AppThread {
                         break;
                 }
                 break;
+            case "selectAccountWithdrawal":
+                if (buttonPressed == 5) {
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                    currentPage = "mainMenu";
+                } else {
+                    String[] accs = getAcc().split("/");
+                    for (int i = 1; i <= accs.length; i++) {
+                        if (buttonPressed == i) {
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Withdrawal"));
+
+                            accountWithdrawal=accs[i-1];
+                            currentPage = "moneyWithdrawal";
+                            break;
+                        }
+                    }
+                }
+                break;
+
 
         }
 

@@ -92,6 +92,8 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "Withdrawal":
                 reloadStage("TouchDisplayEmulatorWithdrawal.fxml");
                 break;
+            case "SelectAccount":
+                reloadStage("TouchDisplayEmulatorSelectAccount.fxml");
 
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
@@ -112,9 +114,9 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         log.info(id + ": show passwords");
 
         if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
-            touchDisplayEmulatorController.passwordField.setText("");
+            touchDisplayEmulatorController.withdrawalField.setText("");
         } else {
-            touchDisplayEmulatorController.appendPassword(msg.getDetails());
+            touchDisplayEmulatorController.appendWithdrawal(msg.getDetails());
         }
     }
 
@@ -128,8 +130,20 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         }
     }
 
+    @Override
+    protected void showInvalidInput() {
+        super.showInvalidInput();
+        touchDisplayEmulatorController.setInvalidInput();
+    }
+
     protected void changeTransferFrom(Msg msg) {
         touchDisplayEmulatorController.setAccPage(msg.getDetails());
+    }
+
+    @Override
+    protected void showAccounts(Msg msg) {
+        super.showAccounts(msg);
+        touchDisplayEmulatorController.setAccountsWithdrawal(msg.getDetails());
     }
 
     protected void changeTransferTo(Msg msg) {

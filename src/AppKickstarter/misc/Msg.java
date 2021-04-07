@@ -139,6 +139,10 @@ public class Msg {
          */
         TD_UpdateDisplay,
         /**
+         * Invalid Input
+         */
+        TD_InvalidInput,
+        /**
          * Mouse Clicked
          */
         TD_MouseClicked,
@@ -146,15 +150,19 @@ public class Msg {
          * Text field of Passwords/Transfer Amount
          */
         TD_Passwords,
+        TD_TransAmount,
         /**
          * Text filed of Money Withdrawal
          */
         TD_Withdrawal,
-        TD_TransAmount,
         /**
          * show the result of operations
          */
         TD_ShowResult,
+        /**
+         *  show all the accounts of the card
+         */
+        TD_showAccount,
         /**
          * show message of transfer
          */

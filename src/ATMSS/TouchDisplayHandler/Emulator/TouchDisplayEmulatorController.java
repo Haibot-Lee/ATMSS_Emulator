@@ -21,6 +21,8 @@ public class TouchDisplayEmulatorController {
     private TouchDisplayEmulator touchDisplayEmulator;
     private MBox touchDisplayMBox;
     public PasswordField passwordField;
+    public TextField withdrawalField;
+    public TextField invalidInputField;
     public TextField passwordMsg;
     public Text messageArea;
 
@@ -59,6 +61,17 @@ public class TouchDisplayEmulatorController {
         cur += password;
         passwordField.setText(cur);
     }
+    public void setInvalidInput(){
+        withdrawalField.setText("");
+        invalidInputField.setText("Invalid input. Please type again");
+
+    }
+
+    public void appendWithdrawal(String withdrawal) {
+        String cur = withdrawalField.getText();
+        cur += withdrawal;
+        withdrawalField.setText(cur);
+    }
 
     public void appendAmounts(String amount) {
         String cur = transAmount.getText();
@@ -84,6 +97,21 @@ public class TouchDisplayEmulatorController {
         button5.setText("Cancel");
         button6.setText("");
     }
+    public void setAccountsWithdrawal(String msg){
+        Text[] buttons = {button1, button2, button3, button4};
+        String[] accs = msg.split("/");
+        for (int i = 0; i < buttons.length; i++) {
+            if (i < accs.length) {
+                buttons[i].setText(accs[i]);
+            } else {
+                buttons[i].setText("");
+            }
+        }
+        button5.setText("Cancel");
+        button6.setText("");
+
+    }
+
 
     public void setAmountPage(String msg) {
         transAmount.setVisible(true);
