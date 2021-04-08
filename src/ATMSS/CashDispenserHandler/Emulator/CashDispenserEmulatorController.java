@@ -28,6 +28,15 @@ public class CashDispenserEmulatorController {
         this.cashDispenserEmulator = cashDispenserEmulator;
         this.CashDispenserMBox = appKickstarter.getThread("CashDispenserHandler").getMBox();
     } // initialize
+    public void buttonPressed(ActionEvent actionEvent) {
+        Button btn = (Button) actionEvent.getSource();
+        if(btn.getText().compareToIgnoreCase("Take money")==0){
+            oneThousandTextField.setText("");
+            fiveHundredTextField.setText("");
+            oneHundredTextField.setText("");
+            totalAmountTextField.setText("");
+        }
+    }
 
 
 }

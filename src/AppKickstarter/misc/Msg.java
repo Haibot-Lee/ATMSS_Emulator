@@ -220,7 +220,7 @@ public class Msg {
          */
         CD_EnquiryMoney,
         /**
-         * MoneyNum
+         * Money
          */
         CD_MoneyAmount,
 

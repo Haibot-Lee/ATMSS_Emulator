@@ -18,9 +18,9 @@ public class CashDispenserEmulator extends CashDispenserHandler{
     private String id;
     private Stage myStage;
     private  CashDispenserEmulatorController cashDispenserEmulatorController;
-    private int oneHundredAmount=100;
-    private int fiveHundredAmount=100;
-    private int oneThousandAmount=100;
+    private int oneHundredAmount=1;
+    private int fiveHundredAmount=1;
+    private int oneThousandAmount=1;
 
     public CashDispenserEmulator (String id, ATMSSStarter atmssStarter) throws Exception {
         super(id, atmssStarter);
@@ -54,6 +54,10 @@ public class CashDispenserEmulator extends CashDispenserHandler{
         this.oneHundredAmount-=Integer.parseInt(oneHundredAmount);
         this.fiveHundredAmount-=Integer.parseInt(fiveHundredAmount);
         this.oneThousandAmount-=Integer.parseInt(oneThousandAmount);
+        if(this.oneHundredAmount==0||this.fiveHundredAmount==0||this.oneThousandAmount==0){
+            handleEnquiryMoney();
+
+        }
         cashDispenserEmulatorController.oneHundredTextField.setText(oneHundredAmount);
         cashDispenserEmulatorController.fiveHundredTextField.setText(fiveHundredAmount);
         cashDispenserEmulatorController.oneThousandTextField.setText(oneThousandAmount);

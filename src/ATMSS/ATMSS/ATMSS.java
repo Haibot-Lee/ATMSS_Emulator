@@ -29,6 +29,10 @@ public class ATMSS extends AppThread {
     private String trans = "";
     private String moneyWithdrawal="";
     private String accountWithdrawal="";
+    private int oneHundredNum; // the number of 100 of cash dispenser
+    private int fiveHundredNum;
+    private int oneThousandNum;
+
 
     private int attempt = 0;
     boolean[] lockeds = {false, false, false};
@@ -54,6 +58,8 @@ public class ATMSS extends AppThread {
         depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
         printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
         cashDispenserMBox = appKickstarter.getThread("CashDispenserHandler").getMBox();
+
+
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -112,8 +118,11 @@ public class ATMSS extends AppThread {
                     quit = true;
                     break;
                 case CD_EnquiryMoney:
-
                     log.info("Money Amount: "+msg.getDetails());
+                    String[] m=msg.getDetails().split(" ");
+                    oneHundredNum=Integer.parseInt(m[0]);
+                    fiveHundredNum=Integer.parseInt(m[1]);
+                    oneThousandNum=Integer.parseInt(m[2]);
                     break;
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
@@ -215,6 +224,11 @@ public class ATMSS extends AppThread {
                         if(mod!=0){
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
                             moneyWithdrawal="";
+                            break;
+                        }
+                        if(moneyAmount/1000>oneThousandNum||moneyAmount%1000/100>oneHundredNum){
+                            moneyWithdrawal="";
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
                             break;
                         }
                         cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EjectMoney,oneHundredAmount+" 0 "+oneThousandAmount));
@@ -441,7 +455,7 @@ public class ATMSS extends AppThread {
                     for (int i = 1; i <= accs.length; i++) {
                         if (buttonPressed == i) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Withdrawal"));
-
+                            cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,"")); // ask for the money amount of three denominations of cash dispenser
                             accountWithdrawal=accs[i-1];
                             currentPage = "moneyWithdrawal";
                             break;
