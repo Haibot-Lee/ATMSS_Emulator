@@ -140,6 +140,17 @@ public class ATMSS extends AppThread {
                     fiveHundredNum=Integer.parseInt(m[1]);
                     oneThousandNum=Integer.parseInt(m[2]);
                     break;
+                case CD_MoneyJammed:
+                    System.out.println(cardNo+accountWithdrawal+moneyWithdrawal);
+                    try {
+                        bams.deposit(cardNo,accountWithdrawal,"cred-1",moneyWithdrawal);
+                    } catch (Exception e) {
+                        System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    log.info(id+": money is deposited");
+                    break;
+
 
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
@@ -179,7 +190,7 @@ public class ATMSS extends AppThread {
 
                 //reset
                 currentPage = "";
-                cardNo = "";
+               // cardNo = "";    // for the money jammed and deposit money back
                 password = "";
                 moneyWithdrawal="";
                 attempt = 0;
@@ -341,7 +352,7 @@ public class ATMSS extends AppThread {
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                         currentPage = "";
-                        cardNo = "";
+                        //cardNo = "";
                         password = "";
                         break;
                 }
@@ -451,7 +462,7 @@ public class ATMSS extends AppThread {
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                         currentPage = "";
-                        cardNo = "";
+                        //cardNo = "";
                         password = "";
                         break;
                 }
@@ -475,6 +486,7 @@ public class ATMSS extends AppThread {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Withdrawal"));
                             cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,"")); // ask for the money amount of three denominations of cash dispenser
                             accountWithdrawal=accs[i-1];
+                            moneyWithdrawal="";
                             currentPage = "moneyWithdrawal";
                             break;
                         }
@@ -489,14 +501,10 @@ public class ATMSS extends AppThread {
                         long currentTime = (new Date()).getTime();
                         String receipt=currentTime+" "+cardNo+" "+accountWithdrawal+" withdraw "+moneyWithdrawal;
                         printerMBox.send(new Msg(id,mbox, Msg.Type.P_PrintAdvice,receipt));
-                        moneyWithdrawal="";
-                        accountWithdrawal="";
                         break;
                     case 4:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
                         currentPage = "withdrawalEnd";
-                        moneyWithdrawal="";
-                        accountWithdrawal="";
                         break;
 
 
@@ -504,15 +512,17 @@ public class ATMSS extends AppThread {
                 break;
             case "withdrawalEnd":
                 switch (buttonPressed){
+                    //back to main menu
                     case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         break;
+                    //Exit
                     case 4:
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                         currentPage = "";
-                        cardNo = "";
+                        //cardNo = "";
                         password = "";
                         break;
 

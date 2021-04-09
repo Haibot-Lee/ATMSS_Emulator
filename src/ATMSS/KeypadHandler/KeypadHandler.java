@@ -9,7 +9,7 @@ import AppKickstarter.timer.Timer;
 //======================================================================
 // KeypadHandler
 public class KeypadHandler extends HWHandler {
-    int waitingTime = 10000;
+    int waitingTime = 30000;
     int timerID = 114514;
 
     //------------------------------------------------------------

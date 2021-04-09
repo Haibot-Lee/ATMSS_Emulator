@@ -18,9 +18,9 @@ public class CashDispenserEmulator extends CashDispenserHandler{
     private String id;
     private Stage myStage;
     private  CashDispenserEmulatorController cashDispenserEmulatorController;
-    private int oneHundredAmount=1;
-    private int fiveHundredAmount=1;
-    private int oneThousandAmount=1;
+    private int oneHundredAmount=5;
+    private int fiveHundredAmount=5;
+    private int oneThousandAmount=5;
 
     public CashDispenserEmulator (String id, ATMSSStarter atmssStarter) throws Exception {
         super(id, atmssStarter);
@@ -72,5 +72,13 @@ public class CashDispenserEmulator extends CashDispenserHandler{
         String fiveHundred=Integer.toString(fiveHundredAmount);
         String oneThousand=Integer.toString(oneThousandAmount);
         atmss.send(new Msg(id, mbox, Msg.Type.CD_EnquiryMoney, oneHundred+" "+fiveHundred+" "+oneThousand));
+    }
+
+    @Override
+    protected void handleTimesup(Msg msg) {
+        super.handleTimesup(msg);
+        cashDispenserEmulatorController.clearArea();
+        atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyJammed, msg.getDetails()));
+        log.info(id+": Money is collected");
     }
 }

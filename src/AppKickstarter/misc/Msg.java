@@ -221,8 +221,6 @@ public class Msg {
          * Printer jammed
          */
         P_Reset,
-
-
         /**
          * Eject money
          */

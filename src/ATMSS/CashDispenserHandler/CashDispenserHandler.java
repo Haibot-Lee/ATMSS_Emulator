@@ -2,8 +2,10 @@ package ATMSS.CashDispenserHandler;
 import ATMSS.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
+import AppKickstarter.timer.Timer;
 
 public class CashDispenserHandler extends HWHandler{
+    int waitingTime=30000;
     public CashDispenserHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
     } // CashDispenserHandler
@@ -13,20 +15,27 @@ public class CashDispenserHandler extends HWHandler{
                 String money=msg.getDetails();
                 String[] m=money.split(" ");
                 handleEjectMoney(m[0],m[1],m[2]);
-                //atmss.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, id+": ejecting..."));
                 break;
             case CD_EnquiryMoney:
                 handleEnquiryMoney();
                 //atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyAmount, ""));
+                break;
             case CD_MoneyJammed:
                 handleMoneyJammed();
+                break;
                 //atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyJammed, msg.getDetails()));
+            case TimesUp:
+                System.out.println("over time"+ msg.getDetails());
+                handleTimesup(msg);
+                break;
+
 
 
         }
     }
     protected void handleEjectMoney(String  oneHundredAmount, String fiveHundrdAmount, String oneThousandAmount){
         log.info(id+": is ejecting money");
+        Timer.setTimer(id,mbox,waitingTime,77);
 
     }
     protected void handleEnquiryMoney(){
@@ -36,4 +45,9 @@ public class CashDispenserHandler extends HWHandler{
     protected void handleMoneyJammed(){
 
     }
+    protected void handleTimesup(Msg msg){
+        log.info(id+": Time is up");
+
+    }
+
 }
