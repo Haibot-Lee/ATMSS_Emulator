@@ -186,9 +186,21 @@ public class Msg {
          */
         CR_LockCard,
         /**
-         * Key pressed
+         * Accept password
+         */
+        KP_AcceptPassword,
+        /**
+         * Print advice
          */
         KP_KeyPressed,
+        /**
+         * Push up Keypad
+         */
+        KP_Overtime,
+        /**
+         * Keypad stop counting
+         */
+        KP_Freeze,
         /**
          * Push up Keypad
          */

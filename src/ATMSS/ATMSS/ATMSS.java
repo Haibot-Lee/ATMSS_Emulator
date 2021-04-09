@@ -75,11 +75,19 @@ public class ATMSS extends AppThread {
                     processKeyPressed(msg);
                     break;
 
+                case KP_Overtime:
+                    log.info("Keypad overtime: " + msg.getDetails());
+                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                    //processKeyPressed(msg);
+                    break;
+
                 case CR_CardInserted:
                     log.info("CardInserted: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
                     // push keypad for inputting password
                     keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
+                    keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_AcceptPassword, ""));
                     currentPage = "password";
                     cardNo = msg.getDetails();
                     break;
@@ -115,6 +123,7 @@ public class ATMSS extends AppThread {
                 case Terminate:
                     quit = true;
                     break;
+
                 case CD_EnquiryMoney:
                     log.info("Money Amount: "+msg.getDetails());
                     String[] m=msg.getDetails().split(" ");
@@ -122,6 +131,7 @@ public class ATMSS extends AppThread {
                     fiveHundredNum=Integer.parseInt(m[1]);
                     oneThousandNum=Integer.parseInt(m[2]);
                     break;
+
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
             }
@@ -169,9 +179,11 @@ public class ATMSS extends AppThread {
         } else {
             switch (currentPage) {
                 case "password":
+
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         if (cardValidation()) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                            keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
                             currentPage = "mainMenu";
                             attempt = 0;
                         } else {

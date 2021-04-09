@@ -6,6 +6,7 @@ import AppKickstarter.misc.Msg;
 
 import java.util.logging.Logger;
 
+import AppKickstarter.timer.Timer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
@@ -48,6 +49,8 @@ public class KeypadEmulatorController {
     //------------------------------------------------------------
     // keyPressed
     public void keyPressed(KeyEvent keyEvent) {
+
+
         String keyCodeStr = keyEvent.getCode().toString();
 
         if (keyCodeStr.startsWith("DIGIT") || keyCodeStr.startsWith("NUMPAD")) {
