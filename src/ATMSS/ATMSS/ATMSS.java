@@ -73,7 +73,7 @@ public class ATMSS extends AppThread {
                     break;
 
                 case KP_KeyPressed:
-                    //log.info("KeyPressed: " + msg.getDetails());
+                    log.info("KeyPressed: " + msg.getDetails());
                     processKeyPressed(msg);
                     break;
 
@@ -106,6 +106,11 @@ public class ATMSS extends AppThread {
                 case CR_CardRemoved:
                     log.info("CardRemoved: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
+                    break;
+
+                case CR_CardEjected:
+                    log.info("CardEjected: " + msg.getDetails());
+                    buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Alert, "Card ejected"));
                     break;
 
                 case P_PrinterJammed:
@@ -143,6 +148,7 @@ public class ATMSS extends AppThread {
                     fiveHundredNum=Integer.parseInt(m[1]);
                     oneThousandNum=Integer.parseInt(m[2]);
                     break;
+
                 case CD_MoneyJammed:
                     System.out.println(cardNo+accountWithdrawal+moneyWithdrawal);
                     try {
@@ -153,7 +159,6 @@ public class ATMSS extends AppThread {
                     }
                     log.info(id+": money is deposited");
                     break;
-
 
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");

@@ -51,16 +51,16 @@ public class BuzzerEmulator extends BuzzerHandler {
         });
         myStage.show();
     } // BuzzerEmulator
-/*
+
 
     //------------------------------------------------------------
     // handleCardInsert
-    protected void handleCardInsert() {
-        super.handleCardInsert();
-        buzzerEmulatorController.appendTextArea("Card Inserted");
-        buzzerEmulatorController.updateCardStatus("Card Inserted");
+    protected void handleAlert(Msg msg) {
+        super.handleAlert(msg);
+        buzzerEmulatorController.appendTextArea(msg.getDetails());
+        buzzerEmulatorController.updateBuzzerStatus(msg.getDetails());
     } // handleCardInsert
-*/
+
 /*
     //------------------------------------------------------------
     // handleCardEject

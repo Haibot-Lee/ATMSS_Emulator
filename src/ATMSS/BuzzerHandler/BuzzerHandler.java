@@ -24,6 +24,11 @@ public class BuzzerHandler extends HWHandler {
     // processMsg
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
+
+            case B_Alert:
+                handleAlert(msg);
+                //atmss.send(new Msg(id, mbox, Msg.Type.CR_CardInserted, msg.getDetails()));
+                break;
             /*
             case CR_CardInserted:
                 handleCardInsert();
@@ -60,7 +65,13 @@ public class BuzzerHandler extends HWHandler {
         }
     } // processMsg
 
+    //------------------------------------------------------------
+    // handleAlert
+    protected void handleAlert(Msg msg) {
+        log.info(id + ": alert");
+    } // handleAlert
 
+    /*
     //------------------------------------------------------------
     // handleCardInsert
     protected void handleCardInsert() {
@@ -107,6 +118,6 @@ public class BuzzerHandler extends HWHandler {
     protected void handleOvertime() {
         log.info(id + ": overtime");
     } // handleOvertime
-
+*/
 
 } // BuzzerHandler

@@ -31,6 +31,7 @@ public class CardReaderHandler extends HWHandler {
             case CR_EjectCard:
                 Timer.setTimer(id, mbox, waitingTime, timerID);
                 //System.out.println("CardReader timer is counting down");
+                atmss.send(new Msg(id, mbox, Msg.Type.CR_CardEjected, msg.getDetails()));
                 handleCardEject(msg);
                 break;
 

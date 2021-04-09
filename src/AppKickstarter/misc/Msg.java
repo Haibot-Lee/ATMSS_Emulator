@@ -174,9 +174,9 @@ public class Msg {
          */
         CR_CardInserted,
         /**
-         * Card operation overtime
+         * Card ejected
          */
-        CR_Overtime,
+        CR_CardEjected,
         /**
          * Card removed
          */
@@ -218,9 +218,13 @@ public class Msg {
          */
         P_PrinterJammed,
         /**
-         * Printer jammed
+         * Printer reset
          */
         P_Reset,
+        /**
+         * Buzzer alert
+         */
+        B_Alert,
         /**
          * Eject money
          */
