@@ -19,6 +19,7 @@ public class ATMSS extends AppThread {
     private MBox printerMBox;
     private MBox depositCollectorMBox;
     private MBox cashDispenserMBox;
+    private MBox buzzerMBox;
 
     private BAMSHandler bams;
     private String currentPage = "";
@@ -58,6 +59,7 @@ public class ATMSS extends AppThread {
         depositCollectorMBox = appKickstarter.getThread("DepositCollectorHandler").getMBox();
         printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
         cashDispenserMBox = appKickstarter.getThread("CashDispenserHandler").getMBox();
+        buzzerMBox = appKickstarter.getThread("BuzzerHandler").getMBox();
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -120,6 +122,7 @@ public class ATMSS extends AppThread {
                     printerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    buzzerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,""));
                     //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EjectMoney,"2 3 4"));
                     //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,""));

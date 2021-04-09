@@ -1,5 +1,7 @@
 package ATMSS;
 
+import ATMSS.BuzzerHandler.BuzzerHandler;
+import ATMSS.BuzzerHandler.Emulator.BuzzerEmulator;
 import ATMSS.CashDispenserHandler.Emulator.CashDispenserEmulator;
 import ATMSS.DepositCollector.DepositCollectorHandler;
 import ATMSS.DepositCollector.Emulator.DepositCollectorEmulator;
@@ -59,6 +61,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             TouchDisplayEmulator touchDisplayEmulator = null;
             DepositCollectorEmulator depositCollectorEmulator = null;
             CashDispenserEmulator cashDispenserEmulator = null;
+            BuzzerEmulator buzzerEmulator = null;
             PrinterEmulator printerEmulator = null;
 
 
@@ -71,6 +74,8 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
                 touchDisplayEmulator = new TouchDisplayEmulator("TouchDisplayHandler", atmssEmulatorStarter);
                 depositCollectorEmulator = new DepositCollectorEmulator("DepositCollectorHandler", atmssEmulatorStarter);
                 cashDispenserEmulator = new CashDispenserEmulator("CashDispenserHandler", atmssEmulatorStarter);
+                buzzerEmulator = new BuzzerEmulator("BuzzerHandler", atmssEmulatorStarter);
+
                 printerEmulator = new PrinterEmulator("PrinterHandler", atmssEmulatorStarter);
 
 
@@ -80,7 +85,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
                 cashDispenserEmulator.start();
                 printerEmulator.start();
                 keypadEmulator.start();
-
+                buzzerEmulator.start();
                 cardReaderEmulator.start();
 
             } catch (Exception e) {
@@ -97,6 +102,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             atmssEmulatorStarter.setCashDispenserHandler(cashDispenserEmulator);
             atmssEmulatorStarter.setDepositCollectorHandler(depositCollectorEmulator);
             atmssEmulatorStarter.setPrinterHandler(printerEmulator);
+            atmssEmulatorStarter.setBuzzerHandler(buzzerEmulator);
 
 
             // start threads
@@ -107,6 +113,7 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
             new Thread(touchDisplayEmulator).start();
             new Thread(depositCollectorEmulator).start();
             new Thread(cashDispenserEmulator).start();
+            new Thread(buzzerEmulator).start();
             new Thread(printerEmulator).start();
 
         } // start
@@ -145,4 +152,9 @@ public class ATMSSEmulatorStarter extends ATMSSStarter {
     private void setPrinterHandler(PrinterHandler printerHandler) {
         this.printerHandler = printerHandler;
     }
+
+    private void setBuzzerHandler(BuzzerHandler buzzerHandler) {
+        this.buzzerHandler = buzzerHandler;
+    }
+
 } // ATMSSEmulatorStarter
