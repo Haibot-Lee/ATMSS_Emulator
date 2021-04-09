@@ -3,11 +3,15 @@ package ATMSS.CardReaderHandler;
 import ATMSS.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
+import AppKickstarter.timer.Timer;
 
 
 //======================================================================
 // CardReaderHandler
 public class CardReaderHandler extends HWHandler {
+    int waitingTime = 3000;
+    int timerID = 1919810;
+
     //------------------------------------------------------------
     // CardReaderHandler
     public CardReaderHandler(String id, AppKickstarter appKickstarter) {
@@ -25,16 +29,26 @@ public class CardReaderHandler extends HWHandler {
                 break;
 
             case CR_EjectCard:
+                Timer.setTimer(id, mbox, waitingTime, timerID);
+                System.out.println("CardReader timer is counting down");
                 handleCardEject(msg);
                 break;
 
             case CR_CardRemoved:
+                Timer.cancelTimer(id, mbox, timerID);
+                System.out.println("CardReader timer is canceled.");
                 handleCardRemove();
                 atmss.send(new Msg(id, mbox, Msg.Type.CR_CardRemoved, msg.getDetails()));
                 break;
 
             case CR_LockCard:
                 handleLockCard(msg);
+                break;
+
+            case TimesUp:
+                System.out.println("Eject card overtime.");
+                handleOvertime();
+                //atmss.send(new Msg(id, mbox, Msg.Type.CR_Overtime, msg.getDetails()));
                 break;
 
             default:
@@ -76,10 +90,19 @@ public class CardReaderHandler extends HWHandler {
         log.info(id + ": card locked");
     } // handleLockCard
 
+
     //------------------------------------------------------------
     // handleLockCard
     protected void handleLockCard(Msg msg) {
         log.info(id + ": card locked");
     } // handleLockCard
+
+
+    //------------------------------------------------------------
+    // handleOvertime
+    protected void handleOvertime() {
+        log.info(id + ": overtime");
+    } // handleOvertime
+
 
 } // CardReaderHandler

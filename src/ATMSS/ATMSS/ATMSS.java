@@ -81,7 +81,16 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                     //processKeyPressed(msg);
                     break;
-
+/*
+                case CR_Overtime:
+                    System.out.println("Card no is" + cardNo);
+                    log.info("Card reader overtime: " + msg.getDetails());
+                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, cardNo));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
+                    System.out.println(cardNo);
+                    lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))] = true;
+                    break;
+*/
                 case CR_CardInserted:
                     log.info("CardInserted: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));

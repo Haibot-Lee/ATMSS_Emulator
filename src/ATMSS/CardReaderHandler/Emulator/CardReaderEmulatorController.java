@@ -116,7 +116,7 @@ public class CardReaderEmulatorController {
     } // appendTextArea
 
     //------------------------------------------------------------
-    // appendTextArea
+    // lockCard
     public void lockCard(int cardNo) {
         Button[] cards = new Button[] {card1, card2, card3};
 
@@ -125,5 +125,22 @@ public class CardReaderEmulatorController {
         javafx.application.Platform.runLater( () -> cardNumField.setText(""));
         //javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText("Card locked\n"));
         javafx.application.Platform.runLater( () -> cardStatusField.setText("Card locked"));
-    } // appendTextArea
+    } // lockCard
+
+
+    //------------------------------------------------------------
+    // overtime
+    public void overtime() {
+        int cardNo = Integer.parseInt(""+cardNumField.getText().charAt(cardNumField.getText().length() - 1));
+
+        Button[] cards = new Button[] {card1, card2, card3};
+
+        javafx.application.Platform.runLater( () -> cards[cardNo - 1].setDisable(true));
+        javafx.application.Platform.runLater( () -> cardReaderRemoveButton.setDisable(true));
+        javafx.application.Platform.runLater( () -> cardNumField.setText(""));
+        //javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText("Card locked\n"));
+        javafx.application.Platform.runLater( () -> cardStatusField.setText("Card locked"));
+    } // overtime
+
+
 } // CardReaderEmulatorController

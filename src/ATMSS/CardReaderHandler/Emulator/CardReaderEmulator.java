@@ -99,9 +99,19 @@ public class CardReaderEmulator extends CardReaderHandler {
     // handleCardRemove
     protected void handleLockCard(Msg msg) {
         super.handleLockCard();
+        System.out.println(msg);
 
         cardReaderEmulatorController.lockCard(Integer.parseInt("" + msg.getDetails().charAt(msg.getDetails().length() - 1)));
     } // handleCardRemove
+
+
+    //------------------------------------------------------------
+    // handleOvertime
+    protected void handleOvertime() {
+        super.handleOvertime();
+
+        cardReaderEmulatorController.overtime();
+    } // handleOvertime
 
 
 } // CardReaderEmulator

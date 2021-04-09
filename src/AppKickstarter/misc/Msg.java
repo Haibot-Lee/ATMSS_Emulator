@@ -174,6 +174,10 @@ public class Msg {
          */
         CR_CardInserted,
         /**
+         * Card operation overtime
+         */
+        CR_Overtime,
+        /**
          * Card removed
          */
         CR_CardRemoved,

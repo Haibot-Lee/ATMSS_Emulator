@@ -9,7 +9,8 @@ import AppKickstarter.timer.Timer;
 //======================================================================
 // KeypadHandler
 public class KeypadHandler extends HWHandler {
-    int waitingTime = 3000;
+    int waitingTime = 10000;
+    int timerID = 114514;
 
     //------------------------------------------------------------
     // KeypadHandler
@@ -23,15 +24,15 @@ public class KeypadHandler extends HWHandler {
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case KP_AcceptPassword:
-                Timer.setTimer(id, mbox, waitingTime, 114514);
+                Timer.setTimer(id, mbox, waitingTime, timerID);
                 System.out.println("Keypad timer is counting down");
                 break;
 
             case KP_KeyPressed:
-                Timer.cancelTimer(id, mbox, 114514);
+                Timer.cancelTimer(id, mbox, timerID);
                 System.out.println("Keypad timer is canceled.");
                 atmss.send(new Msg(id, mbox, Msg.Type.KP_KeyPressed, msg.getDetails()));
-                Timer.setTimer(id, mbox, waitingTime, 114514);
+                Timer.setTimer(id, mbox, waitingTime, timerID);
                 System.out.println("Keypad timer is recounting down");
                 break;
 
@@ -45,7 +46,7 @@ public class KeypadHandler extends HWHandler {
                 break;
 
             case KP_Freeze:
-                Timer.cancelTimer(id, mbox, 114514);
+                Timer.cancelTimer(id, mbox, timerID);
                 System.out.println("Keypad timer freeze.");
                 break;
 
