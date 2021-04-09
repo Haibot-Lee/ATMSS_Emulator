@@ -30,12 +30,15 @@ public class TouchDisplayHandler extends HWHandler {
             case TD_Passwords:
                 showPasswords(msg);
                 break;
+
             case TD_Withdrawal:
                 showWithdrawal(msg);
                 break;
+
             case TD_showAccount:
                 showAccounts(msg);
                 break;
+
             case TD_InvalidInput:
                 showInvalidInput();
                 break;
@@ -73,21 +76,27 @@ public class TouchDisplayHandler extends HWHandler {
 
     protected void showAmounts(Msg msg) {
     }
-    protected void showAccounts(Msg msg){
+
+    protected void showAccounts(Msg msg) {
 
     }
 
     protected void showResult(Msg msg) {
     }
-    protected void showInvalidInput(){
-        log.info(id+": invalid input");
+
+    protected void showInvalidInput() {
+        log.info(id + ": invalid input");
     }
 
+    protected void changeTransferFrom(Msg msg) {
+    }
 
-    protected void changeTransferFrom(Msg msg){}
+    protected void changeTransferTo(Msg msg) {
+    }
 
-    protected void changeTransferTo(Msg msg){}
+    protected void changeTransferAmount(Msg msg) {
+    }
 
-    protected void changeTransferAmount(Msg msg){}
-    protected void showWithdrawal(Msg msg){}
+    protected void showWithdrawal(Msg msg) {
+    }
 } // TouchDisplayHandler

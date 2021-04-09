@@ -117,6 +117,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             touchDisplayEmulatorController.appendPassword(msg.getDetails());
         }
     }
+
     protected void showWithdrawal(Msg msg) {
         log.info(id + ": show passwords");
 
@@ -145,16 +146,18 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
 
     protected void changeTransferFrom(Msg msg) {
         touchDisplayEmulatorController.setAccPage(msg.getDetails());
+        touchDisplayEmulatorController.messageArea.setText("[Transfer] Choose payment account:");
+    }
+
+    protected void changeTransferTo(Msg msg) {
+        touchDisplayEmulatorController.messageArea.setText("[Transfer] Choose target account:");
     }
 
     @Override
     protected void showAccounts(Msg msg) {
         super.showAccounts(msg);
-        touchDisplayEmulatorController.setAccountsWithdrawal(msg.getDetails());
-    }
-
-    protected void changeTransferTo(Msg msg) {
-        touchDisplayEmulatorController.messageArea.setText("[Transfer] Choose target account:");
+        touchDisplayEmulatorController.setAccPage(msg.getDetails());
+        touchDisplayEmulatorController.messageArea.setText("[Cash Withdraw] Choose one account:");
     }
 
     protected void changeTransferAmount(Msg msg) {

@@ -61,10 +61,10 @@ public class TouchDisplayEmulatorController {
         cur += password;
         passwordField.setText(cur);
     }
-    public void setInvalidInput(){
+
+    public void setInvalidInput() {
         withdrawalField.setText("");
         invalidInputField.setText("Invalid input. Please type again");
-
     }
 
     public void appendWithdrawal(String withdrawal) {
@@ -84,7 +84,6 @@ public class TouchDisplayEmulatorController {
     }
 
     public void setAccPage(String msg) {
-        messageArea.setText("[Transfer] Choose payment account:");
         Text[] buttons = {button1, button2, button3, button4};
         String[] accs = msg.split("/");
         for (int i = 0; i < buttons.length; i++) {
@@ -97,21 +96,6 @@ public class TouchDisplayEmulatorController {
         button5.setText("Cancel");
         button6.setText("");
     }
-    public void setAccountsWithdrawal(String msg){
-        Text[] buttons = {button1, button2, button3, button4};
-        String[] accs = msg.split("/");
-        for (int i = 0; i < buttons.length; i++) {
-            if (i < accs.length) {
-                buttons[i].setText(accs[i]);
-            } else {
-                buttons[i].setText("");
-            }
-        }
-        button5.setText("Cancel");
-        button6.setText("");
-
-    }
-
 
     public void setAmountPage(String msg) {
         transAmount.setVisible(true);

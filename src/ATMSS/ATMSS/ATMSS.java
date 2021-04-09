@@ -59,8 +59,6 @@ public class ATMSS extends AppThread {
         printerMBox = appKickstarter.getThread("PrinterHandler").getMBox();
         cashDispenserMBox = appKickstarter.getThread("CashDispenserHandler").getMBox();
 
-
-
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
 
@@ -146,7 +144,7 @@ public class ATMSS extends AppThread {
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
             if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))]) {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
 
                 //reset
                 currentPage = "";
@@ -279,7 +277,6 @@ public class ATMSS extends AppThread {
                     case 1:
                         //cash withdrawal
                         currentPage="selectAccountWithdrawal";
-                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"SelectAccount"));
                         String allAccounts = getAcc();
                         if (!allAccounts.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_showAccount, allAccounts));
