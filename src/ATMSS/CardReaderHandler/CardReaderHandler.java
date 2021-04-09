@@ -9,7 +9,7 @@ import AppKickstarter.timer.Timer;
 //======================================================================
 // CardReaderHandler
 public class CardReaderHandler extends HWHandler {
-    int waitingTime = 3000;
+    int waitingTime = 10000;
     int timerID = 1919810;
 
     //------------------------------------------------------------
@@ -30,23 +30,25 @@ public class CardReaderHandler extends HWHandler {
 
             case CR_EjectCard:
                 Timer.setTimer(id, mbox, waitingTime, timerID);
-                System.out.println("CardReader timer is counting down");
+                //System.out.println("CardReader timer is counting down");
                 handleCardEject(msg);
                 break;
 
             case CR_CardRemoved:
                 Timer.cancelTimer(id, mbox, timerID);
-                System.out.println("CardReader timer is canceled.");
+                //System.out.println("CardReader timer is canceled.");
                 handleCardRemove();
                 atmss.send(new Msg(id, mbox, Msg.Type.CR_CardRemoved, msg.getDetails()));
                 break;
 
             case CR_LockCard:
+                Timer.cancelTimer(id, mbox, timerID);
+                //System.out.println("CardReader timer is canceled.");
                 handleLockCard(msg);
                 break;
 
             case TimesUp:
-                System.out.println("Eject card overtime.");
+                //System.out.println("Eject card overtime.");
                 handleOvertime();
                 //atmss.send(new Msg(id, mbox, Msg.Type.CR_Overtime, msg.getDetails()));
                 break;

@@ -30,6 +30,7 @@ public class CardReaderEmulatorController {
     public Button card1;
     public Button card2;
     public Button card3;
+    Button[] cards;
 
 
     //------------------------------------------------------------
@@ -41,6 +42,7 @@ public class CardReaderEmulatorController {
         this.cardReaderEmulator = cardReaderEmulator;
         this.cardReaderMBox = appKickstarter.getThread("CardReaderHandler").getMBox();
         cardReaderRemoveButton.setDisable(true);
+        cards = new Button[] {card1, card2, card3};
     } // initialize
 
 
@@ -92,19 +94,28 @@ public class CardReaderEmulatorController {
     public void updateCardStatus(String status) {
         cardStatusField.setText(status);
 
-        if (status.equals("Card Inserted")) {
-            cardReaderInsertButton.setDisable(true);
-            cardReaderRemoveButton.setDisable(true);
-        } else if (status.equals("Card Ejected")) {
-            cardReaderInsertButton.setDisable(true);
-            cardReaderRemoveButton.setDisable(false);
-        } else if (status.equals("Card Reader Empty")) {
-            cardReaderInsertButton.setDisable(false);
-            cardReaderRemoveButton.setDisable(true);
-        } else if (status.equals("Card Locked")) {
-            cardReaderInsertButton.setDisable(false);
-            cardReaderRemoveButton.setDisable(true);
-            cardStatusField.setText("");
+        switch(status) {
+            case "Card Inserted":
+                cardReaderInsertButton.setDisable(true);
+                cardReaderRemoveButton.setDisable(true);
+                break;
+
+            case "Card Ejected":
+                cardReaderInsertButton.setDisable(true);
+                cardReaderRemoveButton.setDisable(false);
+                break;
+            case "Card Reader Empty":
+                cardReaderInsertButton.setDisable(false);
+                cardReaderRemoveButton.setDisable(true);
+                break;
+            case "Card Locked":
+                cardReaderInsertButton.setDisable(false);
+                cardReaderRemoveButton.setDisable(true);
+                cardStatusField.setText("");
+                break;
+
+            default:
+                System.out.println("Unknown card status: " + status);
         }
     } // updateCardStatus
 
@@ -118,10 +129,9 @@ public class CardReaderEmulatorController {
     //------------------------------------------------------------
     // lockCard
     public void lockCard(int cardNo) {
-        Button[] cards = new Button[] {card1, card2, card3};
-
         javafx.application.Platform.runLater( () -> cards[cardNo - 1].setDisable(true));
         javafx.application.Platform.runLater( () -> cardReaderRemoveButton.setDisable(true));
+        javafx.application.Platform.runLater( () -> cardReaderInsertButton.setDisable(false));
         javafx.application.Platform.runLater( () -> cardNumField.setText(""));
         //javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText("Card locked\n"));
         javafx.application.Platform.runLater( () -> cardStatusField.setText("Card locked"));
@@ -132,15 +142,8 @@ public class CardReaderEmulatorController {
     // overtime
     public void overtime() {
         int cardNo = Integer.parseInt(""+cardNumField.getText().charAt(cardNumField.getText().length() - 1));
-
-        Button[] cards = new Button[] {card1, card2, card3};
-
-        javafx.application.Platform.runLater( () -> cards[cardNo - 1].setDisable(true));
-        javafx.application.Platform.runLater( () -> cardReaderRemoveButton.setDisable(true));
-        javafx.application.Platform.runLater( () -> cardNumField.setText(""));
-        //javafx.application.Platform.runLater( () -> cardReaderTextArea.appendText("Card locked\n"));
-        javafx.application.Platform.runLater( () -> cardStatusField.setText("Card locked"));
-    } // overtime
+        lockCard(cardNo);
+     } // overtime
 
 
 } // CardReaderEmulatorController

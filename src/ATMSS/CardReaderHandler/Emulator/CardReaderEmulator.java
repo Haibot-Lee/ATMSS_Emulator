@@ -76,9 +76,7 @@ public class CardReaderEmulator extends CardReaderHandler {
     protected void handleCardEject(Msg msg) {
         super.handleCardEject(msg);
         if (msg.getDetails().equals("Locked")) {
-            System.out.println("NM$L");
             cardReaderEmulatorController.updateCardStatus("Card Locked");
-            System.out.println("NM$L");
         } else {
             cardReaderEmulatorController.appendTextArea("Card Ejected");
             cardReaderEmulatorController.updateCardStatus("Card Ejected");
@@ -96,20 +94,17 @@ public class CardReaderEmulator extends CardReaderHandler {
 
 
     //------------------------------------------------------------
-    // handleCardRemove
+    // handleLockCard
     protected void handleLockCard(Msg msg) {
         super.handleLockCard();
-        System.out.println(msg);
-
         cardReaderEmulatorController.lockCard(Integer.parseInt("" + msg.getDetails().charAt(msg.getDetails().length() - 1)));
-    } // handleCardRemove
+    } // handleLockCard
 
 
     //------------------------------------------------------------
     // handleOvertime
     protected void handleOvertime() {
         super.handleOvertime();
-
         cardReaderEmulatorController.overtime();
     } // handleOvertime
 
