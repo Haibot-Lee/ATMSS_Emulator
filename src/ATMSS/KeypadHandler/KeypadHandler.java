@@ -9,13 +9,15 @@ import AppKickstarter.timer.Timer;
 //======================================================================
 // KeypadHandler
 public class KeypadHandler extends HWHandler {
-    int waitingTime = 30000;
-    int timerID = 114514;
+    private int waitingTime;
+    private int timerID;
 
     //------------------------------------------------------------
     // KeypadHandler
     public KeypadHandler(String id, ATMSSStarter atmssStarter) {
         super(id, atmssStarter);
+        waitingTime = Integer.parseInt(appKickstarter.getProperty("Keypad.WaitingTime"));
+        timerID = Integer.parseInt(appKickstarter.getProperty("Keypad.TimerID"));
     } // KeypadHandler
 
 

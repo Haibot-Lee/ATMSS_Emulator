@@ -9,13 +9,15 @@ import AppKickstarter.timer.Timer;
 //======================================================================
 // CardReaderHandler
 public class CardReaderHandler extends HWHandler {
-    int waitingTime = 10000;
-    int timerID = 1919810;
+    private int waitingTime;
+    private int timerID;
 
     //------------------------------------------------------------
     // CardReaderHandler
     public CardReaderHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
+        waitingTime = Integer.parseInt(appKickstarter.getProperty("CardReader.WaitingTime"));
+        timerID = Integer.parseInt(appKickstarter.getProperty("CardReader.TimerID"));
     } // CardReaderHandler
 
 
