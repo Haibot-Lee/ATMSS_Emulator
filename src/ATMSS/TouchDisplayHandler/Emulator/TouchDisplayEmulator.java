@@ -179,6 +179,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     protected void dealDetails(Msg msg){
         String[] details = msg.getDetails().split("/");
         touchDisplayEmulatorController.setDepositCollectorInfo(details);
+
     }
 
 

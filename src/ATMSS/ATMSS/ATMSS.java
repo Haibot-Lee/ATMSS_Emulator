@@ -32,17 +32,21 @@ public class ATMSS extends AppThread {
     private String trans = "";
     private String moneyWithdrawal = "";
     private String accountWithdrawal = "";
-    private String moneyDepositOne = "";
-    private String moneyDepositFive = "";
-    private String moneyDepositTen = "";
     private String accountDeposit = "";
-    private String depositDetails="";
     private int oneHundredNum; // the number of 100 of cash dispenser
     private int fiveHundredNum;
     private int oneThousandNum;
 
+    private String DepositTotal = "";
+    private int intDepositTotal = 0;
+    private int intDepositOne = 0;
+    private int intDepositFive = 0;
+    private int intDepositTen = 0;
+
     private int attempt = 0;
     boolean[] lockeds = {false, false, false};
+
+    private boolean DepositCollectorWork = true;
 
     //------------------------------------------------------------
     // ATMSS
@@ -133,6 +137,12 @@ public class ATMSS extends AppThread {
 
                 case DC_Total:
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDepositDetails, msg.getDetails()));
+                    String[] msgs = msg.getDetails().split("/");
+                    intDepositOne += Integer.parseInt(msgs[0]);
+                    intDepositFive += Integer.parseInt(msgs[1]);
+                    intDepositTen += Integer.parseInt(msgs[2]);
+                    intDepositTotal += Integer.parseInt(msgs[3]);
+                    DepositTotal = Integer.toString(intDepositTotal);
                     break;
 
                 case TimesUp:
@@ -159,10 +169,10 @@ public class ATMSS extends AppThread {
                     break;
 
                 case CD_EnquiryMoney:
-                    String[] m=msg.getDetails().split(" ");
-                    oneHundredNum=Integer.parseInt(m[0]);
-                    fiveHundredNum=Integer.parseInt(m[1]);
-                    oneThousandNum=Integer.parseInt(m[2]);
+                    String[] m = msg.getDetails().split(" ");
+                    oneHundredNum = Integer.parseInt(m[0]);
+                    fiveHundredNum = Integer.parseInt(m[1]);
+                    oneThousandNum = Integer.parseInt(m[2]);
                     log.info("Money Amount: " + msg.getDetails());
                     break;
 
@@ -206,12 +216,14 @@ public class ATMSS extends AppThread {
                 cardNo = "";
                 password = "";
                 moneyWithdrawal = "";
-                moneyDepositOne = "";
-                moneyDepositFive = "";
-                moneyDepositTen = "";
                 attempt = 0;
                 attempt = 0;
                 accountWithdrawal = "";
+                DepositTotal = "";
+                intDepositTotal = 0;
+                intDepositOne = 0;
+                intDepositFive = 0;
+                intDepositTen = 0;
 
             } else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
@@ -222,11 +234,13 @@ public class ATMSS extends AppThread {
                 // cardNo = "";    // for the money jammed and deposit money back
                 password = "";
                 moneyWithdrawal = "";
-                moneyDepositOne = "";
-                moneyDepositFive = "";
-                moneyDepositTen = "";
                 attempt = 0;
                 accountWithdrawal = "";
+                DepositTotal = "";
+                intDepositTotal = 0;
+                intDepositOne = 0;
+                intDepositFive = 0;
+                intDepositTen = 0;
             }
         } else {
             switch (currentPage) {
@@ -290,8 +304,8 @@ public class ATMSS extends AppThread {
                                 moneyWithdrawal = "";
                                 break;
                             }
-                            if(moneyAmount/1000>oneThousandNum||moneyAmount%1000/100>oneHundredNum){
-                                moneyWithdrawal="";
+                            if (moneyAmount / 1000 > oneThousandNum || moneyAmount % 1000 / 100 > oneHundredNum) {
+                                moneyWithdrawal = "";
                                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, "Not enough money"));
                                 moneyWithdrawal = "";
                                 break;
@@ -520,9 +534,9 @@ public class ATMSS extends AppThread {
                 break;
 
             case "moneyWithdrawal":
-                switch (buttonPressed){
+                switch (buttonPressed) {
                     case 6:
-                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"MainMenu"));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         break;
                 }
@@ -536,12 +550,10 @@ public class ATMSS extends AppThread {
                         currentPage = "depositReceipt";
                         break;
                     case 5:
-                        //update data
-                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"moneyDeposit"));
-                        System.out.println("button5 Clicked");
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
                         break;
                     case 6:
-                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"MainMenu"));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         break;
                 }
@@ -555,7 +567,7 @@ public class ATMSS extends AppThread {
                     String[] accs = getAcc().split("/");
                     for (int i = 1; i <= accs.length; i++) {
                         if (buttonPressed == i) {
-                            cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,"")); // ask for the money amount of three denominations of cash dispenser
+                            cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EnquiryMoney, "")); // ask for the money amount of three denominations of cash dispenser
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Withdrawal"));
 
                             accountWithdrawal = accs[i - 1];
@@ -604,14 +616,14 @@ public class ATMSS extends AppThread {
                 switch (buttonPressed) {
                     case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositEnd"));
-                        currentPage = "depositEnd";
+                        currentPage = "withdrawalEnd";
                         long currentTime = (new Date()).getTime();
-                        String receipt = currentTime + " " + cardNo + " " + accountWithdrawal + " deposit " + moneyWithdrawal;
+                        String receipt = currentTime + " " + cardNo + " " + accountDeposit + " deposit " + DepositTotal;
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, receipt));
                         break;
                     case 4:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositEnd"));
-                        currentPage = "depositEnd";
+                        currentPage = "withdrawalEnd";
                         break;
                 }
                 break;
@@ -732,7 +744,7 @@ public class ATMSS extends AppThread {
     private double Deposit() {
         double depAmount = 0;
         try {
-            depAmount = bams.deposit("41070003", "41070003-0", "cred-3", "1000");
+            depAmount = bams.deposit(cardNo, accountDeposit, "cred-1", DepositTotal);
         } catch (BAMSInvalidReplyException e) {
             e.printStackTrace();
         } catch (IOException e) {

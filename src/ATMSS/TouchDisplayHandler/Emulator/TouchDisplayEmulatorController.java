@@ -145,5 +145,8 @@ public class TouchDisplayEmulatorController {
         five.setText(Integer.toString(second));
         ten.setText(Integer.toString(third));
         total.setText(Integer.toString(forth));
+
+        String n = first + " " +second +" "+third+" "+forth;
+        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.DC_MoneyDetails, n));
     }
 } // TouchDisplayEmulatorController

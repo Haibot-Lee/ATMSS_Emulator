@@ -265,6 +265,7 @@ public class Msg {
          * Cash Deposit Collector
          */
         DC_Total,
+        DC_MoneyDetails,
 
 
     } // Type

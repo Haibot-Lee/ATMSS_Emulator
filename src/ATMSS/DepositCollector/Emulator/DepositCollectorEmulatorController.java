@@ -4,6 +4,7 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
 import AppKickstarter.timer.Timer;
+import com.sun.glass.ui.Menu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,12 +39,10 @@ public class DepositCollectorEmulatorController {
     public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
         if(btn.getText().equals("Done")){
-            System.out.println("i'm here");
             int one = Integer.parseInt(One.getText());
             int five = Integer.parseInt(Five.getText());
             int ten = Integer.parseInt(Ten.getText());
             int total = 100*one + 500*five + 1000*ten;
-            System.out.println("This is total:"+total);
             Total.setText(Integer.toString(total));
             depositCollectorMBox.send(new Msg(id, depositCollectorMBox, Msg.Type.DC_Total, one +"/"+ five +"/"+ ten +"/"+ total));
             One.setText("0");
