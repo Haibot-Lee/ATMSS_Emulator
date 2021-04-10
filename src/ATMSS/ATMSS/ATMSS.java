@@ -363,7 +363,7 @@ public class ATMSS extends AppThread {
                         currentPage = "selectAccountDeposit";
                         allAccounts = getAcc();
                         if (!allAccounts.equals("")) {
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_SaveCash, allAccounts));
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Deposit, allAccounts));
                         }
                         //Cash Deposit
                         break;

@@ -56,7 +56,6 @@ public class CashDispenserEmulator extends CashDispenserHandler{
         this.oneThousandAmount-=Integer.parseInt(oneThousandAmount);
         if(this.oneHundredAmount==0||this.fiveHundredAmount==0||this.oneThousandAmount==0){
             handleEnquiryMoney();
-
         }
         cashDispenserEmulatorController.oneHundredTextField.setText(oneHundredAmount);
         cashDispenserEmulatorController.fiveHundredTextField.setText(fiveHundredAmount);
