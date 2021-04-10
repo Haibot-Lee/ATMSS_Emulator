@@ -258,9 +258,9 @@ public class Msg {
          */
         CD_EnquiryMoney,
         /**
-         * Money
+         * Add the number of denomination
          */
-        CD_MoneyAmount,
+        CD_AddDenomination,
         /**
          * Cash Deposit Collector
          */

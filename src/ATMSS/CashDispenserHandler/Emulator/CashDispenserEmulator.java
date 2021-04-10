@@ -84,4 +84,16 @@ public class CashDispenserEmulator extends CashDispenserHandler {
         atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyJammed, msg.getDetails()));
         log.info(id + ": Money is collected");
     }
+
+    @Override
+    protected void handeleAddDenomination(Msg msg) {
+        super.handeleAddDenomination(msg);
+        String money=msg.getDetails();
+        String[] m=money.split(" ");
+        oneHundredAmount+=Integer.parseInt(m[0]);
+        fiveHundredAmount+=Integer.parseInt(m[1]);
+        oneThousandAmount+=Integer.parseInt(m[2]);
+        handleEnquiryMoney();
+
+    }
 }
