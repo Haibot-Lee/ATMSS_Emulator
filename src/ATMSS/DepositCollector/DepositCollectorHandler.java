@@ -15,32 +15,10 @@ public class DepositCollectorHandler extends HWHandler {
     // processMsg
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
-            case CD_EjectMoney:
-                String money=msg.getDetails();
-                String[] m=money.split(" ");
-                handleEjectMoney(m[0],m[1],m[2]);
-                //atmss.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, id+": ejecting..."));
+            case DC_Total:
+                atmss.send(new Msg(id,mbox,Msg.Type.DC_Total,msg.getDetails()));
                 break;
-            case CD_EnquiryMoney:
-                handleEnquiryMoney();
-                //atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyAmount, ""));
-            case CD_MoneyJammed:
-                handleMoneyJammed();
-                //atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyJammed, msg.getDetails()));
-
-
         }
 
     } // processMsg
-
-    private void handleMoneyJammed() {
-    }
-
-    protected void handleEjectMoney(String  oneHundredAmount, String fiveHundrdAmount, String oneThousandAmount){
-        log.info(id+": is ejecting money");
-    }
-    protected void handleEnquiryMoney(){
-        log.info(id+": is answering enquiry");
-
-    }
 }

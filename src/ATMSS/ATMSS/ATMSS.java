@@ -2,10 +2,12 @@ package ATMSS.ATMSS;
 
 import ATMSS.BAMSHandler.BAMSHandler;
 
+import ATMSS.BAMSHandler.BAMSInvalidReplyException;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
+import java.io.IOException;
 import java.util.Date;
 
 
@@ -34,6 +36,7 @@ public class ATMSS extends AppThread {
     private String moneyDepositFive = "";
     private String moneyDepositTen = "";
     private String accountDeposit = "";
+    private String depositDetails="";
     private int oneHundredNum; // the number of 100 of cash dispenser
     private int fiveHundredNum;
     private int oneThousandNum;
@@ -128,6 +131,10 @@ public class ATMSS extends AppThread {
                     //touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
                     break;
 
+                case DC_Total:
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDepositDetails, msg.getDetails()));
+                    break;
+
                 case TimesUp:
                     Timer.setTimer(id, mbox, pollingTime);
                     log.info("Poll: " + msg.getDetails());
@@ -202,6 +209,7 @@ public class ATMSS extends AppThread {
                 moneyDepositOne = "";
                 moneyDepositFive = "";
                 moneyDepositTen = "";
+                attempt = 0;
                 attempt = 0;
                 accountWithdrawal = "";
 
@@ -295,7 +303,7 @@ public class ATMSS extends AppThread {
 
                                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
                                 currentPage = "withdrawalReceipt";
-                            }else{
+                            } else {
                                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, "Balance not enough!"));
                                 moneyWithdrawal = "";
                                 break;
@@ -318,37 +326,9 @@ public class ATMSS extends AppThread {
 
                 case "moneyDeposit":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
-                        try {
-//                            int moneyAmount = Integer.parseInt(moneyWithdrawal);
-//                            String oneThousandAmount = Integer.toString(moneyAmount / 1000);
-//                            String oneHundredAmount = Integer.toString(moneyAmount % 1000 / 100);
-//                            int mod = moneyAmount % 100;
-//                            if (mod != 0) {
-//                                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
-//                                moneyWithdrawal = "";
-//                                break;
-//                            }
-//                            cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, oneHundredAmount + " 0 " + oneThousandAmount));
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                            currentPage = "depositReceipt";
-//                            try {
-//                                bams.withdraw(cardNo, accountWithdrawal, "cred-1", moneyWithdrawal);
-//                            } catch (Exception e) {
-//                                System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
-//                                e.printStackTrace();
-//                            }
-                        } catch (Exception e) {
-                            moneyWithdrawal = "";
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
-                        }
-                    } else {
-//                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Withdrawal, msg.getDetails()));
-//                        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
-//                            moneyWithdrawal = "";
-//                        } else {
-//                            moneyWithdrawal += msg.getDetails();
-//                        }
-
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
+                        Deposit();
+                        currentPage = "depositReceipt";
                     }
                     break;
             }
@@ -380,12 +360,12 @@ public class ATMSS extends AppThread {
                         break;
 
                     case 2:
+                        //Cash Deposit
                         currentPage = "selectAccountDeposit";
                         allAccounts = getAcc();
                         if (!allAccounts.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Deposit, allAccounts));
                         }
-                        //Cash Deposit
                         break;
 
                     case 3:
@@ -535,15 +515,29 @@ public class ATMSS extends AppThread {
                         //cardNo = "";
                         password = "";
                         break;
+
                 }
                 break;
 
             case "moneyWithdrawal":
+                switch (buttonPressed){
+                    case 6:
+                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"MainMenu"));
+                        currentPage = "mainMenu";
+                        break;
+                }
+
+
             case "moneyDeposit":
                 switch (buttonPressed) {
                     case 6:
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                        currentPage = "mainMenu";
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
+                        Deposit();
+                        currentPage = "depositReceipt";
+                        break;
+                    case 5:
+                        //update data
+                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"moneyDeposit"));
                         break;
                 }
                 break;
@@ -729,5 +723,17 @@ public class ATMSS extends AppThread {
             e.printStackTrace();
         }
         return outamount;
+    }
+
+    private double Deposit() {
+        double depAmount = 0;
+        try {
+            depAmount = bams.deposit("41070003", "41070003-0", "cred-3", "1000");
+        } catch (BAMSInvalidReplyException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return depAmount;
     }
 }

@@ -164,7 +164,6 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         super.showDepositAccount(msg);
         touchDisplayEmulatorController.setAccPage(msg.getDetails());
         touchDisplayEmulatorController.messageArea.setText("[Cash Deposit] Choose one account:");
-
     }
 
     protected void changeTransferAmount(Msg msg) {
@@ -175,6 +174,11 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         log.info(id + ": show Result");
 
         touchDisplayEmulatorController.showResult(msg.getDetails());
+    }
+
+    protected void dealDetails(Msg msg){
+        String[] details = msg.getDetails().split("/");
+        touchDisplayEmulatorController.setDepositCollectorInfo(details);
     }
 
 

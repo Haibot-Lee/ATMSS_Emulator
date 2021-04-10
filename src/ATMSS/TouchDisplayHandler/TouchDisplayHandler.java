@@ -99,10 +99,18 @@ public class TouchDisplayHandler extends HWHandler {
                 System.out.println("TouchDisplay timer freeze.");
                 break;
 
+            case TD_UpdateDepositDetails:
+                dealDetails(msg);
+                break;
+
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
     } // processMsg
+
+    protected void dealDetails(Msg msg) {
+
+    }
 
     protected void showAccounts(Msg msg) {
     }

@@ -26,6 +26,7 @@ public class TouchDisplayEmulatorController {
     public TextField passwordMsg;
     public Text messageArea;
 
+
     public Text button1;
     public Text button2;
     public Text button3;
@@ -34,6 +35,11 @@ public class TouchDisplayEmulatorController {
     public Text button6;
 
     public TextField transAmount;
+
+    public TextField one;
+    public TextField five;
+    public TextField ten;
+    public TextField total;
 
     //------------------------------------------------------------
     // initialize
@@ -130,4 +136,14 @@ public class TouchDisplayEmulatorController {
         button6.setText("Exit");
     }
 
+    public void setDepositCollectorInfo(String[] details) {
+        int first = Integer.parseInt(one.getText())+Integer.parseInt(details[0]);
+        int second = Integer.parseInt(five.getText())+Integer.parseInt(details[1]);
+        int third = Integer.parseInt(ten.getText())+Integer.parseInt(details[2]);
+        int forth = Integer.parseInt(total.getText())+Integer.parseInt(details[3]);
+        one.setText(Integer.toString(first));
+        five.setText(Integer.toString(second));
+        ten.setText(Integer.toString(third));
+        total.setText(Integer.toString(forth));
+    }
 } // TouchDisplayEmulatorController

@@ -186,6 +186,10 @@ public class Msg {
         TD_Message_transferTo,
         TD_Message_transferAmount,
         /**
+         *  show message of deposit
+         */
+        TD_UpdateDepositDetails,
+        /**
          * Card inserted
          */
         CR_CardInserted,
@@ -257,6 +261,10 @@ public class Msg {
          * Money
          */
         CD_MoneyAmount,
+        /**
+         * Cash Deposit Collector
+         */
+        DC_Total,
 
 
     } // Type

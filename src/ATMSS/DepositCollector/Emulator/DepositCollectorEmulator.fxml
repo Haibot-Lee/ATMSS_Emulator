@@ -10,10 +10,11 @@
       <TextField editable="false" layoutX="100.0" layoutY="63.0" text="100" />
       <TextField editable="false" layoutX="100.0" layoutY="123.0" text="500" />
       <TextField editable="false" layoutX="100.0" layoutY="189.0" text="1000" />
-      <TextField layoutX="300.0" layoutY="63.0" promptText="0" />
-      <TextField layoutX="300.0" layoutY="123.0" promptText="0" />
-      <TextField layoutX="300.0" layoutY="189.0" promptText="0" />
+      <TextField fx:id="One" layoutX="300.0" layoutY="63.0" promptText="0" text="0" />
+      <TextField fx:id="Five" layoutX="300.0" layoutY="123.0" promptText="0" text="0" />
+      <TextField fx:id="Ten" layoutX="300.0" layoutY="189.0" promptText="0" text="0" />
       <TextField editable="false" layoutX="100.0" layoutY="255.0" text="Total:" />
-      <TextField editable="false" layoutX="300.0" layoutY="255.0" promptText="0" />
+      <TextField fx:id="Total" editable="false" layoutX="300.0" layoutY="255.0" promptText="0" text="0" />
+      <Button fx:id="done" layoutX="237.0" layoutY="318.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="31.0" prefWidth="126.0" text="Done" />
    </children>
 </AnchorPane>
