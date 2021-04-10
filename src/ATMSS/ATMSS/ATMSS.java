@@ -1,13 +1,11 @@
 package ATMSS.ATMSS;
 
-import ATMSS.BAMSHandler.BAMSHandler;
+import BAMS.BAMS;
 
-import ATMSS.BAMSHandler.BAMSInvalidReplyException;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
-import java.io.IOException;
 import java.util.Date;
 
 
@@ -23,7 +21,7 @@ public class ATMSS extends AppThread {
     private MBox cashDispenserMBox;
     private MBox buzzerMBox;
 
-    private BAMSHandler bams;
+    private BAMS bams;
     private String currentPage = "";
 
     //For one card
@@ -55,7 +53,7 @@ public class ATMSS extends AppThread {
         super(id, appKickstarter);
         pollingTime = Integer.parseInt(appKickstarter.getProperty("ATMSS.PollingTime"));
         //Establish Connection
-        bams = new BAMSHandler("http://cslinux0.comp.hkbu.edu.hk/comp4107_20-21_grp01/");
+        bams = new BAMS();
     } // ATMSS
 
 
@@ -129,7 +127,7 @@ public class ATMSS extends AppThread {
                     break;
 
                 case DC_Total:
-                    if(!msg.getDetails().equals("Invalid")){
+                    if (!msg.getDetails().equals("Invalid")) {
                         String[] msgs = msg.getDetails().split("/");
                         intDepositOne += Integer.parseInt(msgs[0]);
                         intDepositFive += Integer.parseInt(msgs[1]);
@@ -174,7 +172,7 @@ public class ATMSS extends AppThread {
                 case CD_MoneyJammed:
                     System.out.println(cardNo + accountWithdrawal + moneyWithdrawal);
                     try {
-                        bams.deposit(cardNo, accountWithdrawal, "cred-1", moneyWithdrawal);
+                        bams.deposit(cardNo, accountWithdrawal, moneyWithdrawal);
                     } catch (Exception e) {
                         System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
                         e.printStackTrace();
@@ -242,7 +240,7 @@ public class ATMSS extends AppThread {
             switch (currentPage) {
                 case "password":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
-                        if (cardValidation()) {
+                        if (bams.cardValidation(cardNo, password)) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                             keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_AcceptInput, "MainMenu"));
@@ -273,7 +271,7 @@ public class ATMSS extends AppThread {
 
                 case "transferAccount":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
-                        String result = moneyTransfer();
+                        String result = bams.moneyTransfer(cardNo, trans);
                         trans += "/" + result;
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, result));
                         currentPage = "showTransferResult";
@@ -307,7 +305,7 @@ public class ATMSS extends AppThread {
                                 break;
                             }
 
-                            int outAmount = withdraw();
+                            int outAmount = bams.withdraw(cardNo, accountWithdrawal, moneyWithdrawal);
                             if (outAmount != -1) {
                                 cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, oneHundredAmount + " 0 " + oneThousandAmount));
 
@@ -337,7 +335,7 @@ public class ATMSS extends AppThread {
                 case "moneyDeposit":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                        Deposit();
+                        bams.deposit(cardNo, accountDeposit, DepositTotal);
                         currentPage = "depositReceipt";
                     }
                     break;
@@ -361,7 +359,7 @@ public class ATMSS extends AppThread {
                     case 1:
                         //cash withdrawal
                         currentPage = "selectAccountWithdrawal";
-                        String allAccounts = getAcc();
+                        String allAccounts = bams.getAcc(cardNo);
                         if (!allAccounts.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_showAccount, allAccounts));
                         }
@@ -372,7 +370,7 @@ public class ATMSS extends AppThread {
                     case 2:
                         //Cash Deposit
                         currentPage = "selectAccountDeposit";
-                        allAccounts = getAcc();
+                        allAccounts = bams.getAcc(cardNo);
                         if (!allAccounts.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Deposit, allAccounts));
                         }
@@ -380,7 +378,7 @@ public class ATMSS extends AppThread {
 
                     case 3:
                         //money transfer
-                        String accs = getAcc();
+                        String accs = bams.getAcc(cardNo);
                         if (!accs.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferFrom, accs));
                         }
@@ -393,10 +391,10 @@ public class ATMSS extends AppThread {
                     case 4:
                         //Balance Enquiry
                         String balance = "";
-                        balance += "Account 1: " + checkBalance("-0");
-                        balance += "\nAccount 2: " + checkBalance("-1");
-                        balance += "\nAccount 3: " + checkBalance("-2");
-                        balance += "\nAccount 4: " + checkBalance("-3");
+                        balance += "Account 1: " + bams.checkBalance(cardNo, "-0");
+                        balance += "\nAccount 2: " + bams.checkBalance(cardNo, "-1");
+                        balance += "\nAccount 3: " + bams.checkBalance(cardNo, "-2");
+                        balance += "\nAccount 4: " + bams.checkBalance(cardNo, "-3");
 
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, balance));
 
@@ -420,10 +418,10 @@ public class ATMSS extends AppThread {
                     case 1:
                         //print advice
                         String balance = "";
-                        balance += "Account 1: " + checkBalance("-0");
-                        balance += "\nAccount 2: " + checkBalance("-1");
-                        balance += "\nAccount 3: " + checkBalance("-2");
-                        balance += "\nAccount 4: " + checkBalance("-3");
+                        balance += "Account 1: " + bams.checkBalance(cardNo, "-0");
+                        balance += "\nAccount 2: " + bams.checkBalance(cardNo, "-1");
+                        balance += "\nAccount 3: " + bams.checkBalance(cardNo, "-2");
+                        balance += "\nAccount 4: " + bams.checkBalance(cardNo, "-3");
 
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
                         break;
@@ -492,7 +490,7 @@ public class ATMSS extends AppThread {
                         currentPage = "mainMenu";
                         break;
                     case 6:
-                        String result = moneyTransfer();
+                        String result = bams.moneyTransfer(cardNo, trans);
                         trans += "/" + result;
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, result));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
@@ -505,7 +503,7 @@ public class ATMSS extends AppThread {
                 switch (buttonPressed) {
                     case 1:
                         //print advice
-                        String[] accs = getAcc().split("/");
+                        String[] accs = bams.getAcc(cardNo).split("/");
                         String[] idx = trans.split("/");
                         String result = "Money Transfer on card: " + cardNo;
                         result += "\nTransfer " + idx[2] + " from account " + accs[Integer.parseInt(idx[0]) - 1] + " to account " + accs[Integer.parseInt(idx[1]) - 1];
@@ -544,13 +542,13 @@ public class ATMSS extends AppThread {
                 switch (buttonPressed) {
                     case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                        System.out.println("----------\n"+Deposit());
+                        bams.deposit(cardNo, accountDeposit, DepositTotal);
                         currentPage = "depositReceipt";
                         break;
                     case 5:
                         //update data
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
-                        depositCollectorMBox.send(new Msg(id,mbox,Msg.Type.DC_ButtonControl,""));
+                        depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.DC_ButtonControl, ""));
                         break;
                     case 6:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
@@ -564,7 +562,7 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
                 } else {
-                    String[] accs = getAcc().split("/");
+                    String[] accs = bams.getAcc(cardNo).split("/");
                     for (int i = 1; i <= accs.length; i++) {
                         if (buttonPressed == i) {
                             cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EnquiryMoney, "")); // ask for the money amount of three denominations of cash dispenser
@@ -584,11 +582,11 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
                 } else {
-                    String[] accs = getAcc().split("/");
+                    String[] accs = bams.getAcc(cardNo).split("/");
                     for (int i = 0; i <= accs.length; i++) {
                         if (buttonPressed == i) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Deposit"));
-                            depositCollectorMBox.send(new Msg(id,mbox,Msg.Type.DC_ButtonControl,""));
+                            depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.DC_ButtonControl, ""));
                             accountDeposit = accs[i - 1];
                             currentPage = "moneyDeposit";
                             break;
@@ -676,84 +674,5 @@ public class ATMSS extends AppThread {
             }
         }
         return 0;
-    }
-
-    //-------------------------------------------------------------
-    //BAMS Connection
-    private boolean cardValidation() {
-        String cred = "";
-        try {
-            cred = bams.login(cardNo, password);
-        } catch (Exception e) {
-            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
-            e.printStackTrace();
-        }
-        if (!cred.equals("") && !cred.equals("Error")) {
-            return true;
-        }
-        return false;
-    }
-
-    private String getAcc() {
-        try {
-            return bams.getAccounts(cardNo, cardNo);
-        } catch (Exception e) {
-            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    private String checkBalance(String number) {
-        double balance = 0;
-        try {
-            balance = bams.enquiry(cardNo, cardNo + number, cardNo);
-            if (balance == -1) return "Invalid account";
-            else return "" + balance;
-        } catch (Exception e) {
-            System.out.println("ATMSS: Exception caught: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return "" + balance;
-    }
-
-    private String moneyTransfer() {
-        String[] accs = getAcc().split("/");
-        String[] idx = trans.split("/");
-        try {
-            double transAmount = bams.transfer(cardNo, cardNo, accs[Integer.parseInt(idx[0]) - 1], accs[Integer.parseInt(idx[1]) - 1], idx[2]);
-            if (transAmount != -1.0) {
-                return "Transfer successfully!";
-            }
-        } catch (Exception e) {
-            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return "Transfer failed. Balance is not enough!";
-    }
-
-    private int withdraw() {
-        int outamount = 0;
-        try {
-            outamount = bams.withdraw(cardNo, accountWithdrawal, "cred-1", moneyWithdrawal);
-        } catch (Exception e) {
-            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return outamount;
-    }
-
-    private double Deposit() {
-        double depAmount = 0;
-        try {
-            System.out.println("--------------------\n"+cardNo+" "+accountDeposit+" "+DepositTotal);
-            depAmount = bams.deposit(cardNo, accountDeposit, "cred-1", DepositTotal);
-
-        } catch (BAMSInvalidReplyException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return depAmount;
     }
 }
