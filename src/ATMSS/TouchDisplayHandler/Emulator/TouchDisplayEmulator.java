@@ -176,10 +176,14 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         touchDisplayEmulatorController.showResult(msg.getDetails());
     }
 
-    protected void dealDetails(Msg msg){
-        String[] details = msg.getDetails().split("/");
-        touchDisplayEmulatorController.setDepositCollectorInfo(details);
-
+    protected void dealDetails(Msg msg) {
+        if (msg.getDetails().equals("Invalid")) {
+            touchDisplayEmulatorController.InvalidCash.setVisible(true);
+        } else {
+            String[] details = msg.getDetails().split("/");
+            touchDisplayEmulatorController.setDepositCollectorInfo(details);
+            touchDisplayEmulatorController.InvalidCash.setVisible(false);
+        }
     }
 
 

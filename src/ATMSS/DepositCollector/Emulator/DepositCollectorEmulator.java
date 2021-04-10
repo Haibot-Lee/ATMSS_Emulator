@@ -44,4 +44,8 @@ public class DepositCollectorEmulator extends DepositCollectorHandler {
         });
         myStage.show();
     } // depositCollectorEmulator
+
+    protected void ButtonControl() {
+        depositCollectorEmulatorController.Done.setDisable(false);
+    }
 }

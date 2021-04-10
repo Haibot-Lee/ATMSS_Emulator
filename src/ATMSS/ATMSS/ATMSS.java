@@ -129,13 +129,15 @@ public class ATMSS extends AppThread {
                     break;
 
                 case DC_Total:
+                    if(!msg.getDetails().equals("Invalid")){
+                        String[] msgs = msg.getDetails().split("/");
+                        intDepositOne += Integer.parseInt(msgs[0]);
+                        intDepositFive += Integer.parseInt(msgs[1]);
+                        intDepositTen += Integer.parseInt(msgs[2]);
+                        intDepositTotal += Integer.parseInt(msgs[3]);
+                        DepositTotal = Integer.toString(intDepositTotal);
+                    }
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDepositDetails, msg.getDetails()));
-                    String[] msgs = msg.getDetails().split("/");
-                    intDepositOne += Integer.parseInt(msgs[0]);
-                    intDepositFive += Integer.parseInt(msgs[1]);
-                    intDepositTen += Integer.parseInt(msgs[2]);
-                    intDepositTotal += Integer.parseInt(msgs[3]);
-                    DepositTotal = Integer.toString(intDepositTotal);
                     break;
 
                 case TimesUp:
@@ -548,8 +550,7 @@ public class ATMSS extends AppThread {
                     case 5:
                         //update data
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
-                        System.out.println("button5 Clicked");
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
+                        depositCollectorMBox.send(new Msg(id,mbox,Msg.Type.DC_ButtonControl,""));
                         break;
                     case 6:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
@@ -587,12 +588,14 @@ public class ATMSS extends AppThread {
                     for (int i = 0; i <= accs.length; i++) {
                         if (buttonPressed == i) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Deposit"));
+                            depositCollectorMBox.send(new Msg(id,mbox,Msg.Type.DC_ButtonControl,""));
                             accountDeposit = accs[i - 1];
                             currentPage = "moneyDeposit";
                             break;
                         }
                     }
                 }
+
                 break;
 
             case "withdrawalReceipt":

@@ -3,6 +3,7 @@ package ATMSS.TouchDisplayHandler.Emulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
+import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 //======================================================================
 // TouchDisplayEmulatorController
 public class TouchDisplayEmulatorController {
+
     private String id;
     private AppKickstarter appKickstarter;
     private Logger log;
@@ -40,6 +42,7 @@ public class TouchDisplayEmulatorController {
     public TextField five;
     public TextField ten;
     public TextField total;
+    public Text InvalidCash;
 
     //------------------------------------------------------------
     // initialize

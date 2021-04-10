@@ -266,6 +266,7 @@ public class Msg {
          */
         DC_Total,
         DC_MoneyDetails,
+        DC_ButtonControl,
 
 
     } // Type

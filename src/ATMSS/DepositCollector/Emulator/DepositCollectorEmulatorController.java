@@ -23,7 +23,7 @@ public class DepositCollectorEmulatorController {
     public TextField One;
     public TextField Five;
     public TextField Ten;
-    public TextField Total;
+    public Button Done;
 
 
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, DepositCollectorEmulator depositCollectorEmulator) {
@@ -38,17 +38,23 @@ public class DepositCollectorEmulatorController {
     // buttonPressed
     public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
-        if(btn.getText().equals("Done")){
-            int one = Integer.parseInt(One.getText());
-            int five = Integer.parseInt(Five.getText());
-            int ten = Integer.parseInt(Ten.getText());
-            int total = 100*one + 500*five + 1000*ten;
-            Total.setText(Integer.toString(total));
-            depositCollectorMBox.send(new Msg(id, depositCollectorMBox, Msg.Type.DC_Total, one +"/"+ five +"/"+ ten +"/"+ total));
-            One.setText("0");
-            Five.setText("0");
-            Ten.setText("0");
-            Total.setText("0");
+        if (btn.getText().equals("Done")) {
+
+            try {
+                int one = Integer.parseInt(One.getText());
+                int five = Integer.parseInt(Five.getText());
+                int ten = Integer.parseInt(Ten.getText());
+                int total = 100 * one + 500 * five + 1000 * ten;
+                depositCollectorMBox.send(new Msg(id, depositCollectorMBox, Msg.Type.DC_Total, one + "/" + five + "/" + ten + "/" + total));
+                One.setText("0");
+                Five.setText("0");
+                Ten.setText("0");
+                Done.setDisable(true);
+            } catch (Exception e) {
+                depositCollectorMBox.send(new Msg(id, depositCollectorMBox, Msg.Type.DC_Total, "Invalid"));
+            }
+
+
         }
     }// buttonPressed
 }

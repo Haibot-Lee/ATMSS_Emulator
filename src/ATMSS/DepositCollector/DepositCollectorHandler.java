@@ -23,6 +23,13 @@ public class DepositCollectorHandler extends HWHandler {
             case DC_Total:
                 atmss.send(new Msg(id, mbox, Msg.Type.DC_Total, msg.getDetails()));
                 break;
+            case DC_ButtonControl:
+                ButtonControl();
+                break;
         }
     } // processMsg
+
+    protected void ButtonControl(){
+
+    }
 }
