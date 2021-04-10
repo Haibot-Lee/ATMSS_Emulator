@@ -599,7 +599,6 @@ public class ATMSS extends AppThread {
                         if (buttonPressed == i) {
                             cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EnquiryMoney, "")); // ask for the money amount of three denominations of cash dispenser
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Withdrawal"));
-
                             accountWithdrawal = accs[i - 1];
                             moneyWithdrawal = "";
                             currentPage = "moneyWithdrawal";
@@ -632,13 +631,6 @@ public class ATMSS extends AppThread {
 
             case "withdrawalReceipt":
                 switch (buttonPressed) {
-                    case 3:
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
-                        currentPage = "withdrawalEnd";
-                        long currentTime = (new Date()).getTime();
-                        String receipt = currentTime + " " + cardNo + " " + accountWithdrawal + " withdraw " + moneyWithdrawal;
-                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, receipt));
-                        break;
                     case 4:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
                         currentPage = "withdrawalEnd";
