@@ -118,6 +118,7 @@ public class ATMSS extends AppThread {
                 case CR_CardRemoved:
                     log.info("CardRemoved: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
+                    //buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, ""));
                     break;
 
                 case CR_CardEjected:
@@ -207,6 +208,7 @@ public class ATMSS extends AppThread {
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
             if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))]) {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
+
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
 
                 //reset

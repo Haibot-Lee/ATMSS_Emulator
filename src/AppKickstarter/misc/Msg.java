@@ -242,6 +242,10 @@ public class Msg {
          */
         P_Reset,
         /**
+         * Buzzer stop alert
+         */
+        B_Stop,
+        /**
          * Buzzer alert
          */
         B_Alert,

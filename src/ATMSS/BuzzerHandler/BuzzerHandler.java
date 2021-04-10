@@ -5,18 +5,27 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.Msg;
 import AppKickstarter.timer.Timer;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+
 
 //======================================================================
 // BuzzerHandler
 public class BuzzerHandler extends HWHandler {
-    /*
-    int waitingTime = 10000;
-    int timerID = 1919810;*/
+    String filename;
+    File file;
+    AudioClip audioClip = null;
 
     //------------------------------------------------------------
     // BuzzerHandler
     public BuzzerHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
+        filename = appKickstarter.getProperty("Buzzer.Music");
+        file = new File(filename);
+        audioClip = null;
     } // BuzzerHandler
 
 
@@ -27,9 +36,44 @@ public class BuzzerHandler extends HWHandler {
 
             case B_Alert:
                 handleAlert(msg);
+                try {
+                    System.out.println("Try to play music");
+
+                    audioClip = Applet.newAudioClip(file.toURL());
+                    audioClip.play();
+                    Thread.sleep(3000);
+                    audioClip.stop();
+
+                    System.out.println("Playing music now");
+
+                }catch (Exception e) {
+
+                }
+
+                break;
+
+            case B_Stop:
+                handleStop();
+                try {
+                    System.out.println("Stop playing music");
+
+                    audioClip.stop();
+
+                    System.out.println("Stop playing music now");
+
+                }catch (Exception e) {
+
+                }
+
                 //atmss.send(new Msg(id, mbox, Msg.Type.CR_CardInserted, msg.getDetails()));
                 break;
-            /*
+/*
+            case CR_CardInserted:
+                handleCardInsert();
+                atmss.send(new Msg(id, mbox, Msg.Type.CR_CardInserted, msg.getDetails()));
+                break;
+                */
+                /*
             case CR_CardInserted:
                 handleCardInsert();
                 atmss.send(new Msg(id, mbox, Msg.Type.CR_CardInserted, msg.getDetails()));
@@ -70,6 +114,12 @@ public class BuzzerHandler extends HWHandler {
     protected void handleAlert(Msg msg) {
         log.info(id + ": alert");
     } // handleAlert
+
+    //------------------------------------------------------------
+    // handleStop
+    protected void handleStop() {
+        log.info(id + ": stop alert");
+    } // handleStop
 
     /*
     //------------------------------------------------------------
