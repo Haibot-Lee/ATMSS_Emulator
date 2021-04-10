@@ -542,7 +542,7 @@ public class ATMSS extends AppThread {
                 switch (buttonPressed) {
                     case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                        Deposit();
+                        System.out.println("----------\n"+Deposit());
                         currentPage = "depositReceipt";
                         break;
                     case 5:
@@ -743,7 +743,9 @@ public class ATMSS extends AppThread {
     private double Deposit() {
         double depAmount = 0;
         try {
+            System.out.println("--------------------\n"+cardNo+" "+accountDeposit+" "+DepositTotal);
             depAmount = bams.deposit(cardNo, accountDeposit, "cred-1", DepositTotal);
+
         } catch (BAMSInvalidReplyException e) {
             e.printStackTrace();
         } catch (IOException e) {
