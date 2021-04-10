@@ -139,9 +139,9 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     }
 
     @Override
-    protected void showInvalidInput() {
-        super.showInvalidInput();
-        touchDisplayEmulatorController.setInvalidInput();
+    protected void showInvalidInput(Msg msg) {
+        super.showInvalidInput(msg);
+        touchDisplayEmulatorController.setInvalidInput(msg.getDetails());
     }
 
     protected void changeTransferFrom(Msg msg) {
@@ -160,7 +160,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         touchDisplayEmulatorController.messageArea.setText("[Cash Withdraw] Choose one account:");
     }
 
-    protected void showDepositAccount(Msg msg){
+    protected void showDepositAccount(Msg msg) {
         super.showDepositAccount(msg);
         touchDisplayEmulatorController.setAccPage(msg.getDetails());
         touchDisplayEmulatorController.messageArea.setText("[Cash Deposit] Choose one account:");

@@ -213,7 +213,6 @@ public class ATMSS extends AppThread {
         } else {
             switch (currentPage) {
                 case "password":
-
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         if (cardValidation()) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
@@ -271,19 +270,21 @@ public class ATMSS extends AppThread {
                                 moneyWithdrawal = "";
                                 break;
                             }
-                            cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, oneHundredAmount + " 0 " + oneThousandAmount));
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
-                            currentPage = "withdrawalReceipt";
-                            try {
-                                bams.withdraw(cardNo, accountWithdrawal, "cred-1", moneyWithdrawal);
-                            } catch (Exception e) {
-                                System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
-                                e.printStackTrace();
+
+                            int outAmount = withdraw();
+                            if (outAmount != -1) {
+                                cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, oneHundredAmount + " 0 " + oneThousandAmount));
+                                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
+                                currentPage = "withdrawalReceipt";
+                            }else{
+                                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, "Balance not enough!"));
+                                moneyWithdrawal = "";
+                                break;
                             }
 
                         } catch (Exception e) {
                             moneyWithdrawal = "";
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, ""));
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_InvalidInput, "Input invalid"));
                         }
                     } else {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Withdrawal, msg.getDetails()));
@@ -693,5 +694,16 @@ public class ATMSS extends AppThread {
             e.printStackTrace();
         }
         return "Transfer failed. Balance is not enough!";
+    }
+
+    private int withdraw() {
+        int outamount = 0;
+        try {
+            outamount = bams.withdraw(cardNo, accountWithdrawal, "cred-1", moneyWithdrawal);
+        } catch (Exception e) {
+            System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return outamount;
     }
 }

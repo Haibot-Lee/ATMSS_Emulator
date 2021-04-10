@@ -40,7 +40,7 @@ public class TouchDisplayHandler extends HWHandler {
                 break;
 
             case TD_InvalidInput:
-                showInvalidInput();
+                showInvalidInput(msg);
                 break;
 
             case TD_TransAmount:
@@ -90,7 +90,7 @@ public class TouchDisplayHandler extends HWHandler {
     protected void showResult(Msg msg) {
     }
 
-    protected void showInvalidInput() {
+    protected void showInvalidInput(Msg msg) {
         log.info(id + ": invalid input");
     }
 

@@ -62,10 +62,9 @@ public class TouchDisplayEmulatorController {
         passwordField.setText(cur);
     }
 
-    public void setInvalidInput() {
+    public void setInvalidInput(String msg) {
         withdrawalField.setText("");
-        invalidInputField.setText("Invalid input. Please type again");
-
+        invalidInputField.setText(msg);
     }
 
     public void appendWithdrawal(String withdrawal) {
