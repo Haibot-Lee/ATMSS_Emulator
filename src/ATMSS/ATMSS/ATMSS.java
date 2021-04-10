@@ -33,7 +33,10 @@ public class ATMSS extends AppThread {
     private String moneyWithdrawal = "";
     private String accountWithdrawal = "";
     private String accountDeposit = "";
-    private int oneHundredNum; // the number of 100 of cash dispenser
+    private String depositDetails = "";
+
+    // the number of different kind of cash in Cash Dispenser
+    private int oneHundredNum;
     private int fiveHundredNum;
     private int oneThousandNum;
 
@@ -46,13 +49,12 @@ public class ATMSS extends AppThread {
     private int attempt = 0;
     boolean[] lockeds = {false, false, false};
 
-    private boolean DepositCollectorWork = true;
-
     //------------------------------------------------------------
     // ATMSS
     public ATMSS(String id, AppKickstarter appKickstarter) throws Exception {
         super(id, appKickstarter);
         pollingTime = Integer.parseInt(appKickstarter.getProperty("ATMSS.PollingTime"));
+        //Establish Connection
         bams = new BAMSHandler("http://cslinux0.comp.hkbu.edu.hk/comp4107_20-21_grp01/");
     } // ATMSS
 
@@ -100,16 +102,7 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                     //processKeyPressed(msg);
                     break;
-/*
-                case CR_Overtime:
-                    System.out.println("Card no is" + cardNo);
-                    log.info("Card reader overtime: " + msg.getDetails());
-                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, cardNo));
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
-                    System.out.println(cardNo);
-                    lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))] = true;
-                    break;
-*/
+
                 case CR_CardInserted:
                     log.info("CardInserted: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Password"));
@@ -216,6 +209,7 @@ public class ATMSS extends AppThread {
                 cardNo = "";
                 password = "";
                 moneyWithdrawal = "";
+
                 attempt = 0;
                 attempt = 0;
                 accountWithdrawal = "";
@@ -492,12 +486,14 @@ public class ATMSS extends AppThread {
                 switch (buttonPressed) {
                     case 5:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
                         currentPage = "mainMenu";
                         break;
                     case 6:
                         String result = moneyTransfer();
                         trans += "/" + result;
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, result));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
                         currentPage = "showTransferResult";
                         break;
                 }
@@ -550,6 +546,9 @@ public class ATMSS extends AppThread {
                         currentPage = "depositReceipt";
                         break;
                     case 5:
+                        //update data
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
+                        System.out.println("button5 Clicked");
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
                         break;
                     case 6:
