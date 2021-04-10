@@ -1,4 +1,5 @@
 package ATMSS.CashDispenserHandler.Emulator;
+
 import ATMSS.ATMSSStarter;
 import ATMSS.CashDispenserHandler.CashDispenserHandler;
 import AppKickstarter.AppKickstarter;
@@ -13,19 +14,22 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 
-public class CashDispenserEmulator extends CashDispenserHandler{
+public class CashDispenserEmulator extends CashDispenserHandler {
     private ATMSSStarter atmssStarter;
     private String id;
     private Stage myStage;
-    private  CashDispenserEmulatorController cashDispenserEmulatorController;
-    private int oneHundredAmount=5;
-    private int fiveHundredAmount=5;
-    private int oneThousandAmount=5;
+    private CashDispenserEmulatorController cashDispenserEmulatorController;
+    private int oneHundredAmount;
+    private int fiveHundredAmount;
+    private int oneThousandAmount;
 
-    public CashDispenserEmulator (String id, ATMSSStarter atmssStarter) throws Exception {
+    public CashDispenserEmulator(String id, ATMSSStarter atmssStarter) throws Exception {
         super(id, atmssStarter);
         this.atmssStarter = atmssStarter;
         this.id = id;
+        this.oneHundredAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.oneHundredAmount"));
+        this.fiveHundredAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.fiveHundredAmount"));
+        this.oneThousandAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.oneThousandAmount"));
     }//cashDispenserEmulator
 
     public void start() throws Exception {
@@ -50,27 +54,27 @@ public class CashDispenserEmulator extends CashDispenserHandler{
 
     @Override
     protected void handleEjectMoney(String oneHundredAmount, String fiveHundredAmount, String oneThousandAmount) {
-        super.handleEjectMoney(oneHundredAmount, fiveHundredAmount,oneThousandAmount);
-        this.oneHundredAmount-=Integer.parseInt(oneHundredAmount);
-        this.fiveHundredAmount-=Integer.parseInt(fiveHundredAmount);
-        this.oneThousandAmount-=Integer.parseInt(oneThousandAmount);
-        if(this.oneHundredAmount==0||this.fiveHundredAmount==0||this.oneThousandAmount==0){
+        super.handleEjectMoney(oneHundredAmount, fiveHundredAmount, oneThousandAmount);
+        this.oneHundredAmount -= Integer.parseInt(oneHundredAmount);
+        this.fiveHundredAmount -= Integer.parseInt(fiveHundredAmount);
+        this.oneThousandAmount -= Integer.parseInt(oneThousandAmount);
+        if (this.oneHundredAmount == 0 || this.fiveHundredAmount == 0 || this.oneThousandAmount == 0) {
             handleEnquiryMoney();
         }
         cashDispenserEmulatorController.oneHundredTextField.setText(oneHundredAmount);
         cashDispenserEmulatorController.fiveHundredTextField.setText(fiveHundredAmount);
         cashDispenserEmulatorController.oneThousandTextField.setText(oneThousandAmount);
-        int totalAmount=100*Integer.parseInt(oneHundredAmount)+500*Integer.parseInt(fiveHundredAmount)+1000*Integer.parseInt(oneThousandAmount);
+        int totalAmount = 100 * Integer.parseInt(oneHundredAmount) + 500 * Integer.parseInt(fiveHundredAmount) + 1000 * Integer.parseInt(oneThousandAmount);
         cashDispenserEmulatorController.totalAmountTextField.setText(Integer.toString(totalAmount));
     }
 
     @Override
     protected void handleEnquiryMoney() {
         super.handleEnquiryMoney();
-        String oneHundred=Integer.toString(oneHundredAmount);
-        String fiveHundred=Integer.toString(fiveHundredAmount);
-        String oneThousand=Integer.toString(oneThousandAmount);
-        atmss.send(new Msg(id, mbox, Msg.Type.CD_EnquiryMoney, oneHundred+" "+fiveHundred+" "+oneThousand));
+        String oneHundred = Integer.toString(oneHundredAmount);
+        String fiveHundred = Integer.toString(fiveHundredAmount);
+        String oneThousand = Integer.toString(oneThousandAmount);
+        atmss.send(new Msg(id, mbox, Msg.Type.CD_EnquiryMoney, oneHundred + " " + fiveHundred + " " + oneThousand));
     }
 
     @Override
@@ -78,6 +82,6 @@ public class CashDispenserEmulator extends CashDispenserHandler{
         super.handleTimesup(msg);
         cashDispenserEmulatorController.clearArea();
         atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyJammed, msg.getDetails()));
-        log.info(id+": Money is collected");
+        log.info(id + ": Money is collected");
     }
 }

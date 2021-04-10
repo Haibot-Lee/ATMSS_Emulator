@@ -77,7 +77,6 @@ public class TouchDisplayHandler extends HWHandler {
 
     protected void showDepositAccount(Msg msg){}
 
-
     protected void handleUpdateDisplay(Msg msg) {
     }
 
