@@ -63,7 +63,7 @@ public class TouchDisplayHandler extends HWHandler {
                 changeTransferAmount(msg);
                 break;
 
-            case TD_SaveCash:
+            case TD_Deposit:
                 showDepositAccount(msg);
                 break;
 

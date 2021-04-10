@@ -147,10 +147,18 @@ public class Msg {
          */
         TD_MouseClicked,
         /**
+         * Cash Deposit
+         */
+        TD_SaveCash,
+        /**
          * Text field of Passwords/Transfer Amount
          */
         TD_Passwords,
         TD_TransAmount,
+        /**
+         * to collect the cash
+         */
+        TD_Deposit,
         /**
          * Text filed of Money Withdrawal
          */
