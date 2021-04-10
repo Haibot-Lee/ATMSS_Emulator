@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
+    <children>
+        <AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
+
+
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="39.0" layoutX="66.0" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="39.0" layoutX="66.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="39.0" layoutX="66.0" layoutY="167.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
+                <Text layoutX="139.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100：">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Text>
+                <Text layoutX="139.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="500：">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Text>
+                <Text layoutX="132.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1000：">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="39.0" layoutX="66.0" layoutY="230.0" stroke="BLACK" strokeType="INSIDE" width="188.0" />
+                <Text layoutX="128.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Text>
+
+                <TextField fx:id="one" layoutX="335.0" layoutY="53.0" promptText="0" text="0" />
+                <TextField fx:id="five" layoutX="335.0" layoutY="115.0" promptText="0" text="0" />
+                <TextField fx:id="ten" layoutX="335.0" layoutY="175.0" promptText="0" text="0" />
+                <TextField fx:id="total" editable="false" layoutX="335.0" layoutY="238.0" promptText="0" />
+
+                <Text fx:id="button6" layoutX="340.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancel" textAlignment="CENTER" wrappingWidth="300.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="70.0" stroke="BLACK" strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" /></children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

@@ -40,12 +40,12 @@ public class DepositCollectorEmulatorController {
     // buttonPressed
     public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
-        if(btn.getText().compareToIgnoreCase("Take money")==0){
-            clearArea();
-            Timer.cancelTimer(id, depositCollectorMBox,77);
-            log.info(id+": Money has been saved");
-        }
-    }// buttonPressed0
+//        if(btn.getText().compareToIgnoreCase("Take money")==0){
+//            clearArea();
+//            Timer.cancelTimer(id, depositCollectorMBox,77);
+//            log.info(id+": Money has been saved");
+//        }
+    }// buttonPressed
 
     public void clearArea(){
         oneThousandTextField.setText("");
