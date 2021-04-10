@@ -63,10 +63,20 @@ public class TouchDisplayHandler extends HWHandler {
                 changeTransferAmount(msg);
                 break;
 
+            case TD_SaveCash:
+                showDepositAccount(msg);
+                break;
+
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
     } // processMsg
+
+    protected void showAccounts(Msg msg) {
+    }
+
+    protected void showDepositAccount(Msg msg){}
+
 
     protected void handleUpdateDisplay(Msg msg) {
     }
@@ -75,10 +85,6 @@ public class TouchDisplayHandler extends HWHandler {
     }
 
     protected void showAmounts(Msg msg) {
-    }
-
-    protected void showAccounts(Msg msg) {
-
     }
 
     protected void showResult(Msg msg) {

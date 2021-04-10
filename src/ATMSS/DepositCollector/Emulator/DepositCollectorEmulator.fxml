@@ -13,8 +13,6 @@
       <TextField layoutX="300.0" layoutY="63.0" promptText="0" />
       <TextField layoutX="300.0" layoutY="123.0" promptText="0" />
       <TextField layoutX="300.0" layoutY="189.0" promptText="0" />
-    <Button layoutX="173.0" layoutY="309.0" mnemonicParsing="false" text="Enter" />
-    <Button layoutX="370.0" layoutY="309.0" mnemonicParsing="false" text="Cancel" />
       <TextField editable="false" layoutX="100.0" layoutY="255.0" text="Total:" />
       <TextField editable="false" layoutX="300.0" layoutY="255.0" promptText="0" />
    </children>

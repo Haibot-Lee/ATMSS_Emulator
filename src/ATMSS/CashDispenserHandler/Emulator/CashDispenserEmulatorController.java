@@ -43,7 +43,4 @@ public class CashDispenserEmulatorController {
         oneHundredTextField.setText("");
         totalAmountTextField.setText("");
     }
-
-
-
 }

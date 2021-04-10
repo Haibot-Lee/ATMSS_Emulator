@@ -65,6 +65,7 @@ public class TouchDisplayEmulatorController {
     public void setInvalidInput() {
         withdrawalField.setText("");
         invalidInputField.setText("Invalid input. Please type again");
+
     }
 
     public void appendWithdrawal(String withdrawal) {

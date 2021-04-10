@@ -65,27 +65,21 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "Start":
                 reloadStage("TouchDisplayEmulatorStart.fxml");
                 break;
-
             case "Password":
                 reloadStage("TouchDisplayPinInput.fxml");
                 break;
-
             case "wrongPassword":
                 touchDisplayEmulatorController.setPasswordMsg("Wrong password! Please input again:");
                 break;
-
             case "Eject":
                 reloadStage("TouchDisplayEmulatorEject.fxml");
                 break;
-
             case "Locked":
                 reloadStage("TouchDisplayEmulatorLocked.fxml");
                 break;
-
             case "MainMenu":
                 reloadStage("TouchDisplayMainMenu.fxml");
                 break;
-
             case "moneyTrans":
                 reloadStage("TouchDisplayMoneyTrans.fxml");
                 break;
@@ -99,9 +93,15 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 reloadStage("TouchDisplayEmulatorWithdrawalReceipt.fxml");
                 break;
             case "WithdrawalEnd":
+            case "DepositEnd":
                 reloadStage("TouchDisplayEmulatorWithdrawalEnd.fxml");
                 break;
-
+            case "Deposit":
+                reloadStage("TouchDisplayEmulatorDeposit.fxml");
+                break;
+            case "DepositReceipt":
+                reloadStage("TouchDisplayEmulatorDepositReceipt.fxml");
+                break;
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
                 break;
@@ -158,6 +158,13 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         super.showAccounts(msg);
         touchDisplayEmulatorController.setAccPage(msg.getDetails());
         touchDisplayEmulatorController.messageArea.setText("[Cash Withdraw] Choose one account:");
+    }
+
+    protected void showDepositAccount(Msg msg){
+        super.showDepositAccount(msg);
+        touchDisplayEmulatorController.setAccPage(msg.getDetails());
+        touchDisplayEmulatorController.messageArea.setText("[Cash Deposit] Choose one account:");
+
     }
 
     protected void changeTransferAmount(Msg msg) {
