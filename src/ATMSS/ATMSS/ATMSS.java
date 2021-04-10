@@ -530,7 +530,7 @@ public class ATMSS extends AppThread {
 
             case "moneyDeposit":
                 switch (buttonPressed) {
-                    case 6:
+                    case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
                         Deposit();
                         currentPage = "depositReceipt";
@@ -538,6 +538,11 @@ public class ATMSS extends AppThread {
                     case 5:
                         //update data
                         touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"moneyDeposit"));
+                        System.out.println("button5 Clicked");
+                        break;
+                    case 6:
+                        touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"MainMenu"));
+                        currentPage = "mainMenu";
                         break;
                 }
                 break;
@@ -592,8 +597,6 @@ public class ATMSS extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
                         currentPage = "withdrawalEnd";
                         break;
-
-
                 }
                 break;
 
@@ -625,6 +628,7 @@ public class ATMSS extends AppThread {
                     //Exit
                     case 4:
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                         //touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
                         currentPage = "";

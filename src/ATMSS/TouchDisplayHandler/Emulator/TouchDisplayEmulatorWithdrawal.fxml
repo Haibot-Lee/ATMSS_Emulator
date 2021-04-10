@@ -5,29 +5,39 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0"
+            prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
     <children>
         <AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20">
             <children>
-                <Text layoutX="18.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please type the money amount:" wrappingWidth="500.0">
+                <Text layoutX="18.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Please type the money amount:" wrappingWidth="500.0">
                     <font>
-                        <Font size="30.0" />
+                        <Font size="30.0"/>
                     </font>
                 </Text>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
-                <TextField fx:id="withdrawalField" layoutX="202.0" layoutY="187.0" prefHeight="54.0" prefWidth="238.0" />
-                <TextField fx:id="invalidInputField" editable="false" layoutX="12.0" layoutY="298.0" prefHeight="41.0" prefWidth="618.0">
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" stroke="BLACK"
+                           strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                           AnchorPane.topAnchor="0"/>
+                <TextField fx:id="withdrawalField" layoutX="202.0" layoutY="187.0" prefHeight="54.0" prefWidth="238.0"/>
+                <TextField fx:id="invalidInputField" editable="false" layoutX="12.0" layoutY="298.0" prefHeight="41.0"
+                           prefWidth="618.0">
                     <font>
-                        <Font size="20.0" />
+                        <Font size="20.0"/>
                     </font>
                 </TextField>
-                <Text fx:id="button6" layoutX="340.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancel" textAlignment="CENTER" wrappingWidth="300.0">
+                <Text fx:id="button6" layoutX="340.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Cancel" textAlignment="CENTER" wrappingWidth="300.0">
                     <font>
-                        <Font size="30.0" />
+                        <Font size="30.0"/>
                     </font>
                 </Text>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="70.0" stroke="BLACK" strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0" />
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="70.0" stroke="BLACK"
+                           strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0"
+                           onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640"
+                           AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"/>
             </children>
         </AnchorPane>
     </children>
