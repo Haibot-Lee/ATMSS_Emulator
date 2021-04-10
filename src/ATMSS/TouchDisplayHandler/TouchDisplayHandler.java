@@ -3,15 +3,24 @@ package ATMSS.TouchDisplayHandler;
 import ATMSS.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
+import AppKickstarter.timer.Timer;
 
 
 //======================================================================
 // TouchDisplayHandler
 public class TouchDisplayHandler extends HWHandler {
+    private int waitingTime;
+    private int timerID;
+    private boolean timerOn = false;
+
+
     //------------------------------------------------------------
     // TouchDisplayHandler
     public TouchDisplayHandler(String id, AppKickstarter appKickstarter) throws Exception {
         super(id, appKickstarter);
+        waitingTime = Integer.parseInt(appKickstarter.getProperty("TouchDisplay.WaitingTime"));
+        timerID = Integer.parseInt(appKickstarter.getProperty("TouchDisplay.TimerID"));
+
     } // TouchDisplayHandler
 
 
@@ -21,6 +30,12 @@ public class TouchDisplayHandler extends HWHandler {
         switch (msg.getType()) {
             case TD_MouseClicked:
                 atmss.send(new Msg(id, mbox, Msg.Type.TD_MouseClicked, msg.getDetails()));
+                if (timerOn) {
+                    Timer.cancelTimer(id, mbox, timerID);
+                    System.out.println("TouchDisplay timer is canceled.");
+                    Timer.setTimer(id, mbox, waitingTime, timerID);
+                    System.out.println("TouchDisplay timer is recounting down");
+                }
                 break;
 
             case TD_UpdateDisplay:
@@ -65,6 +80,23 @@ public class TouchDisplayHandler extends HWHandler {
 
             case TD_Deposit:
                 showDepositAccount(msg);
+                break;
+
+            case TimesUp:
+                System.out.println("TouchDisplay accept input overtime.");
+                atmss.send(new Msg(id, mbox, Msg.Type.TD_Overtime, msg.getDetails()));
+                break;
+
+            case TD_AcceptInput:
+                Timer.setTimer(id, mbox, waitingTime, timerID);
+                timerOn = true;
+                System.out.println("TouchDisplay timer is counting down");
+                break;
+
+            case TD_Freeze:
+                Timer.cancelTimer(id, mbox, timerID);
+                timerOn = false;
+                System.out.println("TouchDisplay timer freeze.");
                 break;
 
             default:

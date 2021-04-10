@@ -86,6 +86,13 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
                     //processKeyPressed(msg);
                     break;
+
+                case TD_Overtime:
+                    log.info("TouchDisplay overtime: " + msg.getDetails());
+                    cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                    //processKeyPressed(msg);
+                    break;
 /*
                 case CR_Overtime:
                     System.out.println("Card no is" + cardNo);
@@ -220,6 +227,8 @@ public class ATMSS extends AppThread {
                         if (cardValidation()) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                             keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_AcceptInput, "MainMenu"));
+
                             currentPage = "mainMenu";
                             attempt = 0;
                         } else {
@@ -283,7 +292,7 @@ public class ATMSS extends AppThread {
                             int outAmount = withdraw();
                             if (outAmount != -1) {
                                 cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, oneHundredAmount + " 0 " + oneThousandAmount));
-                                keypadMBox.send(new Msg(id,mbox,Msg.Type.KP_Freeze,""));
+
                                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
                                 currentPage = "withdrawalReceipt";
                             }else{
@@ -439,6 +448,8 @@ public class ATMSS extends AppThread {
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+
                         currentPage = "";
                         cardNo = "";
                         password = "";
@@ -519,6 +530,7 @@ public class ATMSS extends AppThread {
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        //touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
                         currentPage = "";
                         //cardNo = "";
                         password = "";
@@ -620,6 +632,7 @@ public class ATMSS extends AppThread {
                     case 4:
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        //touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
                         currentPage = "";
                         //cardNo = "";
                         password = "";

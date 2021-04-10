@@ -168,6 +168,18 @@ public class Msg {
          */
         TD_showAccount,
         /**
+         *  TouchDisplay start to accept input within time limit
+         */
+        TD_AcceptInput,
+        /**
+         *  TouchDisplay freeze
+         */
+        TD_Freeze,
+        /**
+         *  TouchDisplay is over time
+         */
+        TD_Overtime,
+        /**
          * show message of transfer
          */
         TD_Message_transferFrom,
