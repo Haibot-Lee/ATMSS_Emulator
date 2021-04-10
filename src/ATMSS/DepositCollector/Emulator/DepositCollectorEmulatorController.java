@@ -39,18 +39,22 @@ public class DepositCollectorEmulatorController {
     public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
         if (btn.getText().equals("Done")) {
-
             try {
+                //get info from the Deposit Collector
                 int one = Integer.parseInt(One.getText());
                 int five = Integer.parseInt(Five.getText());
                 int ten = Integer.parseInt(Ten.getText());
+                //calculate the total cash Deposited
                 int total = 100 * one + 500 * five + 1000 * ten;
+                //send the deposited money to the deposit collector handler
                 depositCollectorMBox.send(new Msg(id, depositCollectorMBox, Msg.Type.DC_Total, one + "/" + five + "/" + ten + "/" + total));
+                //reset the textFile
                 One.setText("0");
                 Five.setText("0");
                 Ten.setText("0");
                 Done.setDisable(true);
             } catch (Exception e) {
+                //check if the input is invalid
                 depositCollectorMBox.send(new Msg(id, depositCollectorMBox, Msg.Type.DC_Total, "Invalid"));
             }
 

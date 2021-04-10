@@ -129,7 +129,7 @@ public class ATMSS extends AppThread {
                     break;
 
                 case DC_Total:
-                    if(!msg.getDetails().equals("Invalid")){
+                    if (!msg.getDetails().equals("Invalid")) {
                         String[] msgs = msg.getDetails().split("/");
                         intDepositOne += Integer.parseInt(msgs[0]);
                         intDepositFive += Integer.parseInt(msgs[1]);
@@ -333,7 +333,7 @@ public class ATMSS extends AppThread {
 
                     }
                     break;
-
+                //If teh currentPage is moneyDeposit, can use enter to going to the next depositReceipt page
                 case "moneyDeposit":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
@@ -543,16 +543,17 @@ public class ATMSS extends AppThread {
             case "moneyDeposit":
                 switch (buttonPressed) {
                     case 3:
+                        //finish depositing money and going to the next depositReceipt page
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                        System.out.println("----------\n"+Deposit());
                         currentPage = "depositReceipt";
                         break;
                     case 5:
-                        //update data
+                        //continue saving money and reset the DepositCollector button so that we can use it
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
-                        depositCollectorMBox.send(new Msg(id,mbox,Msg.Type.DC_ButtonControl,""));
+                        depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.DC_ButtonControl, ""));
                         break;
                     case 6:
+                        //cancel depositing money and go back to the main menu page
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         break;
@@ -560,10 +561,12 @@ public class ATMSS extends AppThread {
                 break;
 
             case "selectAccountWithdrawal":
+
                 if (buttonPressed == 5) {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
                 } else {
+
                     String[] accs = getAcc().split("/");
                     for (int i = 1; i <= accs.length; i++) {
                         if (buttonPressed == i) {
@@ -580,15 +583,17 @@ public class ATMSS extends AppThread {
                 break;
 
             case "selectAccountDeposit":
+                //press cancel button and go back to the main menu page
                 if (buttonPressed == 5) {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
                 } else {
+                    //set the accounts according to the user's bank account and go to the moneyDeposit page
                     String[] accs = getAcc().split("/");
                     for (int i = 0; i <= accs.length; i++) {
                         if (buttonPressed == i) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Deposit"));
-                            depositCollectorMBox.send(new Msg(id,mbox,Msg.Type.DC_ButtonControl,""));
+                            depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.DC_ButtonControl, ""));
                             accountDeposit = accs[i - 1];
                             currentPage = "moneyDeposit";
                             break;
@@ -616,6 +621,7 @@ public class ATMSS extends AppThread {
 
             case "depositReceipt":
                 switch (buttonPressed) {
+                    //print the advice
                     case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositEnd"));
                         currentPage = "withdrawalEnd";
@@ -623,6 +629,7 @@ public class ATMSS extends AppThread {
                         String receipt = currentTime + " " + cardNo + " " + accountDeposit + " deposit " + DepositTotal;
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, receipt));
                         break;
+                    //don't print advice
                     case 4:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositEnd"));
                         currentPage = "withdrawalEnd";
@@ -743,10 +750,10 @@ public class ATMSS extends AppThread {
         return outamount;
     }
 
+    //Update the deposit record to the database
     private double Deposit() {
         double depAmount = 0;
         try {
-            System.out.println("--------------------\n"+cardNo+" "+accountDeposit+" "+DepositTotal);
             depAmount = bams.deposit(cardNo, accountDeposit, "cred-1", DepositTotal);
 
         } catch (BAMSInvalidReplyException e) {
