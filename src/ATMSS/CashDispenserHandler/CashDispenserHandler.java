@@ -28,6 +28,9 @@ public class CashDispenserHandler extends HWHandler{
                 System.out.println("over time"+ msg.getDetails());
                 handleTimesup(msg);
                 break;
+            case CD_AddDenomination:
+                handeleAddDenomination(msg);
+                break;
 
 
 
@@ -47,6 +50,9 @@ public class CashDispenserHandler extends HWHandler{
     }
     protected void handleTimesup(Msg msg){
         log.info(id+": Time is up");
+
+    }
+    protected void handeleAddDenomination(Msg msg){
 
     }
 

@@ -21,8 +21,10 @@ public class DepositCollectorHandler extends HWHandler {
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case DC_Total:
+                //send the cash details info to teh ATMSS
                 atmss.send(new Msg(id, mbox, Msg.Type.DC_Total, msg.getDetails()));
                 break;
+                //get the command to change the status of "Done" button
             case DC_ButtonControl:
                 ButtonControl();
                 break;

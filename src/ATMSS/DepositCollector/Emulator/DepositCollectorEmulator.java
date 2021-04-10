@@ -45,6 +45,7 @@ public class DepositCollectorEmulator extends DepositCollectorHandler {
         myStage.show();
     } // depositCollectorEmulator
 
+    //control the "Done" button, when the moneyDeposit page appears, or user chooses the continue button it can be used
     protected void ButtonControl() {
         depositCollectorEmulatorController.Done.setDisable(false);
     }
