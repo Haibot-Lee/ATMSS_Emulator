@@ -66,6 +66,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
         cashDispenserEmulatorController.oneThousandTextField.setText(oneThousandAmount);
         int totalAmount = 100 * Integer.parseInt(oneHundredAmount) + 500 * Integer.parseInt(fiveHundredAmount) + 1000 * Integer.parseInt(oneThousandAmount);
         cashDispenserEmulatorController.totalAmountTextField.setText(Integer.toString(totalAmount));
+        cashDispenserEmulatorController.takeMoney.setDisable(false);
     }
 
     @Override
@@ -88,11 +89,11 @@ public class CashDispenserEmulator extends CashDispenserHandler {
     @Override
     protected void handeleAddDenomination(Msg msg) {
         super.handeleAddDenomination(msg);
-        String money=msg.getDetails();
-        String[] m=money.split(" ");
-        oneHundredAmount+=Integer.parseInt(m[0]);
-        fiveHundredAmount+=Integer.parseInt(m[1]);
-        oneThousandAmount+=Integer.parseInt(m[2]);
+        String money = msg.getDetails();
+        String[] m = money.split(" ");
+        oneHundredAmount += Integer.parseInt(m[0]);
+        fiveHundredAmount += Integer.parseInt(m[1]);
+        oneThousandAmount += Integer.parseInt(m[2]);
         handleEnquiryMoney();
 
     }

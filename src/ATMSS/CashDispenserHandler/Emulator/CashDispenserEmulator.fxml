@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ATMSS.CashDispenserHandler.Emulator.CashDispenserEmulatorController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ATMSS.CashDispenserHandler.Emulator.CashDispenserEmulatorController">
     <children>
-        <TextField editable="false" layoutX="100.0" layoutY="63.0" text="100" />
-        <TextField editable="false" layoutX="100.0" layoutY="123.0" text="500" />
-        <TextField editable="false" layoutX="100.0" layoutY="189.0" text="1000" />
-        <TextField fx:id="oneHundredTextField" layoutX="300.0" layoutY="63.0" promptText="0" />
-        <TextField fx:id="fiveHundredTextField" layoutX="300.0" layoutY="123.0" promptText="0" />
-        <TextField fx:id="oneThousandTextField" layoutX="300.0" layoutY="189.0" promptText="0" />
-        <TextField fx:id="totalAmountTextField" editable="false" layoutX="100.0" layoutY="255.0" text="Total:" />
-      <Button layoutX="401.0" layoutY="273.0" mnemonicParsing="false" prefHeight="65.0"
-              onAction="#buttonPressed" prefWidth="131.0" text="Take money" />
-        
+        <TextField editable="false" layoutX="100.0" layoutY="63.0" text="100"/>
+        <TextField editable="false" layoutX="100.0" layoutY="123.0" text="500"/>
+        <TextField editable="false" layoutX="100.0" layoutY="189.0" text="1000"/>
+        <TextField fx:id="oneHundredTextField" layoutX="300.0" layoutY="63.0" promptText="0"/>
+        <TextField fx:id="fiveHundredTextField" layoutX="300.0" layoutY="123.0" promptText="0"/>
+        <TextField fx:id="oneThousandTextField" layoutX="300.0" layoutY="189.0" promptText="0"/>
+        <TextField fx:id="totalAmountTextField" editable="false" layoutX="100.0" layoutY="255.0" text="Total:"/>
+        <Button fx:id="takeMoney" disable="true" layoutX="322.0" layoutY="247.0" mnemonicParsing="false"
+                onAction="#buttonPressed" prefHeight="39.0" prefWidth="118.0" text="Take money"/>
+
     </children>
 
 </AnchorPane>

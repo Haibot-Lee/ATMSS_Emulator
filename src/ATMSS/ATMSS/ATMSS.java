@@ -342,9 +342,7 @@ public class ATMSS extends AppThread {
                                     break;
                                 }
 
-
                             }
-
 
                         } catch (Exception e) {
                             moneyWithdrawal = "";

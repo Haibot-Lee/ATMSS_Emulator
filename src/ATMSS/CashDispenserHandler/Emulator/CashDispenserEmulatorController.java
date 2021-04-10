@@ -1,4 +1,5 @@
 package ATMSS.CashDispenserHandler.Emulator;
+
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
@@ -21,6 +22,7 @@ public class CashDispenserEmulatorController {
     public TextField fiveHundredTextField;
     public TextField oneThousandTextField;
     public TextField totalAmountTextField;
+    public Button takeMoney;
 
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, CashDispenserEmulator cashDispenserEmulator) {
         this.id = id;
@@ -29,15 +31,18 @@ public class CashDispenserEmulatorController {
         this.cashDispenserEmulator = cashDispenserEmulator;
         this.cashDispenserMBox = appKickstarter.getThread("CashDispenserHandler").getMBox();
     } // initialize
+
     public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
-        if(btn.getText().compareToIgnoreCase("Take money")==0){
+        if (btn.getText().compareToIgnoreCase("Take money") == 0) {
             clearArea();
-            Timer.cancelTimer(id, cashDispenserMBox,77);
-            log.info(id+": Money has been taken");
+            takeMoney.setDisable(true);
+            Timer.cancelTimer(id, cashDispenserMBox, 77);
+            log.info(id + ": Money has been taken");
         }
     }
-    public void clearArea(){
+
+    public void clearArea() {
         oneThousandTextField.setText("");
         fiveHundredTextField.setText("");
         oneHundredTextField.setText("");
