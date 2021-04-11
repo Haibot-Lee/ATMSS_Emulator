@@ -89,14 +89,14 @@ public class TouchDisplayHandler extends HWHandler {
                 break;
 
             case TimesUp:
-                System.out.println("TouchDisplay accept input overtime.");
+                log.warning(id + ": TouchDisplay accept input overtime");
                 atmss.send(new Msg(id, mbox, Msg.Type.TD_Overtime, msg.getDetails()));
                 break;
 
             case TD_AcceptInput:
                 Timer.setTimer(id, mbox, waitingTime, timerID);
                 timerOn = true;
-                System.out.println("TouchDisplay timer is counting down");
+                log.info(id + ": TouchDisplay timer is counting down");
                 break;
 
             case TD_UpdateDepositDetails:

@@ -29,7 +29,7 @@ public class KeypadHandler extends HWHandler {
             case KP_AcceptPassword:
                 Timer.setTimer(id, mbox, waitingTime, timerID);
                 timerOn = true;
-                System.out.println("Keypad timer is counting down");
+                log.info(id + ": Keypad timer is counting down");
                 break;
 
             case KP_KeyPressed:
@@ -47,7 +47,7 @@ public class KeypadHandler extends HWHandler {
                 break;
 
             case TimesUp:
-                System.out.println("Keypad accept password overtime.");
+                log.warning(id + ": Keypad accept password overtime");
                 atmss.send(new Msg(id, mbox, Msg.Type.KP_Overtime, msg.getDetails()));
                 break;
 
