@@ -13,8 +13,8 @@
         <TextField fx:id="fiveHundredTextField" layoutX="300.0" layoutY="123.0" promptText="0" />
         <TextField fx:id="oneThousandTextField" layoutX="300.0" layoutY="189.0" promptText="0" />
         <TextField fx:id="totalAmountTextField" editable="false" layoutX="100.0" layoutY="255.0" text="Total:" />
-      <Button  layoutX="401.0" layoutY="273.0" mnemonicParsing="false" prefHeight="65.0"
-              onAction="#buttonPressed" prefWidth="131.0" text="Take money"  disable="true"/>
+        <Button fx:id="takeMoney" disable="true" layoutX="322.0" layoutY="247.0" mnemonicParsing="false"
+                onAction="#buttonPressed" prefHeight="39.0" prefWidth="118.0" text="Take money"/>
         
     </children>
 
