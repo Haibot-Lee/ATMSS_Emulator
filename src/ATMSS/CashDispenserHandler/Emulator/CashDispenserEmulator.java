@@ -66,6 +66,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
         cashDispenserEmulatorController.oneThousandTextField.setText(oneThousandAmount);
         int totalAmount = 100 * Integer.parseInt(oneHundredAmount) + 500 * Integer.parseInt(fiveHundredAmount) + 1000 * Integer.parseInt(oneThousandAmount);
         cashDispenserEmulatorController.totalAmountTextField.setText(Integer.toString(totalAmount));
+        cashDispenserEmulatorController.takeMoney.setDisable(false);
 
     }
 
