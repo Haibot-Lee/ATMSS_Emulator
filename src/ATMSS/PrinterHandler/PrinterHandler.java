@@ -20,11 +20,9 @@ public class PrinterHandler extends HWHandler {
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case P_PrintAdvice:
-                handlePrintAdvice();
                 handlePrintAdvice(msg);
                 break;
             case P_Reset:
-                handleReset();
                 handleReset(msg);
                 break;
 
@@ -33,24 +31,11 @@ public class PrinterHandler extends HWHandler {
         }
     } // processMsg
 
-
-    //------------------------------------------------------------
     // handlePrintAdvice
-    protected void handlePrintAdvice() {
-        log.info(id + ": print advice");
+    protected void handlePrintAdvice(Msg msg) {
     } // handlePrintAdvice
 
-    // handlePrintAdvice with msg
-    protected void handlePrintAdvice(Msg msg) {
-    } // handlePrintAdvice with msg
-
-    //------------------------------------------------------------
     // handleReset
-    protected void handleReset() {
-        log.info(id + ": reset printer");
-    } // handleReset
-
-    // handleReset with msg
     protected void handleReset(Msg msg) {
-    } // handleReset with msg
+    } // handleReset
 } // PrinterHandler

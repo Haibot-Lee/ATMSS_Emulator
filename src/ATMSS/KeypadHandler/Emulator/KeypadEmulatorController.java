@@ -49,8 +49,6 @@ public class KeypadEmulatorController {
     //------------------------------------------------------------
     // keyPressed
     public void keyPressed(KeyEvent keyEvent) {
-
-
         String keyCodeStr = keyEvent.getCode().toString();
 
         if (keyCodeStr.startsWith("DIGIT") || keyCodeStr.startsWith("NUMPAD")) {

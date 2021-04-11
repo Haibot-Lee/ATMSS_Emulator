@@ -55,14 +55,10 @@ public class PrinterEmulator extends PrinterHandler {
     //------------------------------------------------------------
     // handlePrintAdvice
     protected void handlePrintAdvice(Msg msg) {
-        // fixme
-        super.handlePrintAdvice();
-
-        //myStage.alwaysOnTopProperty();
-
         // print advice
         if (printerEmulatorController.printerTextArea.getText().equals("")
                 && printerEmulatorController.printerTextField.getText().equals("")) {
+            log.info(id + ": print advice");
             printerEmulatorController.setTextArea(msg.getDetails());
             printerEmulatorController.setTextField("");
 
@@ -78,14 +74,10 @@ public class PrinterEmulator extends PrinterHandler {
     } // handlePrintAdvice
 
     //------------------------------------------------------------
-    // handlePrintAdvice
+    // handleReset
     protected void handleReset(Msg msg) {
-        // fixme
-        super.handleReset();
         log.info(id + ": reset printer.");
         printerEmulatorController.reset();
-    } // handlePrintAdvice
-
-
+    } // handleReset
 } // PrinterEmulator
 
