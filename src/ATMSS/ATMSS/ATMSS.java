@@ -118,6 +118,7 @@ public class ATMSS extends AppThread {
                 case CR_CardRemoved:
                     log.info("CardRemoved: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
+                    buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, "Card removed"));
                     //buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, ""));
                     break;
 

@@ -61,16 +61,6 @@ public class CardReaderEmulator extends CardReaderHandler {
         cardReaderEmulatorController.updateCardStatus("Card Inserted");
     } // handleCardInsert
 
-/*
-    //------------------------------------------------------------
-    // handleCardEject
-    protected void handleCardEject() {
-        super.handleCardEject();
-        cardReaderEmulatorController.appendTextArea("Card Ejected");
-        cardReaderEmulatorController.updateCardStatus("Card Ejected");
-    } // handleCardEject
-*/
-
     //------------------------------------------------------------
     // handleCardEject
     protected void handleCardEject(Msg msg) {
