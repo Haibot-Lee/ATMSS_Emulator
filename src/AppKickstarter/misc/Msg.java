@@ -210,6 +210,10 @@ public class Msg {
          */
         CR_LockCard,
         /**
+         * Over time
+         */
+        CR_Overtime,
+        /**
          * Accept password
          */
         KP_AcceptPassword,

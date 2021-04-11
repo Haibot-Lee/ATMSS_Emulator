@@ -32,28 +32,24 @@ public class CardReaderHandler extends HWHandler {
 
             case CR_EjectCard:
                 Timer.setTimer(id, mbox, waitingTime, timerID);
-                //System.out.println("CardReader timer is counting down");
                 atmss.send(new Msg(id, mbox, Msg.Type.CR_CardEjected, msg.getDetails()));
                 handleCardEject(msg);
                 break;
 
             case CR_CardRemoved:
                 Timer.cancelTimer(id, mbox, timerID);
-                //System.out.println("CardReader timer is canceled.");
                 handleCardRemove();
                 atmss.send(new Msg(id, mbox, Msg.Type.CR_CardRemoved, msg.getDetails()));
                 break;
 
             case CR_LockCard:
                 Timer.cancelTimer(id, mbox, timerID);
-                //System.out.println("CardReader timer is canceled.");
                 handleLockCard(msg);
                 break;
 
             case TimesUp:
-                //System.out.println("Eject card overtime.");
                 handleOvertime();
-                //atmss.send(new Msg(id, mbox, Msg.Type.CR_Overtime, msg.getDetails()));
+                atmss.send(new Msg(id, mbox, Msg.Type.CR_Overtime, "CarReader overtime, retain card!"));
                 break;
 
             default:
@@ -67,13 +63,6 @@ public class CardReaderHandler extends HWHandler {
     protected void handleCardInsert() {
         log.info(id + ": card inserted");
     } // handleCardInsert
-
-
-    //------------------------------------------------------------
-    // handleCardEject
-    protected void handleCardEject() {
-        log.info(id + ": card ejected");
-    } // handleCardEject
 
     //------------------------------------------------------------
     // handleCardEject
