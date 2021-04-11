@@ -39,6 +39,13 @@ public class TouchDisplayHandler extends HWHandler {
                 break;
 
             case TD_UpdateDisplay:
+                if (msg.getDetails().equals("Eject") || msg.getDetails().equals("Locked")) {
+                    if (timerOn) {
+                        Timer.cancelTimer(id, mbox, timerID);
+                        timerOn = false;
+                        System.out.println("TouchDisplay timer freeze.");
+                    }
+                }
                 handleUpdateDisplay(msg);
                 break;
 
@@ -93,12 +100,6 @@ public class TouchDisplayHandler extends HWHandler {
                 System.out.println("TouchDisplay timer is counting down");
                 break;
 
-            case TD_Freeze:
-                Timer.cancelTimer(id, mbox, timerID);
-                timerOn = false;
-                System.out.println("TouchDisplay timer freeze.");
-                break;
-
             case TD_UpdateDepositDetails:
                 dealDetails(msg);
                 break;
@@ -115,7 +116,8 @@ public class TouchDisplayHandler extends HWHandler {
     protected void showAccounts(Msg msg) {
     }
 
-    protected void showDepositAccount(Msg msg){}
+    protected void showDepositAccount(Msg msg) {
+    }
 
     protected void handleUpdateDisplay(Msg msg) {
     }
@@ -144,4 +146,5 @@ public class TouchDisplayHandler extends HWHandler {
 
     protected void showWithdrawal(Msg msg) {
     }
+
 } // TouchDisplayHandler

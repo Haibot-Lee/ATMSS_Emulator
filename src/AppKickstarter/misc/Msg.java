@@ -172,10 +172,6 @@ public class Msg {
          */
         TD_AcceptInput,
         /**
-         *  TouchDisplay freeze
-         */
-        TD_Freeze,
-        /**
          *  TouchDisplay is over time
          */
         TD_Overtime,
