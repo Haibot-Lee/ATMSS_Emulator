@@ -30,12 +30,11 @@ public class TouchDisplayHandler extends HWHandler {
         switch (msg.getType()) {
             case TD_MouseClicked:
                 atmss.send(new Msg(id, mbox, Msg.Type.TD_MouseClicked, msg.getDetails()));
-                if (timerOn) {
-                    Timer.cancelTimer(id, mbox, timerID);
-                    System.out.println("TouchDisplay timer is canceled.");
-                    Timer.setTimer(id, mbox, waitingTime, timerID);
-                    System.out.println("TouchDisplay timer is recounting down");
-                }
+                resetTimer();
+                break;
+
+            case TD_resetTimer:
+                resetTimer();
                 break;
 
             case TD_UpdateDisplay:
@@ -43,7 +42,7 @@ public class TouchDisplayHandler extends HWHandler {
                     if (timerOn) {
                         Timer.cancelTimer(id, mbox, timerID);
                         timerOn = false;
-                        System.out.println("TouchDisplay timer freeze.");
+                        log.info(id + ": TouchDisplay timer freeze");
                     }
                 }
                 handleUpdateDisplay(msg);
@@ -145,6 +144,14 @@ public class TouchDisplayHandler extends HWHandler {
     }
 
     protected void showWithdrawal(Msg msg) {
+    }
+
+    private void resetTimer() {
+        if (timerOn) {
+            Timer.cancelTimer(id, mbox, timerID);
+            Timer.setTimer(id, mbox, waitingTime, timerID);
+            log.info(id + ": TouchDisplay timer is recounting down");
+        }
     }
 
 } // TouchDisplayHandler

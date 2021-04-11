@@ -9,7 +9,7 @@
     <children>
         <AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20">
             <children>
-                <TextField fx:id="transAmount" layoutX="197.0" layoutY="163.0" prefHeight="38.0" prefWidth="248.0" visible="false" />
+                <TextField fx:id="transAmount" editable="false" layoutX="197.0" layoutY="163.0" prefHeight="38.0" prefWidth="248.0" visible="false" />
                 <Text fx:id="messageArea" layoutX="16.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select transaction" textAlignment="CENTER" wrappingWidth="610.240234375">
                     <font>
                         <Font size="26.0" />

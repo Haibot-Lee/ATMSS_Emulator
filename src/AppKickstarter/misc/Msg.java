@@ -151,9 +151,12 @@ public class Msg {
          */
         TD_Deposit,
         /**
-         * Text field of Passwords/Transfer Amount
+         * Text field of Passwords
          */
         TD_Passwords,
+        /**
+         * Text field of Transfer Amount
+         */
         TD_TransAmount,
         /**
          * Text filed of Money Withdrawal
@@ -171,6 +174,10 @@ public class Msg {
          *  TouchDisplay start to accept input within time limit
          */
         TD_AcceptInput,
+        /**
+         *  TouchDisplay reset timer
+         */
+        TD_resetTimer,
         /**
          *  TouchDisplay is over time
          */

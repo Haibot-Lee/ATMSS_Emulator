@@ -29,16 +29,15 @@ public class KeypadHandler extends HWHandler {
             case KP_AcceptPassword:
                 Timer.setTimer(id, mbox, waitingTime, timerID);
                 timerOn = true;
-                //System.out.println("Keypad timer is counting down");
+                System.out.println("Keypad timer is counting down");
                 break;
 
             case KP_KeyPressed:
                 atmss.send(new Msg(id, mbox, Msg.Type.KP_KeyPressed, msg.getDetails()));
                 if (timerOn) {
                     Timer.cancelTimer(id, mbox, timerID);
-                    System.out.println("Keypad timer is canceled.");
                     Timer.setTimer(id, mbox, waitingTime, timerID);
-                    System.out.println("Keypad timer is recounting down");
+                    log.info(id + ": Keypad timer is recounting down");
                 }
 
                 break;
@@ -53,9 +52,11 @@ public class KeypadHandler extends HWHandler {
                 break;
 
             case KP_Freeze:
-                Timer.cancelTimer(id, mbox, timerID);
-                timerOn = false;
-                //System.out.println("Keypad timer freeze.");
+                if (timerOn) {
+                    Timer.cancelTimer(id, mbox, timerID);
+                    timerOn = false;
+                    log.info(id + ": Keypad timer freeze");
+                }
                 break;
 
             default:

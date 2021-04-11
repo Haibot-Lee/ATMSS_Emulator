@@ -127,13 +127,11 @@ public class ATMSS extends AppThread {
                     log.info("Card Reader overtime: " + msg.getDetails());
                     buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, msg.getDetails()));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
-                    keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
-                    currentPage="cardLocked";
+                    currentPage = "cardLocked";
                     break;
 
                 case P_PrinterJammed:
                     log.info("PrinterJammed: " + msg.getDetails());
-                    //touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
                     break;
 
                 case DC_Total:
@@ -158,9 +156,6 @@ public class ATMSS extends AppThread {
                     depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     buzzerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
-                    //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,""));
-                    //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EjectMoney,"2 3 4"));
-                    //cashDispenserMBox.send(new Msg(id,mbox,Msg.Type.CD_EnquiryMoney,""));
                     break;
 
                 case PollAck:
@@ -211,8 +206,6 @@ public class ATMSS extends AppThread {
         }
 
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
-            keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
-
             if (currentPage.equals("cardLocked")) {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
 
@@ -238,13 +231,14 @@ public class ATMSS extends AppThread {
             intDepositTen = 0;
 
         } else {
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_resetTimer, ""));
             switch (currentPage) {
                 case "password":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         if (bams.cardValidation(cardNo, password)) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                            keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_AcceptInput, "MainMenu"));
+                            keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
 
                             currentPage = "mainMenu";
                             attempt = 0;
@@ -267,7 +261,7 @@ public class ATMSS extends AppThread {
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, cardNo));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
                         keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
-                        currentPage="cardLocked";
+                        currentPage = "cardLocked";
                     }
                     break;
 
