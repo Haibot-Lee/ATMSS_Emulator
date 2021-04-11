@@ -40,29 +40,15 @@ public class BuzzerHandler extends HWHandler {
             case B_Alert:
                 handleAlert(msg);
 
-                System.out.println("Try to play music");
-
-                audioClip.play();
-
-                System.out.println("Playing music now");
-
+                audioClip.loop();
 
                 break;
 
             case B_Stop:
                 handleStop();
-                try {
-                    System.out.println("Stop playing music");
 
-                    audioClip.stop();
+                audioClip.stop();
 
-                    System.out.println("Stop playing music now");
-
-                } catch (Exception e) {
-
-                }
-
-                //atmss.send(new Msg(id, mbox, Msg.Type.CR_CardInserted, msg.getDetails()));
                 break;
 
 

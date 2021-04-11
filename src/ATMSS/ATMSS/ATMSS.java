@@ -48,7 +48,6 @@ public class ATMSS extends AppThread {
     private int intWithdrawalTen = 0;
 
     private int attempt = 0;
-    boolean[] lockeds = {false, false, false};
 
     //------------------------------------------------------------
     // ATMSS
@@ -119,12 +118,20 @@ public class ATMSS extends AppThread {
                     log.info("CardRemoved: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
                     buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, "Card removed"));
-                    //buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, ""));
                     break;
 
                 case CR_CardEjected:
                     log.info("CardEjected: " + msg.getDetails());
                     buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Alert, "Card ejected"));
+                    break;
+
+                case CR_Overtime:
+                    log.info("Card Reader overtime: " + msg.getDetails());
+                    buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, msg.getDetails()));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+                    keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
+                    currentPage="cardLocked";
                     break;
 
                 case P_PrinterJammed:
@@ -207,44 +214,33 @@ public class ATMSS extends AppThread {
         }
 
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
-            if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))]) {
-                cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+            keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
+
+            if (currentPage.equals("cardLocked")) {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
-                keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
 
-                //reset
-                currentPage = "";
                 cardNo = "";
-                password = "";
                 moneyWithdrawal = "";
-
-                attempt = 0;
-                accountWithdrawal = "";
-                DepositTotal = "";
-                intDepositTotal = 0;
-                intDepositOne = 0;
-                intDepositFive = 0;
-                intDepositTen = 0;
 
             } else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
-                keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
-                //reset
-                currentPage = "";
+
                 // cardNo = "";    // for the money jammed and deposit money back
-                password = "";
                 moneyWithdrawal = "";
-                attempt = 0;
-                accountWithdrawal = "";
-                DepositTotal = "";
-                intDepositTotal = 0;
-                intDepositOne = 0;
-                intDepositFive = 0;
-                intDepositTen = 0;
             }
+            //reset
+            currentPage = "";
+            password = "";
+            attempt = 0;
+            accountWithdrawal = "";
+            DepositTotal = "";
+            intDepositTotal = 0;
+            intDepositOne = 0;
+            intDepositFive = 0;
+            intDepositTen = 0;
+
         } else {
             switch (currentPage) {
                 case "password":
@@ -276,7 +272,7 @@ public class ATMSS extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
                         keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
-                        lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))] = true;
+                        currentPage="cardLocked";
                     }
                     break;
 
