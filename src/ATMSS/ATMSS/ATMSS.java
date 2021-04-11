@@ -208,8 +208,9 @@ public class ATMSS extends AppThread {
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
             if (lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))]) {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, "Locked"));
-
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+                keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
 
                 //reset
                 currentPage = "";
@@ -217,7 +218,6 @@ public class ATMSS extends AppThread {
                 password = "";
                 moneyWithdrawal = "";
 
-                attempt = 0;
                 attempt = 0;
                 accountWithdrawal = "";
                 DepositTotal = "";
@@ -229,7 +229,8 @@ public class ATMSS extends AppThread {
             } else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+                keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
                 //reset
                 currentPage = "";
                 // cardNo = "";    // for the money jammed and deposit money back
@@ -272,6 +273,8 @@ public class ATMSS extends AppThread {
                     if (attempt >= 3) {
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_LockCard, cardNo));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+                        keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_Freeze, ""));
                         lockeds[Integer.parseInt("" + cardNo.charAt(cardNo.length() - 1))] = true;
                     }
                     break;
@@ -437,6 +440,8 @@ public class ATMSS extends AppThread {
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+
                         currentPage = "";
                         //cardNo = "";
                         password = "";
@@ -591,7 +596,6 @@ public class ATMSS extends AppThread {
                 break;
 
             case "selectAccountWithdrawal":
-
                 if (buttonPressed == 5) {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
