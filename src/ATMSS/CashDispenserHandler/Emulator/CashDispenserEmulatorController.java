@@ -25,6 +25,7 @@ public class CashDispenserEmulatorController {
     public Button takeMoney;
 
 
+
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, CashDispenserEmulator cashDispenserEmulator) {
         this.id = id;
         this.appKickstarter = appKickstarter;

@@ -634,6 +634,14 @@ public class ATMSS extends AppThread {
 
             case "withdrawalReceipt":
                 switch (buttonPressed) {
+                    case 3:
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
+                        currentPage = "withdrawalEnd";
+                        long currentTime = (new Date()).getTime();
+                        String receipt = currentTime + " " + cardNo + " " + accountWithdrawal + " withdraw " + moneyWithdrawal;
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, receipt));
+                        break;
+
                     case 4:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalEnd"));
                         currentPage = "withdrawalEnd";
@@ -661,6 +669,19 @@ public class ATMSS extends AppThread {
 
 
             case "withdrawalEnd":
+                switch (buttonPressed) {
+                    //Exit
+                    case 4:
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        //touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Freeze, ""));
+                        currentPage = "";
+                        password = "";
+                        break;
+                }
+                break;
+
             case "depositEnd":
                 switch (buttonPressed) {
                     //back to main menu
