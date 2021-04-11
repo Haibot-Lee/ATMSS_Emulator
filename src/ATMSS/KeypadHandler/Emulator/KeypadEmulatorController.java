@@ -6,7 +6,6 @@ import AppKickstarter.misc.Msg;
 
 import java.util.logging.Logger;
 
-import AppKickstarter.timer.Timer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;

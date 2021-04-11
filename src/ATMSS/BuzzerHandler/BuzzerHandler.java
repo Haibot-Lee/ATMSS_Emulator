@@ -7,9 +7,7 @@ import AppKickstarter.timer.Timer;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.net.MalformedURLException;
 
 

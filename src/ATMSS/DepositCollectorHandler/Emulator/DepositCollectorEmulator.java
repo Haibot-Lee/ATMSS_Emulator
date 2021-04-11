@@ -1,9 +1,8 @@
-package ATMSS.DepositCollector.Emulator;
+package ATMSS.DepositCollectorHandler.Emulator;
 
 import ATMSS.ATMSSStarter;
-import ATMSS.DepositCollector.DepositCollectorHandler;
+import ATMSS.DepositCollectorHandler.DepositCollectorHandler;
 
-import AppKickstarter.misc.Msg;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

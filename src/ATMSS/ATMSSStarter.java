@@ -2,9 +2,7 @@ package ATMSS;
 
 import ATMSS.BuzzerHandler.BuzzerHandler;
 import ATMSS.CashDispenserHandler.CashDispenserHandler;
-import ATMSS.CashDispenserHandler.Emulator.CashDispenserEmulator;
-import ATMSS.DepositCollector.DepositCollectorHandler;
-import ATMSS.KeypadHandler.Emulator.KeypadEmulator;
+import ATMSS.DepositCollectorHandler.DepositCollectorHandler;
 import ATMSS.PrinterHandler.PrinterHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.Msg;
@@ -16,8 +14,6 @@ import ATMSS.KeypadHandler.KeypadHandler;
 import ATMSS.TouchDisplayHandler.TouchDisplayHandler;
 
 import javafx.application.Platform;
-
-import java.io.IOException;
 
 
 //======================================================================

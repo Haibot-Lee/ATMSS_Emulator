@@ -1,16 +1,12 @@
-package ATMSS.DepositCollector.Emulator;
+package ATMSS.DepositCollectorHandler.Emulator;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
-import AppKickstarter.timer.Timer;
-import com.sun.glass.ui.Menu;
+
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 
 import java.util.logging.Logger;
 

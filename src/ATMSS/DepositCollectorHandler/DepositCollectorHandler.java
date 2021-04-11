@@ -1,8 +1,6 @@
-package ATMSS.DepositCollector;
+package ATMSS.DepositCollectorHandler;
 
-import ATMSS.DepositCollector.Emulator.DepositCollectorEmulatorController;
 import ATMSS.HWHandler.HWHandler;
-import ATMSS.ATMSSStarter;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 

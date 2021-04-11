@@ -2,8 +2,6 @@ package ATMSS.BuzzerHandler.Emulator;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
-import AppKickstarter.misc.Msg;
-import javafx.event.ActionEvent;
 
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;

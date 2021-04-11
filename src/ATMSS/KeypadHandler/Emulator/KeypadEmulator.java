@@ -3,8 +3,6 @@ package ATMSS.KeypadHandler.Emulator;
 import ATMSS.ATMSSStarter;
 import ATMSS.KeypadHandler.KeypadHandler;
 
-import ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulator;
-import ATMSS.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController;
 import AppKickstarter.misc.Msg;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
