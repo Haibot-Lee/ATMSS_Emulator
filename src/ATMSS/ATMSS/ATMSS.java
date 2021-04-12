@@ -125,7 +125,6 @@ public class ATMSS extends AppThread {
                         }
                         log.info(id + ": money is deposited");
                     }
-
                     break;
 
                 case CR_CardRemoved:
@@ -200,16 +199,19 @@ public class ATMSS extends AppThread {
                     break;
 
                 case CD_MoneyJammed:
-                    try {
-                        bams.deposit(withdrawalCardNo, accountWithdrawal, moneyWithdrawal);
-                        withdrawalCardNo = "none";
-                        cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
-                    } catch (Exception e) {
-                        log.warning(id + ": TestBAMSHandler: Exception caught: " + e.getMessage());
-                        e.printStackTrace();
+                    if (withdrawalCardNo.compareToIgnoreCase("none") != 0) {
+                        try {
+                            bams.deposit(withdrawalCardNo, accountWithdrawal, moneyWithdrawal);
+                            withdrawalCardNo = "none";
+                            cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
+                        } catch (Exception e) {
+                            log.warning(id + ": TestBAMSHandler: Exception caught: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                        log.info(id + ": money is deposited");
                     }
-                    log.info(id + ": money is deposited");
                     break;
+
                 case CD_MoneyTaken:       // printer send the information 
                     withdrawalCardNo = "none";
                     break;
