@@ -70,8 +70,8 @@ public class PrinterEmulator extends PrinterHandler {
             printerEmulatorController.setTextField("printer jammed");
             atmss.send(new Msg(id, mbox, Msg.Type.P_PrinterJammed, ""));
         }else {
-            log.info(id + ": already printed");
-            printerEmulatorController.setTextField("already printed");
+            //log.info(id + ": already printed");
+            //printerEmulatorController.setTextField("already printed");
         }
     } // handlePrintAdvice
 
