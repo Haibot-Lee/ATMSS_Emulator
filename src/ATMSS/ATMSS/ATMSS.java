@@ -348,16 +348,6 @@ public class ATMSS extends AppThread {
 
                     }
                     break;
-                //If teh currentPage is moneyDeposit, can use enter to going to the next depositReceipt page
-                case "moneyDeposit":
-                    if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                        bams.deposit(cardNo, accountDeposit, DepositTotal);
-                        String moneyNumChange = intDepositOne + " " + intDepositFive + " " + intDepositTen;
-                        cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, moneyNumChange));
-                        currentPage = "depositReceipt";
-                    }
-                    break;
             }
         }
 
