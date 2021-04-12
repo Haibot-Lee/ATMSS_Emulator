@@ -152,7 +152,6 @@ public class ATMSS extends AppThread {
                 case P_PrintSuccess:
                     log.info("PrinteSuccess: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Printed"));
-
                     break;
 
                 case DC_Total:
@@ -463,7 +462,7 @@ public class ATMSS extends AppThread {
                         }
 
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
-                        currentPage = "afterBalance";
+                        currentPage = "afterPrint";
                         break;
 
                     case 5:
@@ -488,7 +487,7 @@ public class ATMSS extends AppThread {
                 }
                 break;
 
-            case "afterBalance":
+            case "afterPrint":
                 switch (buttonPressed) {
                     case 5:
                         // cancel and go back to the main menu
@@ -542,7 +541,7 @@ public class ATMSS extends AppThread {
                                 trans += "/" + i;
                                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferAmount, trans));
                                 trans += "/0";
-                                currentPage = "transferAccount";
+                                currentPage = "transferAmount";
                                 break;
                             }
                         }
@@ -576,6 +575,7 @@ public class ATMSS extends AppThread {
                         result += "\nTransfer " + idx[2] + " from account " + accs[Integer.parseInt(idx[0]) - 1] + " to account " + accs[Integer.parseInt(idx[1]) - 1];
                         result += "\n" + idx[3];
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, result));
+                        currentPage="afterPrint";
                         break;
                     case 5:
                         //Back to main menu

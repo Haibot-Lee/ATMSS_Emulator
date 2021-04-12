@@ -139,16 +139,6 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         }
     }
 
-    protected void showAmounts(Msg msg) {
-        log.info(id + ": show amounts");
-
-        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
-            touchDisplayEmulatorController.transAmount.setText("");
-        } else {
-            touchDisplayEmulatorController.appendAmounts(msg.getDetails());
-        }
-    }
-
     @Override
     protected void showInvalidInput(Msg msg) {
         super.showInvalidInput(msg);
@@ -178,6 +168,20 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         touchDisplayEmulatorController.messageArea.setText("[Transfer] Choose target account:");
     }
 
+    protected void changeTransferAmount(Msg msg) {
+        touchDisplayEmulatorController.setAmountPage(msg.getDetails());
+    }
+
+    protected void showTransAmounts(Msg msg) {
+        super.showTransAmounts(msg);
+
+        if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
+            touchDisplayEmulatorController.transAmount.setText("");
+        } else {
+            touchDisplayEmulatorController.appendAmounts(msg.getDetails());
+        }
+    }
+
     @Override
     protected void showAccounts(Msg msg) {
         super.showAccounts(msg);
@@ -189,10 +193,6 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         super.showDepositAccount(msg);
         touchDisplayEmulatorController.setAccPage(msg.getDetails());
         touchDisplayEmulatorController.messageArea.setText("[Cash Deposit] Choose one account:");
-    }
-
-    protected void changeTransferAmount(Msg msg) {
-        touchDisplayEmulatorController.setAmountPage(msg.getDetails());
     }
 
     protected void showResult(Msg msg) {
