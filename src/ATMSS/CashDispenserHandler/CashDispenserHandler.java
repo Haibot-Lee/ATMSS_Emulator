@@ -5,7 +5,7 @@ import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
 public class CashDispenserHandler extends HWHandler {
-    int waitingTime = 300000;
+
 
     public CashDispenserHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
@@ -43,7 +43,7 @@ public class CashDispenserHandler extends HWHandler {
 
     protected void handleEjectMoney(String oneHundredAmount, String fiveHundrdAmount, String oneThousandAmount) {
         log.info(id + ": is ejecting money");
-        Timer.setTimer(id, mbox, waitingTime, 77);
+
 
     }
 

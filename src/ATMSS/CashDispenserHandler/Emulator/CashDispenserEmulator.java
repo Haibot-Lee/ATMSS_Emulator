@@ -5,6 +5,7 @@ import ATMSS.CashDispenserHandler.CashDispenserHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 
+import AppKickstarter.timer.Timer;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
     private int oneHundredAmount;
     private int fiveHundredAmount;
     private int oneThousandAmount;
+    private int waitingTime;
 
     public CashDispenserEmulator(String id, ATMSSStarter atmssStarter) throws Exception {
         super(id, atmssStarter);
@@ -30,6 +32,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
         this.oneHundredAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.oneHundredAmount"));
         this.fiveHundredAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.fiveHundredAmount"));
         this.oneThousandAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.oneThousandAmount"));
+        this.waitingTime=Integer.parseInt(appKickstarter.getProperty("CashDispenser.waitingTime"));
     }//cashDispenserEmulator
 
     public void start() throws Exception {
@@ -67,6 +70,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
         int totalAmount = 100 * Integer.parseInt(oneHundredAmount) + 500 * Integer.parseInt(fiveHundredAmount) + 1000 * Integer.parseInt(oneThousandAmount);
         cashDispenserEmulatorController.totalAmountTextField.setText(Integer.toString(totalAmount));
         cashDispenserEmulatorController.takeMoney.setDisable(false);
+        Timer.setTimer(id, mbox, waitingTime, 77);
 
     }
 
@@ -83,6 +87,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
     protected void handleTimesup(Msg msg) {
         super.handleTimesup(msg);
         cashDispenserEmulatorController.clearArea();
+        cashDispenserEmulatorController.takeMoney.setDisable(true);
         atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyJammed, msg.getDetails()));
         log.info(id + ": Money is collected");
     }
