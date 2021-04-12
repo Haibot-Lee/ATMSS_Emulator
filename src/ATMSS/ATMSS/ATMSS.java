@@ -137,7 +137,6 @@ public class ATMSS extends AppThread {
                 case P_PrintSuccess:
                     log.info("PrinteSuccess: " + msg.getDetails());
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Printed"));
-
                     break;
 
                 case DC_Total:
@@ -523,7 +522,7 @@ public class ATMSS extends AppThread {
                                 trans += "/" + i;
                                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferAmount, trans));
                                 trans += "/0";
-                                currentPage = "transferAccount";
+                                currentPage = "transferAmount";
                                 break;
                             }
                         }

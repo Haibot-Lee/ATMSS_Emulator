@@ -81,7 +81,7 @@ public class TouchDisplayHandler extends HWHandler {
                 break;
 
             case TD_TransAmount:
-                showAmounts(msg);
+                showTransAmounts(msg);
                 break;
 
             case TD_Deposit:
@@ -124,7 +124,8 @@ public class TouchDisplayHandler extends HWHandler {
     protected void showPasswords(Msg msg) {
     }
 
-    protected void showAmounts(Msg msg) {
+    protected void showTransAmounts(Msg msg) {
+        log.info(id + ": show transfer amounts");
     }
 
     protected void showResult(Msg msg) {
