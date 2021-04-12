@@ -15,7 +15,7 @@
         <TextField fx:id="totalAmountTextField" editable="false" layoutX="100.0" layoutY="255.0" text="Total:" />
         <Button fx:id="takeMoney" disable="true" layoutX="322.0" layoutY="247.0" mnemonicParsing="false"
                 onAction="#buttonPressed" prefHeight="39.0" prefWidth="118.0" text="Take money"/>
-        
+
     </children>
 
 </AnchorPane>

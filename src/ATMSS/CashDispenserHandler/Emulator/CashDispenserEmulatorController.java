@@ -38,6 +38,7 @@ public class CashDispenserEmulatorController {
         if (btn.getText().compareToIgnoreCase("Take money") == 0) {
             clearArea();
             takeMoney.setDisable(true);
+            cashDispenserMBox.send(new Msg(id, cashDispenserMBox,Msg.Type.CD_MoneyTaken,""));
             Timer.cancelTimer(id, cashDispenserMBox, 77);
             log.info(id + ": Money has been taken");
         }

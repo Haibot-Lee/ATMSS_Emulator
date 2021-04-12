@@ -277,6 +277,10 @@ public class Msg {
          */
         CD_AddDenomination,
         /**
+         *  the money has been taken
+         */
+        CD_MoneyTaken,
+        /**
          * Cash Deposit Collector
          */
         DC_Total,

@@ -6,7 +6,7 @@ import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
 public class CashDispenserHandler extends HWHandler {
-    int waitingTime = 30000;
+    int waitingTime = 300000;
 
     public CashDispenserHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
@@ -32,6 +32,9 @@ public class CashDispenserHandler extends HWHandler {
                 break;
             case CD_AddDenomination:
                 handeleAddDenomination(msg);
+                break;
+            case CD_MoneyTaken:
+                atmss.send(new Msg(id,mbox,Msg.Type.CD_MoneyTaken,""));
                 break;
 
 

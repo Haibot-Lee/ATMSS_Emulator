@@ -26,6 +26,7 @@ public class ATMSS extends AppThread {
 
     //For one card
     private String cardNo = "";
+    private String withdrawaalCardNo="none";
     private String password = "";
     private String trans = "";
     private String moneyWithdrawal = "";
@@ -110,6 +111,20 @@ public class ATMSS extends AppThread {
                     keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_AcceptPassword, ""));
                     currentPage = "password";
                     cardNo = msg.getDetails();
+                    // deposit money back
+                    if(withdrawaalCardNo.compareToIgnoreCase("none")!=0){
+                        log.info(id+": need to deposit money");
+                        try {
+                            bams.deposit( withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
+                            withdrawaalCardNo="none";
+                            cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
+                        } catch (Exception e) {
+                            log.warning(id + ": TestBAMSHandler: Exception caught: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                        log.info(id + ": money is deposited");
+                    }
+
                     break;
 
                 case CR_CardRemoved:
@@ -182,13 +197,17 @@ public class ATMSS extends AppThread {
 
                 case CD_MoneyJammed:
                     try {
-                        bams.deposit(cardNo, accountWithdrawal, moneyWithdrawal);
+                        bams.deposit( withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
+                        withdrawaalCardNo="none";
                         cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                     } catch (Exception e) {
                         log.warning(id + ": TestBAMSHandler: Exception caught: " + e.getMessage());
                         e.printStackTrace();
                     }
                     log.info(id + ": money is deposited");
+                    break;
+                case CD_MoneyTaken:
+                    withdrawaalCardNo="none";
                     break;
 
                 default:
@@ -306,7 +325,7 @@ public class ATMSS extends AppThread {
                                 intWithdrawalTen = 0;
                                 if (moneyAmount % 500 / 100 <= oneHundredNum) {
                                     intWithdrawalOne = moneyAmount % 500 / 100;
-                                    int outAmount = bams.withdraw(cardNo, accountWithdrawal, moneyWithdrawal);
+                                    int outAmount = bams.withdraw( withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
                                     if (outAmount != -1) {
                                         cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
@@ -331,7 +350,7 @@ public class ATMSS extends AppThread {
                                 }
                                 intWithdrawalTen = leftAmount / 1000;
                                 intWithdrawalOne = leftAmount % 1000 / 100;
-                                int outAmount = bams.withdraw(cardNo, accountWithdrawal, moneyWithdrawal);
+                                int outAmount = bams.withdraw( withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
                                 if (outAmount != -1) {
                                     cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
@@ -603,6 +622,10 @@ public class ATMSS extends AppThread {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Withdrawal"));
                             accountWithdrawal = accs[i - 1];
                             moneyWithdrawal = "";
+                            intWithdrawalOne=0;
+                            intWithdrawalTen=0;
+                            intWithdrawalFive=0;
+                            withdrawaalCardNo=cardNo;
                             currentPage = "moneyWithdrawal";
                             break;
                         }
