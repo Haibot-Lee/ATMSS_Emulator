@@ -559,6 +559,9 @@ public class ATMSS extends AppThread {
                     case 3:
                         //finish depositing money and going to the next depositReceipt page
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
+                        if(DepositTotal.equals("")){
+                            DepositTotal = "0";
+                        }
                         bams.deposit(cardNo, accountDeposit, DepositTotal);
                         currentPage = "depositReceipt";
                         break;
