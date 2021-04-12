@@ -345,7 +345,6 @@ public class ATMSS extends AppThread {
                         } else {
                             moneyWithdrawal += msg.getDetails();
                         }
-
                     }
                     break;
             }
