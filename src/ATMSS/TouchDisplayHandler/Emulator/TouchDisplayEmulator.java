@@ -161,6 +161,20 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     }
 
     protected void changeTransferTo(Msg msg) {
+        switch (msg.getDetails()){
+            case "1":
+                touchDisplayEmulatorController.button1.setVisible(false);
+                break;
+            case "2":
+                touchDisplayEmulatorController.button2.setVisible(false);
+                break;
+            case "3":
+                touchDisplayEmulatorController.button3.setVisible(false);
+                break;
+            case "4":
+                touchDisplayEmulatorController.button4.setVisible(false);
+                break;
+        }
         touchDisplayEmulatorController.messageArea.setText("[Transfer] Choose target account:");
     }
 
