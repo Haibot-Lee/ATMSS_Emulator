@@ -47,6 +47,7 @@ public class ATMSS extends AppThread {
     private int intWithdrawalOne = 0;
     private int intWithdrawalFive = 0;
     private int intWithdrawalTen = 0;
+    private boolean isDone = false;
 
     private int attempt = 0;
 
@@ -613,27 +614,34 @@ public class ATMSS extends AppThread {
 
 
             case "moneyDeposit":
+                if (!DepositTotal.equals("")) {
+                    isDone = true;
+                }
                 switch (buttonPressed) {
                     case 3:
-                        //finish depositing money and going to the next depositReceipt page
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                        if (DepositTotal.equals("")) {
-                            DepositTotal = "0";
+                        if (isDone) {
+                            //finish depositing money and going to the next depositReceipt page
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
+                            bams.deposit(cardNo, accountDeposit, DepositTotal);
+                            cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intDepositOne + " " + intDepositFive + " " + intDepositTen));
+                            currentPage = "depositReceipt";
+                            isDone = false;
                         }
-                        bams.deposit(cardNo, accountDeposit, DepositTotal);
-                        cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intDepositOne + " " + intDepositFive + " " + intDepositTen));
-                        currentPage = "depositReceipt";
                         break;
                     case 5:
-                        //continue saving money and reset the DepositCollector button so that we can use it
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
-                        depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.DC_ButtonControl, ""));
+                        if (isDone) {
+                            //continue saving money and reset the DepositCollector button so that we can use it
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "moneyDeposit"));
+                            depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.DC_ButtonControl, ""));
+                            isDone = false;
+                        }
                         break;
                     case 6:
                         //cancel depositing money and go back to the main menu page
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
                         //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
+                        isDone = false;
                         break;
                 }
                 break;
@@ -671,7 +679,7 @@ public class ATMSS extends AppThread {
                 } else {
                     //set the accounts according to the user's bank account and go to the moneyDeposit page
                     String[] accs = bams.getAcc(cardNo).split("/");
-                    for (int i = 0; i <= accs.length; i++) {
+                    for (int i = 1; i <= accs.length; i++) {
                         if (buttonPressed == i) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Deposit"));
                             depositCollectorMBox.send(new Msg(id, mbox, Msg.Type.DC_ButtonControl, ""));
@@ -681,7 +689,6 @@ public class ATMSS extends AppThread {
                         }
                     }
                 }
-
                 break;
 
             case "withdrawalReceipt":

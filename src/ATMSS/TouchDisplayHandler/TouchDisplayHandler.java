@@ -103,6 +103,8 @@ public class TouchDisplayHandler extends HWHandler {
                 dealDetails(msg);
                 break;
 
+
+
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }

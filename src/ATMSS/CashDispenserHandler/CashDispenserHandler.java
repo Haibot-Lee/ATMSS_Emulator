@@ -1,5 +1,4 @@
 package ATMSS.CashDispenserHandler;
-
 import ATMSS.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
@@ -36,6 +35,7 @@ public class CashDispenserHandler extends HWHandler {
             case CD_MoneyTaken:
                 atmss.send(new Msg(id,mbox,Msg.Type.CD_MoneyTaken,""));
                 break;
+
 
 
         }

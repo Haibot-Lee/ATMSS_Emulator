@@ -101,13 +101,9 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "Deposit":
                 reloadStage("TouchDisplayEmulatorDeposit.fxml");
                 break;
-//            case "DepositOK":
-//                reloadStage("TouchDisplayEmulatorDeposit.fxml");
-//                break;
             case "DepositReceipt":
                 reloadStage("TouchDisplayEmulatorDepositReceipt.fxml");
                 break;
-
             case "Printed":
                 touchDisplayEmulatorController.handlePrinted();
 
@@ -208,9 +204,10 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             String[] details = msg.getDetails().split("/");
             touchDisplayEmulatorController.setDepositCollectorInfo(details);
             touchDisplayEmulatorController.InvalidCash.setVisible(false);
+            touchDisplayEmulatorController.button3.setVisible(true);
+            touchDisplayEmulatorController.button5.setVisible(true);
         }
     }
-
 
     //------------------------------------------------------------
     // reloadStage
