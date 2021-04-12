@@ -445,9 +445,33 @@ public class ATMSS extends AppThread {
                         }
 
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
-
+                        currentPage = "afterBalance";
                         break;
 
+                    case 5:
+                        // cancel and go back to the main menu
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
+
+                        currentPage = "mainMenu";
+                        break;
+
+                    case 6:
+                        //Exit
+                        cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
+                        printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
+
+                        currentPage = "";
+                        cardNo = "";
+                        password = "";
+                        break;
+
+                }
+                break;
+
+            case "afterBalance":
+                switch (buttonPressed) {
                     case 5:
                         // cancel and go back to the main menu
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
