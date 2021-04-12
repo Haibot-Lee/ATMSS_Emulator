@@ -68,9 +68,11 @@ public class PrinterEmulatorController {
     } // setTextField
 
     public void reset() {
-        printerTextArea.setText("");
-        printerTextField.setText("");
-        printerButton.setDisable(true);
+        if (printerTextField.getText().equals("Advice taken")) {
+            printerTextArea.setText("");
+            printerTextField.setText("");
+            printerButton.setDisable(true);
+        }
     }
 } // CardReaderEmulatorController
 

@@ -61,8 +61,10 @@ public class PrinterEmulator extends PrinterHandler {
             log.info(id + ": print advice");
             printerEmulatorController.setTextArea(msg.getDetails());
             printerEmulatorController.setTextField("");
-
             printerEmulatorController.printerButton.setDisable(false);
+
+            atmss.send(new Msg(id, mbox, Msg.Type.P_PrintSuccess, ""));
+
         }else if (!printerEmulatorController.printerTextArea.getText().equals("")) {
             log.info(id + ": printer jammed.");
             printerEmulatorController.setTextField("printer jammed");

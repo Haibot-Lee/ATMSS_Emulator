@@ -64,10 +64,6 @@ public class TouchDisplayHandler extends HWHandler {
                 showInvalidInput(msg);
                 break;
 
-            case TD_TransAmount:
-                showAmounts(msg);
-                break;
-
             case TD_ShowResult:
                 showResult(msg);
                 break;
@@ -82,6 +78,10 @@ public class TouchDisplayHandler extends HWHandler {
 
             case TD_Message_transferAmount:
                 changeTransferAmount(msg);
+                break;
+
+            case TD_TransAmount:
+                showAmounts(msg);
                 break;
 
             case TD_Deposit:

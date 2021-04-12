@@ -106,9 +106,9 @@ public class TouchDisplayEmulatorController {
 
     public void setAmountPage(String msg) {
         transAmount.setVisible(true);
-        Text[] buttons = {button1, button2, button3, button4};
         String[] accs = msg.split("/");
         int from = Integer.parseInt(accs[0]), to = Integer.parseInt(accs[1]);
+        Text[] buttons = {button1, button2, button3, button4};
         messageArea.setText("[Transfer from (" + buttons[from - 1].getText() + ") to (" + buttons[to - 1].getText() + ")] Input transfer amount:");
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setText("");
@@ -137,17 +137,21 @@ public class TouchDisplayEmulatorController {
         button6.setText("Exit");
     }
 
+    public void handlePrinted() {
+        button1.setText("");
+    }
+
     public void setDepositCollectorInfo(String[] details) {
-        int first = Integer.parseInt(one.getText())+Integer.parseInt(details[0]);
-        int second = Integer.parseInt(five.getText())+Integer.parseInt(details[1]);
-        int third = Integer.parseInt(ten.getText())+Integer.parseInt(details[2]);
-        int forth = Integer.parseInt(total.getText())+Integer.parseInt(details[3]);
+        int first = Integer.parseInt(one.getText()) + Integer.parseInt(details[0]);
+        int second = Integer.parseInt(five.getText()) + Integer.parseInt(details[1]);
+        int third = Integer.parseInt(ten.getText()) + Integer.parseInt(details[2]);
+        int forth = Integer.parseInt(total.getText()) + Integer.parseInt(details[3]);
         one.setText(Integer.toString(first));
         five.setText(Integer.toString(second));
         ten.setText(Integer.toString(third));
         total.setText(Integer.toString(forth));
 
-        String n = first + " " +second +" "+third+" "+forth;
+        String n = first + " " + second + " " + third + " " + forth;
         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.DC_MoneyDetails, n));
     }
 } // TouchDisplayEmulatorController

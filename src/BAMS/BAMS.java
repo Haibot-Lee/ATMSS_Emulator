@@ -38,10 +38,10 @@ public class BAMS {
         return "";
     }
 
-    public String checkBalance(String cardNo, String number) {
+    public String checkBalance(String cardNo, String accNo) {
         double balance = 0;
         try {
-            balance = bams.enquiry(cardNo, cardNo + number, cardNo);
+            balance = bams.enquiry(cardNo, accNo, cardNo);
             if (balance == -1) return "Invalid account";
             else return "" + balance;
         } catch (Exception e) {

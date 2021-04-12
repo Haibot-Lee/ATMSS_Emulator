@@ -22,6 +22,7 @@ public class PrinterHandler extends HWHandler {
             case P_PrintAdvice:
                 handlePrintAdvice(msg);
                 break;
+
             case P_Reset:
                 handleReset(msg);
                 break;
