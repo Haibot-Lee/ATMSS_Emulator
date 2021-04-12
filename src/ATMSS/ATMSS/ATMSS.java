@@ -125,7 +125,7 @@ public class ATMSS extends AppThread {
 
                 case CR_Overtime:
                     log.info("Card Reader overtime: " + msg.getDetails());
-                    buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, msg.getDetails()));
+                    buzzerMBox.send(new Msg(id, mbox, Msg.Type.B_Stop, "Over time! Card retained"));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Locked"));
                     currentPage = "cardLocked";
                     break;
@@ -175,12 +175,11 @@ public class ATMSS extends AppThread {
                     break;
 
                 case CD_MoneyJammed:
-                    System.out.println(cardNo + accountWithdrawal + moneyWithdrawal);
                     try {
                         bams.deposit(cardNo, accountWithdrawal, moneyWithdrawal);
                         cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                     } catch (Exception e) {
-                        System.out.println("TestBAMSHandler: Exception caught: " + e.getMessage());
+                        log.warning(id + ": TestBAMSHandler: Exception caught: " + e.getMessage());
                         e.printStackTrace();
                     }
                     log.info(id + ": money is deposited");

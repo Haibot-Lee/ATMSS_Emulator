@@ -14,19 +14,11 @@ import java.net.MalformedURLException;
 //======================================================================
 // BuzzerHandler
 public class BuzzerHandler extends HWHandler {
-    File file;
-    AudioClip audioClip = null;
 
     //------------------------------------------------------------
     // BuzzerHandler
     public BuzzerHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
-        file = new File(appKickstarter.getProperty("Buzzer.Music"));
-        try {
-            audioClip = Applet.newAudioClip(file.toURL());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
     } // BuzzerHandler
 
 
@@ -37,16 +29,10 @@ public class BuzzerHandler extends HWHandler {
 
             case B_Alert:
                 handleAlert(msg);
-
-                audioClip.loop();
-
                 break;
 
             case B_Stop:
-                handleStop();
-
-                audioClip.stop();
-
+                handleStop(msg);
                 break;
 
 
@@ -63,7 +49,7 @@ public class BuzzerHandler extends HWHandler {
 
     //------------------------------------------------------------
     // handleStop
-    protected void handleStop() {
+    protected void handleStop(Msg msg) {
         log.info(id + ": stop alert");
     } // handleStop
 

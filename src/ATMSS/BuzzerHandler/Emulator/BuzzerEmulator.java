@@ -12,6 +12,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.io.File;
+import java.net.MalformedURLException;
+
 
 //======================================================================
 // BuzzerEmulator
@@ -21,12 +26,22 @@ public class BuzzerEmulator extends BuzzerHandler {
     private Stage myStage;
     private BuzzerEmulatorController buzzerEmulatorController;
 
+    File file;
+    AudioClip audioClip = null;
+
     //------------------------------------------------------------
     // BuzzerEmulator
     public BuzzerEmulator(String id, ATMSSStarter atmssStarter) {
         super(id, atmssStarter);
         this.atmssStarter = atmssStarter;
         this.id = id;
+
+        file = new File(appKickstarter.getProperty("Buzzer.Music"));
+        try {
+            audioClip = Applet.newAudioClip(file.toURL());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     } // BuzzerEmulator
 
 
@@ -57,8 +72,15 @@ public class BuzzerEmulator extends BuzzerHandler {
     // handleCardInsert
     protected void handleAlert(Msg msg) {
         super.handleAlert(msg);
+        audioClip.loop();
         buzzerEmulatorController.appendTextArea(msg.getDetails());
         buzzerEmulatorController.updateBuzzerStatus(msg.getDetails());
     } // handleCardInsert
 
+    protected void handleStop(Msg msg) {
+        super.handleStop(msg);
+        audioClip.stop();
+        buzzerEmulatorController.appendTextArea(msg.getDetails());
+        buzzerEmulatorController.updateBuzzerStatus(msg.getDetails());
+    } // handleStop
 } // BuzzerEmulator
