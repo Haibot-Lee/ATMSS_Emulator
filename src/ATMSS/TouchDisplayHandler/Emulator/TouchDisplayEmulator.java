@@ -107,7 +107,13 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "DepositReceipt":
                 reloadStage("TouchDisplayEmulatorDepositReceipt.fxml");
                 break;
+
+            case "Printed":
+                touchDisplayEmulatorController.handlePrinted();
+
+                break;
             default:
+
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
                 break;
         }

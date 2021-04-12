@@ -245,6 +245,10 @@ public class Msg {
          */
         P_PrinterJammed,
         /**
+         * Print Successful
+         */
+        P_PrintSuccess,
+        /**
          * Printer reset
          */
         P_Reset,

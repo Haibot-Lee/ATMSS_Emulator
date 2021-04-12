@@ -137,6 +137,10 @@ public class TouchDisplayEmulatorController {
         button6.setText("Exit");
     }
 
+    public void handlePrinted() {
+        button1.setText("");
+    }
+
     public void setDepositCollectorInfo(String[] details) {
         int first = Integer.parseInt(one.getText())+Integer.parseInt(details[0]);
         int second = Integer.parseInt(five.getText())+Integer.parseInt(details[1]);

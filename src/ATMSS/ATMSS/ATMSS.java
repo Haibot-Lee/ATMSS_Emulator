@@ -134,6 +134,12 @@ public class ATMSS extends AppThread {
                     log.info("PrinterJammed: " + msg.getDetails());
                     break;
 
+                case P_PrintSuccess:
+                    log.info("PrinteSuccess: " + msg.getDetails());
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Printed"));
+
+                    break;
+
                 case DC_Total:
                     if (!msg.getDetails().equals("Invalid")) {
                         String[] msgs = msg.getDetails().split("/");
@@ -207,7 +213,7 @@ public class ATMSS extends AppThread {
         if (msg.getDetails().compareToIgnoreCase("Cancel") == 0) {
             if (currentPage.equals("cardLocked")) {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Start"));
-                printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
+                //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                 cardNo = "";
                 moneyWithdrawal = "";
@@ -215,7 +221,7 @@ public class ATMSS extends AppThread {
             } else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
+                //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                 // cardNo = "";    // for the money jammed and deposit money back
                 moneyWithdrawal = "";
@@ -439,6 +445,7 @@ public class ATMSS extends AppThread {
                         balance += "\nAccount 4: " + bams.checkBalance(cardNo, "-3");
 
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
+
                         break;
 
                     case 5:
