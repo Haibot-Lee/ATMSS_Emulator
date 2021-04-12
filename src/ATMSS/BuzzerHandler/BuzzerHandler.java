@@ -3,12 +3,6 @@ package ATMSS.BuzzerHandler;
 import ATMSS.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.Msg;
-import AppKickstarter.timer.Timer;
-
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.io.File;
-import java.net.MalformedURLException;
 
 
 //======================================================================

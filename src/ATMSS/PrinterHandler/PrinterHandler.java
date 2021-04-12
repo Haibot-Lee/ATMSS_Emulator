@@ -34,6 +34,7 @@ public class PrinterHandler extends HWHandler {
 
     // handlePrintAdvice
     protected void handlePrintAdvice(Msg msg) {
+
     } // handlePrintAdvice
 
     // handleReset

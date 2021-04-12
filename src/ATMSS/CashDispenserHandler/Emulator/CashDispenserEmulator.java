@@ -2,7 +2,6 @@ package ATMSS.CashDispenserHandler.Emulator;
 
 import ATMSS.ATMSSStarter;
 import ATMSS.CashDispenserHandler.CashDispenserHandler;
-import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 
 import AppKickstarter.timer.Timer;

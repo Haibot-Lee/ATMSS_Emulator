@@ -7,9 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import org.w3c.dom.css.Rect;
 
-import java.awt.*;
 import java.util.logging.Logger;
 
 
@@ -128,15 +126,6 @@ public class TouchDisplayEmulatorController {
         button3.setText("");
         button4.setText("");
         button5.setText("Back to Main Menu");
-        button6.setText("Exit");
-    }
-
-    public void textReset() {
-        button1.setText("Cash Withdrawal");
-        button2.setText("Cash Deposit");
-        button3.setText("Balance Enquiry");
-        button4.setText("Money Transfer");
-        button5.setText("");
         button6.setText("Exit");
     }
 

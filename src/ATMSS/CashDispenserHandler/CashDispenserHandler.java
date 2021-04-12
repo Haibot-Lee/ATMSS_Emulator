@@ -2,7 +2,6 @@ package ATMSS.CashDispenserHandler;
 import ATMSS.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
-import AppKickstarter.timer.Timer;
 
 public class CashDispenserHandler extends HWHandler {
 
@@ -20,12 +19,10 @@ public class CashDispenserHandler extends HWHandler {
                 break;
             case CD_EnquiryMoney:
                 handleEnquiryMoney();
-                //atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyAmount, ""));
                 break;
             case CD_MoneyJammed:
                 handleMoneyJammed();
                 break;
-            //atmss.send(new Msg(id, mbox, Msg.Type.CD_MoneyJammed, msg.getDetails()));
             case TimesUp:
                 handleTimesup(msg);
                 break;
@@ -35,16 +32,11 @@ public class CashDispenserHandler extends HWHandler {
             case CD_MoneyTaken:
                 atmss.send(new Msg(id,mbox,Msg.Type.CD_MoneyTaken,""));
                 break;
-
-
-
         }
     }
 
-    protected void handleEjectMoney(String oneHundredAmount, String fiveHundrdAmount, String oneThousandAmount) {
+    protected void handleEjectMoney(String oneHundredAmount, String fiveHundredAmount, String oneThousandAmount) {
         log.info(id + ": is ejecting money");
-
-
     }
 
     protected void handleEnquiryMoney() {
@@ -53,7 +45,7 @@ public class CashDispenserHandler extends HWHandler {
     }
 
     protected void handleMoneyJammed() {
-
+        log.warning(id + ": Money Jammed");
     }
 
     protected void handleTimesup(Msg msg) {

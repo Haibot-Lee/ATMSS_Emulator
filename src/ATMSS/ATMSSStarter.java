@@ -32,10 +32,9 @@ public class ATMSSStarter extends AppKickstarter {
 
     //------------------------------------------------------------
     // main
-//    public static void main(String[] args) {
-//        new ATMSSStarter().startApp();
-//
-//    } // main
+    public static void main(String[] args) {
+        new ATMSSStarter().startApp();
+    }
 
 
     //------------------------------------------------------------

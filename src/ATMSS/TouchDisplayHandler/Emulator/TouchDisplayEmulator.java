@@ -106,10 +106,8 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 break;
             case "Printed":
                 touchDisplayEmulatorController.handlePrinted();
-
                 break;
             default:
-
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
                 break;
         }
@@ -147,7 +145,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     }
 
     protected void changeTransferTo(Msg msg) {
-        switch (msg.getDetails()){
+        switch (msg.getDetails()) {
             case "1":
                 touchDisplayEmulatorController.button1.setVisible(false);
                 break;
@@ -193,7 +191,6 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
 
     protected void showResult(Msg msg) {
         log.info(id + ": show Result");
-
         touchDisplayEmulatorController.showResult(msg.getDetails());
     }
 

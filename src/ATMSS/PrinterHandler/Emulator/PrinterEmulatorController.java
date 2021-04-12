@@ -2,7 +2,6 @@ package ATMSS.PrinterHandler.Emulator;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
-import AppKickstarter.misc.Msg;
 
 import java.util.logging.Logger;
 

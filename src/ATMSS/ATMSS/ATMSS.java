@@ -26,7 +26,7 @@ public class ATMSS extends AppThread {
 
     //For one card
     private String cardNo = "";
-    private String withdrawaalCardNo = "none";
+    private String withdrawalCardNo = "none";
     private String password = "";
     private String trans = "";
     private String moneyWithdrawal = "";
@@ -113,11 +113,11 @@ public class ATMSS extends AppThread {
                     currentPage = "password";
                     cardNo = msg.getDetails();
                     // deposit money back
-                    if (withdrawaalCardNo.compareToIgnoreCase("none") != 0) {
+                    if (withdrawalCardNo.compareToIgnoreCase("none") != 0) {
                         log.info(id + ": need to deposit money");
                         try {
-                            bams.deposit(withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
-                            withdrawaalCardNo = "none";
+                            bams.deposit(withdrawalCardNo, accountWithdrawal, moneyWithdrawal);
+                            withdrawalCardNo = "none";
                             cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                         } catch (Exception e) {
                             log.warning(id + ": TestBAMSHandler: Exception caught: " + e.getMessage());
@@ -201,8 +201,8 @@ public class ATMSS extends AppThread {
 
                 case CD_MoneyJammed:
                     try {
-                        bams.deposit(withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
-                        withdrawaalCardNo = "none";
+                        bams.deposit(withdrawalCardNo, accountWithdrawal, moneyWithdrawal);
+                        withdrawalCardNo = "none";
                         cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_AddDenomination, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                     } catch (Exception e) {
                         log.warning(id + ": TestBAMSHandler: Exception caught: " + e.getMessage());
@@ -211,7 +211,7 @@ public class ATMSS extends AppThread {
                     log.info(id + ": money is deposited");
                     break;
                 case CD_MoneyTaken:       // printer send the information 
-                    withdrawaalCardNo = "none";
+                    withdrawalCardNo = "none";
                     break;
 
                 default:
@@ -244,13 +244,9 @@ public class ATMSS extends AppThread {
             } else {
                 cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
-
-                // cardNo = "";    // for the money jammed and deposit money back
                 moneyWithdrawal = "";
             }
 
-            //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
             //reset
             currentPage = "";
             password = "";
@@ -329,7 +325,7 @@ public class ATMSS extends AppThread {
                                 intWithdrawalTen = 0;
                                 if (moneyAmount % 500 / 100 <= oneHundredNum) {
                                     intWithdrawalOne = moneyAmount % 500 / 100;
-                                    int outAmount = bams.withdraw(withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
+                                    int outAmount = bams.withdraw(withdrawalCardNo, accountWithdrawal, moneyWithdrawal);
                                     if (outAmount != -1) {
                                         cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
@@ -354,7 +350,7 @@ public class ATMSS extends AppThread {
                                 }
                                 intWithdrawalTen = leftAmount / 1000;
                                 intWithdrawalOne = leftAmount % 1000 / 100;
-                                int outAmount = bams.withdraw(withdrawaalCardNo, accountWithdrawal, moneyWithdrawal);
+                                int outAmount = bams.withdraw(withdrawalCardNo, accountWithdrawal, moneyWithdrawal);
                                 if (outAmount != -1) {
                                     cashDispenserMBox.send(new Msg(id, mbox, Msg.Type.CD_EjectMoney, intWithdrawalOne + " " + intWithdrawalFive + " " + intWithdrawalTen));
                                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "WithdrawalReceipt"));
@@ -424,7 +420,6 @@ public class ATMSS extends AppThread {
 
                         trans = "" + accs.split("/").length;
                         currentPage = "transferFrom";
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         break;
 
                     case 4:
@@ -439,17 +434,14 @@ public class ATMSS extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, balance));
 
                         currentPage = "showBalance";
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         break;
 
                     case 6:
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                         currentPage = "";
-                        //cardNo = "";
                         password = "";
                         break;
                 }
@@ -473,7 +465,6 @@ public class ATMSS extends AppThread {
                     case 5:
                         // cancel and go back to the main menu
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                         currentPage = "mainMenu";
                         break;
@@ -482,7 +473,6 @@ public class ATMSS extends AppThread {
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                         currentPage = "";
                         cardNo = "";
@@ -497,7 +487,6 @@ public class ATMSS extends AppThread {
                     case 5:
                         // cancel and go back to the main menu
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                         currentPage = "mainMenu";
                         break;
@@ -506,7 +495,6 @@ public class ATMSS extends AppThread {
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                         currentPage = "";
                         cardNo = "";
@@ -580,24 +568,19 @@ public class ATMSS extends AppThread {
                         result += "\nTransfer " + idx[2] + " from account " + accs[Integer.parseInt(idx[0]) - 1] + " to account " + accs[Integer.parseInt(idx[1]) - 1];
                         result += "\n" + idx[3];
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, result));
-                        // currentPage="afterPrint";
                         break;
                     case 5:
                         //Back to main menu
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
-
                         break;
 
                     case 6:
                         //Exit
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
 
                         currentPage = "";
-                        //cardNo = "";
                         password = "";
                         break;
 
@@ -640,7 +623,6 @@ public class ATMSS extends AppThread {
                         //cancel depositing money and go back to the main menu page
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentPage = "mainMenu";
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         isDone = false;
                         break;
                 }
@@ -650,7 +632,6 @@ public class ATMSS extends AppThread {
                 if (buttonPressed == 5) {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
-                    //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                 } else {
                     String[] accs = bams.getAcc(cardNo).split("/");
                     for (int i = 1; i <= accs.length; i++) {
@@ -662,7 +643,7 @@ public class ATMSS extends AppThread {
                             intWithdrawalOne = 0;
                             intWithdrawalTen = 0;
                             intWithdrawalFive = 0;
-                            withdrawaalCardNo = cardNo;
+                            withdrawalCardNo = cardNo;
                             currentPage = "moneyWithdrawal";
                             break;
                         }
@@ -675,7 +656,6 @@ public class ATMSS extends AppThread {
                 if (buttonPressed == 5) {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
-                    //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                 } else {
                     //set the accounts according to the user's bank account and go to the moneyDeposit page
                     String[] accs = bams.getAcc(cardNo).split("/");
@@ -733,7 +713,6 @@ public class ATMSS extends AppThread {
                     case 4:
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         currentPage = "";
                         password = "";
                         break;
@@ -745,16 +724,13 @@ public class ATMSS extends AppThread {
                     //back to main menu
                     case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         currentPage = "mainMenu";
                         break;
                     //Exit
                     case 4:
                         cardReaderMBox.send(new Msg(id, mbox, Msg.Type.CR_EjectCard, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Eject"));
-                        //printerMBox.send(new Msg(id, mbox, Msg.Type.P_Reset, ""));
                         currentPage = "";
-                        //cardNo = "";
                         password = "";
                         break;
                 }
