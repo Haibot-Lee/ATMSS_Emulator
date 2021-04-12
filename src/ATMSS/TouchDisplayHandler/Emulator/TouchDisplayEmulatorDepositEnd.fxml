@@ -27,6 +27,13 @@
                         <Font size="30.0"/>
                     </font>
                 </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="70.0" stroke="BLACK" strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="70" AnchorPane.leftAnchor="0" />
+
+                <Text fx:id="button3" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Back To Main Menu" textAlignment="CENTER" wrappingWidth="300.0">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Text>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0"
                            onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640"
                            AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"/>

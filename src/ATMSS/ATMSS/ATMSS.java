@@ -640,7 +640,7 @@ public class ATMSS extends AppThread {
                     //print the advice
                     case 3:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositEnd"));
-                        currentPage = "withdrawalEnd";
+                        currentPage = "depositEnd";
                         long currentTime = (new Date()).getTime();
                         String receipt = currentTime + " " + cardNo + " " + accountDeposit + " deposit " + DepositTotal;
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, receipt));
@@ -648,7 +648,7 @@ public class ATMSS extends AppThread {
                     //don't print advice
                     case 4:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositEnd"));
-                        currentPage = "withdrawalEnd";
+                        currentPage = "depositEnd";
                         break;
                 }
                 break;
