@@ -1,5 +1,3 @@
-// This SQL file is used to update the database directly.
-
 DROP TABLE ATMcards;
 
 CREATE TABLE ATMcards
