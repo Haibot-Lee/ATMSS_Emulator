@@ -205,7 +205,7 @@ public class ATMSS extends AppThread {
                     }
                     log.info(id + ": money is deposited");
                     break;
-                case CD_MoneyTaken:
+                case CD_MoneyTaken:       // printer send the information 
                     withdrawaalCardNo="none";
                     break;
 
