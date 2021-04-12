@@ -274,7 +274,7 @@ public class ATMSS extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_TransAmount, msg.getDetails()));
                         if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
                             String[] temp = trans.split("/");
-                            trans = temp[0] + "/" + temp[1] + "/";
+                            trans = temp[0] + "/" + temp[1] + "/0";
                         } else {
                             trans += msg.getDetails();
                         }
@@ -382,8 +382,6 @@ public class ATMSS extends AppThread {
                         if (!allAccounts.equals("")) {
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_showAccount, allAccounts));
                         }
-                        //touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.TD_UpdateDisplay,"Withdrawal"));
-                        //keypadMBox.send(new Msg(id, mbox, Msg.Type.KP_PushUp, ""));
                         break;
 
                     case 2:
@@ -472,7 +470,7 @@ public class ATMSS extends AppThread {
                 } else {
                     for (int i = 1; i <= Integer.parseInt(trans); i++) {
                         if (buttonPressed == i) {
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferTo, ""));
+                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferTo, "" + i));
                             trans += "/" + i;
                             currentPage = "transferTo";
                             break;
@@ -486,15 +484,19 @@ public class ATMSS extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                     currentPage = "mainMenu";
                 } else {
+                    System.out.println(trans);
                     String[] temp = trans.split("/");
-                    trans = temp[1];
+                    int payAcc = Integer.parseInt(temp[1]);
                     for (int i = 1; i <= Integer.parseInt(temp[0]); i++) {
-                        if (buttonPressed == i) {
-                            trans += "/" + i;
-                            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferAmount, trans));
-                            trans += "/";
-                            currentPage = "transferAccount";
-                            break;
+                        if (buttonPressed != payAcc) {
+                            if (buttonPressed == i) {
+                                trans = temp[1];
+                                trans += "/" + i;
+                                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferAmount, trans));
+                                trans += "/0";
+                                currentPage = "transferAccount";
+                                break;
+                            }
                         }
 
                     }
@@ -559,7 +561,7 @@ public class ATMSS extends AppThread {
                     case 3:
                         //finish depositing money and going to the next depositReceipt page
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "DepositReceipt"));
-                        if(DepositTotal.equals("")){
+                        if (DepositTotal.equals("")) {
                             DepositTotal = "0";
                         }
                         bams.deposit(cardNo, accountDeposit, DepositTotal);
