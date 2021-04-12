@@ -274,7 +274,7 @@ public class ATMSS extends AppThread {
                     }
                     break;
 
-                case "transferAccount":
+                case "transferAmount":
                     if (msg.getDetails().compareToIgnoreCase("Enter") == 0) {
                         String result = bams.moneyTransfer(cardNo, trans);
                         trans += "/" + result;
@@ -500,7 +500,7 @@ public class ATMSS extends AppThread {
                             trans += "/" + i;
                             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_Message_transferAmount, trans));
                             trans += "/";
-                            currentPage = "transferAccount";
+                            currentPage = "transferAmount";
                             break;
                         }
 
@@ -508,7 +508,7 @@ public class ATMSS extends AppThread {
                 }
                 break;
 
-            case "transferAccount":
+            case "transferAmount":
                 switch (buttonPressed) {
                     case 5:
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
