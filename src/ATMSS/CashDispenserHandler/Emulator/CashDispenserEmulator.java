@@ -24,6 +24,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
     private int fiveHundredAmount;
     private int oneThousandAmount;
     private int waitingTime;
+    private int timerID;
 
     public CashDispenserEmulator(String id, ATMSSStarter atmssStarter) throws Exception {
         super(id, atmssStarter);
@@ -33,6 +34,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
         this.fiveHundredAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.fiveHundredAmount"));
         this.oneThousandAmount = Integer.parseInt(appKickstarter.getProperty("CashDispenser.oneThousandAmount"));
         this.waitingTime=Integer.parseInt(appKickstarter.getProperty("CashDispenser.waitingTime"));
+        this.timerID=Integer.parseInt(appKickstarter.getProperty("CashDispenser.timerID"));
     }//cashDispenserEmulator
 
     public void start() throws Exception {
@@ -70,7 +72,7 @@ public class CashDispenserEmulator extends CashDispenserHandler {
         int totalAmount = 100 * Integer.parseInt(oneHundredAmount) + 500 * Integer.parseInt(fiveHundredAmount) + 1000 * Integer.parseInt(oneThousandAmount);
         cashDispenserEmulatorController.totalAmountTextField.setText(Integer.toString(totalAmount));
         cashDispenserEmulatorController.takeMoney.setDisable(false);
-        Timer.setTimer(id, mbox, waitingTime, 77);
+        Timer.setTimer(id, mbox, waitingTime, timerID);
 
     }
 
