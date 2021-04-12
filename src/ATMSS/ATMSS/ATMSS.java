@@ -153,9 +153,10 @@ public class ATMSS extends AppThread {
                 case P_PrintSuccess:
                     log.info("PrinteSuccess: " + msg.getDetails());
                     //only for money transfer
-                    if(currentPage.compareToIgnoreCase("afterPrint")==0){
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Printed"));
-                    currentPage = "afterPrint";}
+                    if (currentPage.compareToIgnoreCase("afterPrint") == 0) {
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Printed"));
+                        currentPage = "afterPrint";
+                    }
                     break;
 
                 case DC_Total:

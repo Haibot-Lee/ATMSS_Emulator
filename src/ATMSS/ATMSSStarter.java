@@ -30,13 +30,12 @@ public class ATMSSStarter extends AppKickstarter {
     protected BuzzerHandler buzzerHandler;
 
 
-
     //------------------------------------------------------------
     // main
-    public static void main(String[] args) {
-        new ATMSSStarter().startApp();
-
-    } // main
+//    public static void main(String[] args) {
+//        new ATMSSStarter().startApp();
+//
+//    } // main
 
 
     //------------------------------------------------------------
@@ -70,7 +69,7 @@ public class ATMSSStarter extends AppKickstarter {
             keypadHandler = new KeypadHandler("KeypadHandler", this);
             touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
             depositCollectorHandler = new DepositCollectorHandler("DepositCollectorHandler", this);
-            cashDispenserHandler=new CashDispenserHandler("CashDispenserHandler",this);
+            cashDispenserHandler = new CashDispenserHandler("CashDispenserHandler", this);
             printerHandler = new PrinterHandler("PrinterHandler", this);
             buzzerHandler = new BuzzerHandler("BuzzerHandler", this);
 
