@@ -62,7 +62,6 @@ public class PrinterEmulator extends PrinterHandler {
             printerEmulatorController.setTextArea(msg.getDetails());
             printerEmulatorController.setTextField("");
             printerEmulatorController.printerButton.setDisable(false);
-
             atmss.send(new Msg(id, mbox, Msg.Type.P_PrintSuccess, ""));
 
         }else if (!printerEmulatorController.printerTextArea.getText().equals("")) {
