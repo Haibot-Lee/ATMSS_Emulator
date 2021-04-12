@@ -46,7 +46,7 @@ public class PrinterEmulatorController {
         switch (btn.getText()) {
             case "Take Advice":
                 setTextArea("");
-                setTextField("Advice Taken");
+                setTextField("");
                 printerButton.setDisable(true);
                 break;
 
@@ -68,7 +68,7 @@ public class PrinterEmulatorController {
     } // setTextField
 
     public void reset() {
-        if (printerTextField.getText().equals("Advice taken")) {
+        if (printerTextField.getText().equals("")) {
             printerTextArea.setText("");
             printerTextField.setText("");
             printerButton.setDisable(true);
