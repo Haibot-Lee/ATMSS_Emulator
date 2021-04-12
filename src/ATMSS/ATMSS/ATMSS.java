@@ -410,10 +410,11 @@ public class ATMSS extends AppThread {
                     case 4:
                         //Balance Enquiry
                         String balance = "";
-                        balance += "Account 1: " + bams.checkBalance(cardNo, "-0");
-                        balance += "\nAccount 2: " + bams.checkBalance(cardNo, "-1");
-                        balance += "\nAccount 3: " + bams.checkBalance(cardNo, "-2");
-                        balance += "\nAccount 4: " + bams.checkBalance(cardNo, "-3");
+                        String[] accounts = bams.getAcc(cardNo).split("/");
+
+                        for (String account : accounts) {
+                            balance += account + ": " + bams.checkBalance(cardNo,account) + "\n";
+                        }
 
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_ShowResult, balance));
 
@@ -439,10 +440,11 @@ public class ATMSS extends AppThread {
                     case 1:
                         //print advice
                         String balance = "";
-                        balance += "Account 1: " + bams.checkBalance(cardNo, "-0");
-                        balance += "\nAccount 2: " + bams.checkBalance(cardNo, "-1");
-                        balance += "\nAccount 3: " + bams.checkBalance(cardNo, "-2");
-                        balance += "\nAccount 4: " + bams.checkBalance(cardNo, "-3");
+                        String[] accounts = bams.getAcc(cardNo).split("/");
+
+                        for (String account : accounts) {
+                            balance += account + ": " + bams.checkBalance(cardNo,account) + "\n";
+                        }
 
                         printerMBox.send(new Msg(id, mbox, Msg.Type.P_PrintAdvice, balance));
 
