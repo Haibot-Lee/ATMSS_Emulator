@@ -114,7 +114,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     } // handleUpdateDisplay
 
     protected void showPasswords(Msg msg) {
-        log.info(id + ": show passwords");
+        log.info(id + ": inputting passwords");
 
         if (msg.getDetails().compareToIgnoreCase("Clear") == 0) {
             touchDisplayEmulatorController.passwordField.setText("");

@@ -87,7 +87,7 @@ public class ATMSS extends AppThread {
                     break;
 
                 case KP_KeyPressed:
-                    log.info("KeyPressed: " + msg.getDetails());
+//                    log.info("KeyPressed: " + msg.getDetails());
                     processKeyPressed(msg);
                     break;
 
